@@ -1,0 +1,51 @@
+package it.unisa.control;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
+import it.unisa.model.BookBean;
+import it.unisa.storage.bookshelf.dao.BookshelfDaoImpl;
+
+@WebServlet("/IndexServlet")
+public class IndexServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	private BookshelfDaoImpl dao;
+	
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		DataSource ds = (DataSource) getServletContext().getAttribute("bookshelf-datasource");
+		if(ds == null)
+			throw new ServletException("Datasource non disponibile nel contest");
+		
+		dao = new BookshelfDaoImpl(ds);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<BookBean> books = null;
+		try {
+			books = dao.doRetriveAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("books", books);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}
