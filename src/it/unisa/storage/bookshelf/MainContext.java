@@ -11,7 +11,7 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
 @WebListener
-public class BookshelfContext implements ServletContextListener{
+public class MainContext implements ServletContextListener{
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
@@ -21,11 +21,11 @@ public class BookshelfContext implements ServletContextListener{
 		try {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
-			ds = (DataSource) envCtx.lookup("jdbc/bookshelf");
+			ds = (DataSource) envCtx.lookup("jdbc/database");
 		} catch (NamingException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		context.setAttribute("bookshelf-datasource", ds);
+		context.setAttribute("datasource", ds);
 	}
 	
 	@Override

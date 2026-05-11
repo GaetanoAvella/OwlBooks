@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS bookshelf;
-CREATE DATABASE bookshelf;
+DROP DATABASE IF EXISTS storageOwlBooks;
+CREATE DATABASE storageOwlBooks;
 USE bookshelf;
 
 DROP TABLE IF EXISTS book;
