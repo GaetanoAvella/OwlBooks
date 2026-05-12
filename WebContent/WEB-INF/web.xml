@@ -5,7 +5,7 @@
 		<welcome-file>IndexServlet</welcome-file>
 	</welcome-file-list>
 	<resource-ref>
-    <res-ref-name>jdbc/bookshelf</res-ref-name>
+    <res-ref-name>jdbc/storageOwlBooks</res-ref-name>
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>

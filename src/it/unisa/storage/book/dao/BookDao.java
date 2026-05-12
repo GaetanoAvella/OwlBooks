@@ -1,13 +1,13 @@
-package it.unisa.storage.bookshelf.dao;
+package it.unisa.storage.book.dao;
 
 import java.sql.SQLException;
 import java.util.Collection;
 
 import it.unisa.model.BookBean;
 
-public interface BookshelfDao {
+public interface BookDao {
 	public void doSave(BookBean book) throws SQLException;
-	public boolean doDelete(BookBean book) throws SQLException;
+	public boolean doDelete(int code) throws SQLException;
 	public BookBean doRetriveByKey(int code) throws SQLException;
 	public Collection<BookBean> doRetriveAll() throws SQLException;
 }

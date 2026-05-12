@@ -1,4 +1,4 @@
-package it.unisa.storage.bookshelf;
+package it.unisa.storage;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;

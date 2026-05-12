@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS storageOwlBooks;
 CREATE DATABASE storageOwlBooks;
-USE bookshelf;
+USE storageOwlBooks;
 
 DROP TABLE IF EXISTS book;
 

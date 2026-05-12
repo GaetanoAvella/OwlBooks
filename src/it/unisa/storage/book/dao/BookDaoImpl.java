@@ -1,4 +1,4 @@
-package it.unisa.storage.bookshelf.dao;
+package it.unisa.storage.book.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,11 @@ import javax.sql.DataSource;
 
 import it.unisa.model.BookBean;
 
-public class BookshelfDaoImpl implements BookshelfDao{
+public class BookDaoImpl implements BookDao{
 	private static final String TABLE_NAME = "book";
     private DataSource ds = null;
 	
-    public BookshelfDaoImpl(DataSource ds) {
+    public BookDaoImpl(DataSource ds) {
     	this.ds = ds;
     }
     
@@ -35,8 +35,14 @@ public class BookshelfDaoImpl implements BookshelfDao{
 	}
 	
 	@Override
-	public boolean doDelete(BookBean book) throws SQLException {
-		return true;
+	public boolean doDelete(int code) throws SQLException {
+		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE code = ?";
+        try (Connection connection = ds.getConnection();
+        		PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+            preparedStatement.setInt(1, code);
+            int result = preparedStatement.executeUpdate();
+            return result != 0;
+        }
 	}
 	
 	@Override

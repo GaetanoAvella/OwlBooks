@@ -14,13 +14,13 @@ import java.util.ArrayList;
 import javax.sql.DataSource;
 
 import it.unisa.model.BookBean;
-import it.unisa.storage.bookshelf.dao.BookshelfDaoImpl;
+import it.unisa.storage.book.dao.BookDaoImpl;
 
 @WebServlet("/IndexServlet")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private BookshelfDaoImpl dao;
+	private BookDaoImpl dao;
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -29,7 +29,7 @@ public class IndexServlet extends HttpServlet {
 		if(ds == null)
 			throw new ServletException("Datasource non disponibile nel contest");
 		
-		dao = new BookshelfDaoImpl(ds);
+		dao = new BookDaoImpl(ds);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
