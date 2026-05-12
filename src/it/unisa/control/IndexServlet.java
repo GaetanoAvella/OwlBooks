@@ -25,7 +25,7 @@ public class IndexServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		DataSource ds = (DataSource) getServletContext().getAttribute("bookshelf-datasource");
+		DataSource ds = (DataSource) getServletContext().getAttribute("datasource");
 		if(ds == null)
 			throw new ServletException("Datasource non disponibile nel contest");
 		
@@ -33,13 +33,7 @@ public class IndexServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<BookBean> books = null;
-		try {
-			books = dao.doRetriveAll();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		request.setAttribute("books", books);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
 		dispatcher.forward(request, response);
 	}
