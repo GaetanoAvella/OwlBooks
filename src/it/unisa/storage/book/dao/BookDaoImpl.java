@@ -20,48 +20,51 @@ public class BookDaoImpl implements BookDao{
 	@Override
 	public synchronized void doSave(BookBean book) throws SQLException {
 		String insertSQL = "INSERT INTO " + TABLE_NAME
-				+ " (name, author, genre, description, price, quantity) VALUES (?,?,?,?,?,?);";
+				+ " (code, name, author, genre, price, description, stock_quantity, editor) VALUES (?,?,?,?,?,?);";
 		
 		try(Connection connection = ds.getConnection();
 				PreparedStatement statement = connection.prepareStatement(insertSQL)) {
-			statement.setString(1, book.getNome());
-			statement.setString(2, book.getAutore());
-			statement.setString(3, book.getGenere());
-			statement.setString(4, book.getDescrizione());
-			statement.setFloat(5, book.getPrezzo());
-			statement.setInt(6, book.getQuantita());
+			statement.setString(1, book.getCode());
+			statement.setString(2, book.getName());
+			statement.setString(3, book.getAuthor());
+			statement.setString(4, book.getGenre());
+			statement.setFloat(5, book.getPrice());
+			statement.setString(6, book.getDescription());
+			statement.setInt(6, book.getStock_quantity());
+			statement.setString(7, book.getEditor());
 			statement.execute();
 		}
 	}
 	
 	@Override
-	public boolean doDelete(int code) throws SQLException {
+	public synchronized boolean doDelete(String code) throws SQLException {
 		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE code = ?";
         try (Connection connection = ds.getConnection();
         		PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-            preparedStatement.setInt(1, code);
+            preparedStatement.setString(1, code);
             int result = preparedStatement.executeUpdate();
             return result != 0;
         }
 	}
 	
 	@Override
-	public synchronized BookBean doRetriveByKey(int code) throws SQLException {
+	public synchronized BookBean doRetriveByKey(String code) throws SQLException {
 			BookBean book = new BookBean();
 			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE code=?";
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
 			
-				statement.setInt(1, code);
+				statement.setString(1, code);
 				try(ResultSet rs = statement.executeQuery()) {
-					book.setCodice(rs.getInt("code"));
-					book.setNome(rs.getString("name"));
-					book.setAutore(rs.getString("author"));
-					book.setGenere(rs.getString("genre"));
-					book.setDescrizione(rs.getString("description"));
-					book.setPrezzo(rs.getFloat("price"));
-					book.setQuantita(rs.getInt("quantity"));
+					book.setCode(rs.getString("code"));
+					book.setName(rs.getString("name"));
+					book.setAuthor(rs.getString("author"));
+					book.setGenre(rs.getString("genre"));
+					book.setPrice(rs.getFloat("price"));
+					book.setDescription(rs.getString("description"));
+					book.setStock_quantity(rs.getInt("stock_quantity"));
+					book.setEditor(rs.getString("editor"));
 				}
 			}
 			
@@ -69,7 +72,7 @@ public class BookDaoImpl implements BookDao{
 	}
 	
 	@Override
-	public ArrayList<BookBean> doRetriveAll() throws SQLException {
+	public synchronized ArrayList<BookBean> doRetriveAll() throws SQLException {
 		ArrayList<BookBean> list = new ArrayList<>();
 		String selectSQL = "SELECT * FROM " + TABLE_NAME;
 		
@@ -78,13 +81,14 @@ public class BookDaoImpl implements BookDao{
 				ResultSet rs = statement.executeQuery()) {
 			while(rs.next()) {
 				BookBean book = new BookBean();
-				book.setCodice(rs.getInt("code"));
-				book.setNome(rs.getString("name"));
-				book.setAutore(rs.getString("author"));
-				book.setGenere(rs.getString("genre"));
-				book.setDescrizione(rs.getString("description"));
-				book.setPrezzo(rs.getFloat("price"));
-				book.setQuantita(rs.getInt("quantity"));
+				book.setCode(rs.getString("code"));
+				book.setName(rs.getString("name"));
+				book.setAuthor(rs.getString("author"));
+				book.setGenre(rs.getString("genre"));
+				book.setPrice(rs.getFloat("price"));
+				book.setDescription(rs.getString("description"));
+				book.setStock_quantity(rs.getInt("stock_quantity"));
+				book.setEditor(rs.getString("editor"));
 				list.add(book);
 			}
 		}

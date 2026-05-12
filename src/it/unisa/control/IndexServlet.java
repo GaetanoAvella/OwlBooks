@@ -33,6 +33,14 @@ public class IndexServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<BookBean> catalogue = null;
+		try {
+			 catalogue = dao.doRetriveAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		
+		request.setAttribute("catalogue", catalogue);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
 		dispatcher.forward(request, response);

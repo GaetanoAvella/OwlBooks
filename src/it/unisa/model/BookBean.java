@@ -1,55 +1,63 @@
 package it.unisa.model;
 
 public class BookBean {
-	private int codice;
-	private int quantita;
-	private String nome;
-	private String autore;
-	private float prezzo;
-	private String descrizione;
-	private String genere;
+	private String code;
+	private String name;
+	private String author;
+	private String genre;
+	private float price;
+	private String description;
+	private int stock_quantity;
+	private String editor;
 	
-	public int getCodice() {
-		return codice;
+	public String getCode() {
+		return code;
 	}
-	public void setCodice(int codice) {
-		this.codice = codice;
+	public void setCode(String code) {
+		this.code = code;
 	}
-	public int getQuantita() {
-		return quantita;
+	public String getName() {
+		return name;
 	}
-	public void setQuantita(int quantita) {
-		this.quantita = quantita;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getNome() {
-		return nome;
+	public String getAuthor() {
+		return author;
 	}
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setAuthor(String author) {
+		this.author = author;
 	}
-	public String getAutore() {
-		return autore;
+	public String getGenre() {
+		return genre;
 	}
-	public void setAutore(String autore) {
-		this.autore = autore;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
-	public float getPrezzo() {
-		return prezzo;
+	public float getPrice() {
+		return price;
 	}
-	public void setPrezzo(float prezzo) {
-		this.prezzo = prezzo;
+	public void setPrice(float price) {
+		this.price = price;
 	}
-	public String getDescrizione() {
-		return descrizione;
+	public String getDescription() {
+		return description;
 	}
-	public void setDescrizione(String descrizione) {
-		this.descrizione = descrizione;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public String getGenere() {
-		return genere;
+	public int getStock_quantity() {
+		return stock_quantity;
 	}
-	public void setGenere(String genere) {
-		this.genere = genere;
+	public void setStock_quantity(int stock_quantity) {
+		this.stock_quantity = stock_quantity;
 	}
+	public String getEditor() {
+		return editor;
+	}
+	public void setEditor(String editor) {
+		this.editor = editor;
+	}
+	
 	
 }

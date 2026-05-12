@@ -20,21 +20,12 @@ CREATE TABLE book (
     id              INT           PRIMARY KEY AUTO_INCREMENT,
     code           	VARCHAR(50)   NOT NULL UNIQUE,
     name            VARCHAR(255)  NOT NULL,
+    author			VARCHAR(255)  NOT NULL,
     genre           VARCHAR(100)  NOT NULL,
     price           DECIMAL(10,2) NOT NULL,
-    description     TEXT,
+    description     VARCHAR(255),
     stock_quantity  INT           NOT NULL DEFAULT 0,
     editor          VARCHAR(150)
-);
-
-DROP TABLE IF EXISTS author_book;
-
-CREATE TABLE author_book (
-    id               INT           PRIMARY KEY AUTO_INCREMENT,
-    book_id          INT           NOT NULL,
-    author           VARCHAR(200)  NOT NULL,
-    FOREIGN KEY (book_id) REFERENCES book(id)
-        ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS purchase_order;
