@@ -33,14 +33,30 @@ public class IndexServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<String> genres = null;
 		ArrayList<BookBean> catalogue = null;
+		
 		try {
-			 catalogue = dao.doRetriveAll();
+			String order = request.getParameter("order");
+			
+			if(order != null) {
+				catalogue = dao.doRetriveAll(order);
+			} else {
+				String genreFilter = request.getParameter("filter");
+			
+				if(genreFilter != null)
+					catalogue = dao.doRetriveAllbyGenre(genreFilter);
+				else
+					catalogue = dao.doRetriveAll("az");
+			}
+			
+			genres = dao.doRetriveAllGenre();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 		
 		request.setAttribute("catalogue", catalogue);
+		request.setAttribute("genres", genres);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
 		dispatcher.forward(request, response);

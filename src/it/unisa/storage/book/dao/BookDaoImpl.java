@@ -1,62 +1,111 @@
-package it.unisa.storage.book.dao;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.sql.DataSource;
-
-import it.unisa.model.BookBean;
-
-public class BookDaoImpl implements BookDao{
-	private static final String TABLE_NAME = "book";
-    private DataSource ds = null;
+	package it.unisa.storage.book.dao;
 	
-    public BookDaoImpl(DataSource ds) {
-    	this.ds = ds;
-    }
-    
-	@Override
-	public synchronized void doSave(BookBean book) throws SQLException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME
-				+ " (code, name, author, genre, price, description, stock_quantity, editor) VALUES (?,?,?,?,?,?);";
+	import java.sql.Connection;
+	import java.sql.PreparedStatement;
+	import java.sql.ResultSet;
+	import java.sql.SQLException;
+	import java.util.ArrayList;
+	import javax.sql.DataSource;
+	
+	import it.unisa.model.BookBean;
+	
+	public class BookDaoImpl implements BookDao{
+		private static final String TABLE_NAME = "book";
+	    private DataSource ds = null;
 		
-		try(Connection connection = ds.getConnection();
-				PreparedStatement statement = connection.prepareStatement(insertSQL)) {
-			statement.setString(1, book.getCode());
-			statement.setString(2, book.getName());
-			statement.setString(3, book.getAuthor());
-			statement.setString(4, book.getGenre());
-			statement.setFloat(5, book.getPrice());
-			statement.setString(6, book.getDescription());
-			statement.setInt(6, book.getStock_quantity());
-			statement.setString(7, book.getEditor());
-			statement.execute();
-		}
-	}
-	
-	@Override
-	public synchronized boolean doDelete(String code) throws SQLException {
-		String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE code = ?";
-        try (Connection connection = ds.getConnection();
-        		PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-            preparedStatement.setString(1, code);
-            int result = preparedStatement.executeUpdate();
-            return result != 0;
-        }
-	}
-	
-	@Override
-	public synchronized BookBean doRetriveByKey(String code) throws SQLException {
-			BookBean book = new BookBean();
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE code=?";
+	    public BookDaoImpl(DataSource ds) {
+	    	this.ds = ds;
+	    }
+	    
+		@Override
+		public void doSave(BookBean book) throws SQLException {
+			String insertSQL = "INSERT INTO " + TABLE_NAME
+					+ " (code, name, author, genre, price, description, stock_quantity, editor) VALUES (?,?,?,?,?,?);";
 			
 			try(Connection connection = ds.getConnection();
-					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+					PreparedStatement statement = connection.prepareStatement(insertSQL)) {
+				statement.setString(1, book.getCode());
+				statement.setString(2, book.getName());
+				statement.setString(3, book.getAuthor());
+				statement.setString(4, book.getGenre());
+				statement.setFloat(5, book.getPrice());
+				statement.setString(6, book.getDescription());
+				statement.setInt(7, book.getStock_quantity());
+				statement.setString(8, book.getEditor());
+				statement.execute();
+			}
+		}
+		
+		@Override
+		public boolean doDelete(String code) throws SQLException {
+			String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE code = ?";
+	        try (Connection connection = ds.getConnection();
+	        		PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
+	            preparedStatement.setString(1, code);
+	            int result = preparedStatement.executeUpdate();
+	            return result != 0;
+	        }
+		}
+		
+		@Override
+		public BookBean doRetriveByKey(String code) throws SQLException {
+				BookBean book = new BookBean();
+				String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE code=?";
+				
+				try(Connection connection = ds.getConnection();
+						PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+				
+					statement.setString(1, code);
+					try(ResultSet rs = statement.executeQuery()) {
+						if(rs.next()) {
+							book.setCode(rs.getString("code"));
+							book.setName(rs.getString("name"));
+							book.setAuthor(rs.getString("author"));
+							book.setGenre(rs.getString("genre"));
+							book.setPrice(rs.getFloat("price"));
+							book.setDescription(rs.getString("description"));
+							book.setStock_quantity(rs.getInt("stock_quantity"));
+							book.setEditor(rs.getString("editor"));
+						}
+					}
+				}
+				
+				return book;		
+		}
+		
+		@Override
+		public ArrayList<BookBean> doRetriveAll(String order) throws SQLException {
+			ArrayList<BookBean> list = new ArrayList<>();
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + "ORDER BY ";
+			String orderSQL = "ORDER BY name ASC";
 			
-				statement.setString(1, code);
-				try(ResultSet rs = statement.executeQuery()) {
+			if(order != null) {
+				switch(order) {
+					case "az":
+						orderSQL = "ORDER BY name ASC";
+						break;
+					case "za":
+						orderSQL = "ORDER BY name DESC";
+						break;
+					case "pricelow":
+						orderSQL = "ORDER BY price ASC";
+						break;
+					case "pricehigh":
+						orderSQL = "ORDER BY price DESC";
+						break;
+					default:
+						orderSQL = "ORDER BY name ASC";
+						break;
+				}
+			}
+			
+			selectSQL += orderSQL;
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement statement = connection.prepareStatement(selectSQL);
+					ResultSet rs = statement.executeQuery()) {
+				while(rs.next()) {
+					BookBean book = new BookBean();
 					book.setCode(rs.getString("code"));
 					book.setName(rs.getString("name"));
 					book.setAuthor(rs.getString("author"));
@@ -65,33 +114,55 @@ public class BookDaoImpl implements BookDao{
 					book.setDescription(rs.getString("description"));
 					book.setStock_quantity(rs.getInt("stock_quantity"));
 					book.setEditor(rs.getString("editor"));
+					list.add(book);
 				}
 			}
-			
-			return book;		
-	}
-	
-	@Override
-	public synchronized ArrayList<BookBean> doRetriveAll() throws SQLException {
-		ArrayList<BookBean> list = new ArrayList<>();
-		String selectSQL = "SELECT * FROM " + TABLE_NAME;
-		
-		try(Connection connection = ds.getConnection();
-				PreparedStatement statement = connection.prepareStatement(selectSQL);
-				ResultSet rs = statement.executeQuery()) {
-			while(rs.next()) {
-				BookBean book = new BookBean();
-				book.setCode(rs.getString("code"));
-				book.setName(rs.getString("name"));
-				book.setAuthor(rs.getString("author"));
-				book.setGenre(rs.getString("genre"));
-				book.setPrice(rs.getFloat("price"));
-				book.setDescription(rs.getString("description"));
-				book.setStock_quantity(rs.getInt("stock_quantity"));
-				book.setEditor(rs.getString("editor"));
-				list.add(book);
-			}
+			return list;
 		}
-		return list;
+	
+	
+		@Override
+		public ArrayList<String> doRetriveAllGenre() throws SQLException{
+			ArrayList<String> genres = new ArrayList<String>();
+			String selectSQL = "SELECT DISTINCT genre FROM " + TABLE_NAME + " ORDER BY genre ASC";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement statement = connection.prepareStatement(selectSQL);
+					ResultSet rs = statement.executeQuery()) {
+				
+				while(rs.next()) {
+					genres.add(rs.getString("genre"));
+				}
+			
+			}
+			
+			return genres;
+		}
+		
+		@Override
+		public ArrayList<BookBean> doRetriveAllbyGenre(String genre) throws SQLException{
+			ArrayList<BookBean> list = new ArrayList<>();
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE genre=?";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+				statement.setString(1, genre);
+				try(ResultSet rs = statement.executeQuery()) {
+					while(rs.next()) {
+						BookBean book = new BookBean();
+						book.setCode(rs.getString("code"));
+						book.setName(rs.getString("name"));
+						book.setAuthor(rs.getString("author"));
+						book.setGenre(rs.getString("genre"));
+						book.setPrice(rs.getFloat("price"));
+						book.setDescription(rs.getString("description"));
+						book.setStock_quantity(rs.getInt("stock_quantity"));
+						book.setEditor(rs.getString("editor"));
+						list.add(book);
+					}
+				}
+			}
+			return list;
+		}
+	
 	}
-}
