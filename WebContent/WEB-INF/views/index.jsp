@@ -22,6 +22,10 @@
 			
 		</select>
 		
+		<% if(request.getParameter("filter") != null) { %>
+		<input type="hidden" name="filter" value="<%= request.getParameter("filter") %>">
+		<% } %>
+		
 		<input type="submit" value="Ordina">
 		
 	</form>

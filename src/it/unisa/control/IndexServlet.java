@@ -37,7 +37,7 @@ public class IndexServlet extends HttpServlet {
 		ArrayList<BookBean> catalogue = null;
 		
 		try {
-			String sort = request.getParameter("sort") != null ? request.getParameter("sort") : "a";
+			String sort = request.getParameter("sort") != null ? request.getParameter("sort") : "az";
 			String genreFilter = request.getParameter("filter");
 			
 			catalogue = dao.doRetriveAll("genre", genreFilter, sort);

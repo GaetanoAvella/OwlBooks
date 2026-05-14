@@ -99,7 +99,7 @@
 	
 		@Override
 		public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order) throws SQLException {
-			if(filterValue == null)
+			if(filterValue == null || filterValue.equals(""))
 				return doRetriveAll(order);
 			
 			ArrayList<BookBean> list = new ArrayList<>();
