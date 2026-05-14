@@ -53,10 +53,3 @@ CREATE TABLE detail_order (
     FOREIGN KEY (book_id) REFERENCES book(id)
         ON DELETE RESTRICT
 );
-
-
-INSERT INTO book (name, author, genre, description, price, quantity) VALUES
-	('Divina Commedia', 'Dante Alighieri', 'poem', '', 20.00, 1),
-	('I promessi sposi', 'Alessandro Manzoni', 'novel', '', 15.00, 5),
-	('Le ultime lettere di Jacopo Ortis', 'Ugo Foscolo', 'novel', '', 24.00, 3),
-	('I Malavoglia', 'Giovanni Verga', 'novel', '', 10.00, 4);

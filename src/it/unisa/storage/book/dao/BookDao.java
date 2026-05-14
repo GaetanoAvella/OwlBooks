@@ -9,6 +9,6 @@ public interface BookDao {
 	public boolean doDelete(String code) throws SQLException;
 	public BookBean doRetriveByKey(String code) throws SQLException;
 	public ArrayList<BookBean> doRetriveAll(String order) throws SQLException;
-	public ArrayList<String> doRetriveAllGenre() throws SQLException;
-	public ArrayList<BookBean> doRetriveAllbyGenre(String genre) throws SQLException;
+	public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order) throws SQLException;
+	public ArrayList<String> doRetriveGenres() throws SQLException;
 }

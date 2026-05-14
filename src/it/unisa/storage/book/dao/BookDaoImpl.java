@@ -20,7 +20,7 @@
 		@Override
 		public void doSave(BookBean book) throws SQLException {
 			String insertSQL = "INSERT INTO " + TABLE_NAME
-					+ " (code, name, author, genre, price, description, stock_quantity, editor) VALUES (?,?,?,?,?,?);";
+					+ " (code, name, author, genre, price, description, stock_quantity, editor) VALUES (?,?,?,?,?,?,?,?);";
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(insertSQL)) {
@@ -76,30 +76,7 @@
 		@Override
 		public ArrayList<BookBean> doRetriveAll(String order) throws SQLException {
 			ArrayList<BookBean> list = new ArrayList<>();
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + "ORDER BY ";
-			String orderSQL = "ORDER BY name ASC";
-			
-			if(order != null) {
-				switch(order) {
-					case "az":
-						orderSQL = "ORDER BY name ASC";
-						break;
-					case "za":
-						orderSQL = "ORDER BY name DESC";
-						break;
-					case "pricelow":
-						orderSQL = "ORDER BY price ASC";
-						break;
-					case "pricehigh":
-						orderSQL = "ORDER BY price DESC";
-						break;
-					default:
-						orderSQL = "ORDER BY name ASC";
-						break;
-				}
-			}
-			
-			selectSQL += orderSQL;
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + setOrderString(order);
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL);
@@ -120,33 +97,17 @@
 			return list;
 		}
 	
-	
 		@Override
-		public ArrayList<String> doRetriveAllGenre() throws SQLException{
-			ArrayList<String> genres = new ArrayList<String>();
-			String selectSQL = "SELECT DISTINCT genre FROM " + TABLE_NAME + " ORDER BY genre ASC";
+		public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order) throws SQLException {
+			if(filterValue == null)
+				return doRetriveAll(order);
 			
-			try(Connection connection = ds.getConnection();
-					PreparedStatement statement = connection.prepareStatement(selectSQL);
-					ResultSet rs = statement.executeQuery()) {
-				
-				while(rs.next()) {
-					genres.add(rs.getString("genre"));
-				}
-			
-			}
-			
-			return genres;
-		}
-		
-		@Override
-		public ArrayList<BookBean> doRetriveAllbyGenre(String genre) throws SQLException{
 			ArrayList<BookBean> list = new ArrayList<>();
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE genre=?";
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + filter + "=?" + setOrderString(order);
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
-				statement.setString(1, genre);
+				statement.setString(1, filterValue);
 				try(ResultSet rs = statement.executeQuery()) {
 					while(rs.next()) {
 						BookBean book = new BookBean();
@@ -163,6 +124,39 @@
 				}
 			}
 			return list;
+		}
+		
+		@Override
+		public ArrayList<String> doRetriveGenres() throws SQLException{
+			ArrayList<String> genres = new ArrayList<String>();
+			String selectSQL = "SELECT DISTINCT genre FROM " + TABLE_NAME + " ORDER BY genre ASC";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement statement = connection.prepareStatement(selectSQL);
+					ResultSet rs = statement.executeQuery()) {
+				
+				while(rs.next()) {
+					genres.add(rs.getString("genre"));
+				}
+			
+			}
+			
+			return genres;
+		}
+		
+		public String setOrderString(String order) {
+			switch(order) {
+				case "az":
+					return " ORDER BY name ASC";
+				case "za":
+					return " ORDER BY name DESC";
+				case "pricelow":
+					return " ORDER BY price ASC";
+				case "pricehigh":
+					return " ORDER BY price DESC";
+				default:
+					return " ORDER BY name ASC";
+			}
 		}
 	
 	}

@@ -12,8 +12,8 @@
 
 	<form method="get" action="IndexServlet">
 		
-		<label for="order">Ordina i libri per: </label>
-		<select name="order">
+		<label for="sort">Ordina i libri per: </label>
+		<select name="sort">
 			
 			<option value="az">Alfabetico(A-Z)</option>
 			<option value="za">Alfabetico(Z-A)</option>

@@ -37,20 +37,11 @@ public class IndexServlet extends HttpServlet {
 		ArrayList<BookBean> catalogue = null;
 		
 		try {
-			String order = request.getParameter("order");
+			String sort = request.getParameter("sort") != null ? request.getParameter("sort") : "a";
+			String genreFilter = request.getParameter("filter");
 			
-			if(order != null) {
-				catalogue = dao.doRetriveAll(order);
-			} else {
-				String genreFilter = request.getParameter("filter");
-			
-				if(genreFilter != null)
-					catalogue = dao.doRetriveAllbyGenre(genreFilter);
-				else
-					catalogue = dao.doRetriveAll("az");
-			}
-			
-			genres = dao.doRetriveAllGenre();
+			catalogue = dao.doRetriveAll("genre", genreFilter, sort);
+			genres = dao.doRetriveGenres();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
