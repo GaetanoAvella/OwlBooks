@@ -43,7 +43,7 @@ public class BookServlet extends HttpServlet {
 		
 		request.setAttribute("book", book);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/VIEWS/book.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/book.jsp");
 		dispatcher.forward(request, response);
 	}
 
