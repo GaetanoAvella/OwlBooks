@@ -8,10 +8,10 @@ CREATE TABLE user (
 	id               INT           PRIMARY KEY AUTO_INCREMENT, 
     name             VARCHAR(100)  NOT NULL,
     surname          VARCHAR(100)  NOT NULL,
+	address 		 VARCHAR(255)  NOT NULL,
     email            VARCHAR(255)  NOT NULL UNIQUE,
     password         VARCHAR(255)  NOT NULL,
-    admin            BOOLEAN       NOT NULL DEFAULT FALSE,
-    address VARCHAR(255)
+    admin            BOOLEAN       NOT NULL DEFAULT FALSE
 );
 
 DROP TABLE IF EXISTS book;
@@ -47,7 +47,7 @@ CREATE TABLE detail_order (
     order_id         INT           NOT NULL,
     book_id          INT           NOT NULL,
     quantity         INT           NOT NULL,
-    price_at_purchase           DECIMAL(10,2) NOT NULL,
+    price_at_purchase DECIMAL(10,2) NOT NULL,
     FOREIGN KEY (order_id) REFERENCES purchase_order(id)
         ON DELETE CASCADE,
     FOREIGN KEY (book_id) REFERENCES book(id)

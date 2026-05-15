@@ -49,28 +49,28 @@
 		
 		@Override
 		public BookBean doRetriveByKey(String code) throws SQLException {
-				BookBean book = new BookBean();
-				String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE code=?";
-				
-				try(Connection connection = ds.getConnection();
-						PreparedStatement statement = connection.prepareStatement(selectSQL)) {
-				
-					statement.setString(1, code);
-					try(ResultSet rs = statement.executeQuery()) {
-						if(rs.next()) {
-							book.setCode(rs.getString("code"));
-							book.setName(rs.getString("name"));
-							book.setAuthor(rs.getString("author"));
-							book.setGenre(rs.getString("genre"));
-							book.setPrice(rs.getFloat("price"));
-							book.setDescription(rs.getString("description"));
-							book.setStock_quantity(rs.getInt("stock_quantity"));
-							book.setEditor(rs.getString("editor"));
-						}
+			BookBean book = new BookBean();
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE code=?";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+			
+				statement.setString(1, code);
+				try(ResultSet rs = statement.executeQuery()) {
+					if(rs.next()) {
+						book.setCode(rs.getString("code"));
+						book.setName(rs.getString("name"));
+						book.setAuthor(rs.getString("author"));
+						book.setGenre(rs.getString("genre"));
+						book.setPrice(rs.getFloat("price"));
+						book.setDescription(rs.getString("description"));
+						book.setStock_quantity(rs.getInt("stock_quantity"));
+						book.setEditor(rs.getString("editor"));
 					}
 				}
-				
-				return book;		
+			}
+			
+			return book;		
 		}
 		
 		@Override
