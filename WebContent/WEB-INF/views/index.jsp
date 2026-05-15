@@ -12,6 +12,7 @@
 
 	<h1><a href="LoginServelt">Login</a></h1>
 	<h1><a href="SignInServelt">Registrati</a></h1>
+	<h1><a href="KartServelet">Carrello</a></h1>
 
 	<form method="get" action="IndexServlet">
 		

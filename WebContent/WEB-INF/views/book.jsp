@@ -23,7 +23,7 @@
 	<%= book.getDescription() %> <br>
 	<%= book.getPrice() %> <br>
 	<%= book.getStock_quantity() %> <br>
-	</p>
+	</p>z
 
 </body>
 </html>

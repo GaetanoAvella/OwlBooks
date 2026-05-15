@@ -7,6 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -42,8 +44,11 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		try {
 			if(dao.isRegistered(email)) {
-				if(dao.checkPassword(email, request.getParameter("password"))) {}
-					
+				if(dao.checkPassword(email, request.getParameter("password"))) {
+					HttpSession session = request.getSession();
+					session.setAttribute("user", dao.doRetriveByKey(email));
+					response.sendRedirect("IndexServlet");
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
