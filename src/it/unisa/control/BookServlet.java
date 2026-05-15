@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
@@ -17,10 +16,9 @@ import it.unisa.model.BookBean;
 import it.unisa.storage.book.dao.BookDao;
 import it.unisa.storage.book.dao.BookDaoImpl;
 
-@WebServlet("/IndexServlet")
-public class IndexServlet extends HttpServlet {
+@WebServlet("/BookServlet")
+public class BookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
 	private BookDao dao;
 	
 	@Override
@@ -34,23 +32,18 @@ public class IndexServlet extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<String> genres = null;
-		ArrayList<BookBean> catalogue = null;
+		String code = request.getParameter("code");
+		BookBean book = null;
 		
 		try {
-			String sort = request.getParameter("sort") != null ? request.getParameter("sort") : "az";
-			String genreFilter = request.getParameter("filter");
-			
-			catalogue = dao.doRetriveAll("genre", genreFilter, sort);
-			genres = dao.doRetriveGenres();
+			book = dao.doRetriveByKey(code);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 		
-		request.setAttribute("catalogue", catalogue);
-		request.setAttribute("genres", genres);
+		request.setAttribute("book", book);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/VIEWS/book.jsp");
 		dispatcher.forward(request, response);
 	}
 
