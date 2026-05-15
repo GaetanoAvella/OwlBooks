@@ -8,4 +8,6 @@ public interface UserDao {
 	public void doSave(UserBean user) throws SQLException;
 	public boolean doDelete(String email) throws SQLException;
 	public UserBean doRetriveByKey(String email) throws SQLException;
+	public boolean isRegistered(String email) throws SQLException;
+	public boolean checkPassword(String email, String password) throws SQLException;
 }

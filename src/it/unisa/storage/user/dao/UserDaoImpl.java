@@ -69,4 +69,28 @@ public class UserDaoImpl implements UserDao {
 		return user;	
 	}
 
+	@Override
+	public boolean isRegistered(String email) throws SQLException {
+		UserBean user = doRetriveByKey(email);
+		return user == null ? false : true;
+	}
+	
+	@Override
+	public boolean checkPassword(String email, String password) throws SQLException {
+		String selectSQL = "SELECT password FROM " + TABLE_NAME + " where email=?";
+		
+		try(Connection connection = ds.getConnection();
+				PreparedStatement statement = connection.prepareStatement(selectSQL)){
+			statement.setString(1, email);
+			try(ResultSet rs = statement.executeQuery()) {
+				if(rs.next()) {
+					if(rs.getString("password").equals(password))
+						return true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

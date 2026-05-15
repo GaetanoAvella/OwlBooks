@@ -10,6 +10,9 @@
 </head>
 <body>
 
+	<h1><a href="LoginServelt">Login</a></h1>
+	<h1><a href="SignInServelt">Registrati</a></h1>
+
 	<form method="get" action="IndexServlet">
 		
 		<label for="sort">Ordina i libri per: </label>
@@ -56,7 +59,7 @@
 	for (BookBean book : catalogue) {
 	%>
 		<tr>
-			<td><a href="<%= request.getContextPath() %>/BookServlet?code=<%= book.getCode() %>"><%= book.getName() %></a></td>
+			<td><a href="BookServlet?code=<%= book.getCode() %>"><%= book.getName() %></a></td>
 			<td><a><%= book.getAuthor() %></a></td>
 			<td><a><%= book.getPrice() %></a></td>
 		</tr>
