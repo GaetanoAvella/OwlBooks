@@ -22,8 +22,12 @@
 	<%= book.getGenre() %> <br>
 	<%= book.getDescription() %> <br>
 	<%= book.getPrice() %> <br>
-	<%= book.getStock_quantity() %> <br>
-	</p>z
+	</p>
+	
+	<form action="KartServlet" method="post">
+		<input type="hidden" name="code" value="<%= book.getCode() %>">
+		<input type="submit" value="Aggiungi al carrello">
+	</form>
 
 </body>
 </html>

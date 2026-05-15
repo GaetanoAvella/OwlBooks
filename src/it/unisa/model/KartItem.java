@@ -6,10 +6,24 @@ public class KartItem {
 	
 	public KartItem(BookBean book) {
 		this.book = book;
-		quantity = 0;
+		quantity = 1;
 	}
 	
 	public float subTotal() {
 		return book.getPrice() * quantity;
 	}
+
+	public BookBean getBook() {
+		return book;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
+	
 }

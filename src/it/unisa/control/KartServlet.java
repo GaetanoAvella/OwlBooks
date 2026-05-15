@@ -1,15 +1,21 @@
 package it.unisa.control;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import it.unisa.model.KartBean;
+import it.unisa.model.KartItem;
 import it.unisa.storage.book.dao.BookDao;
 import it.unisa.storage.book.dao.BookDaoImpl;
 
@@ -30,9 +36,25 @@ private BookDao dao;
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/kart.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		KartBean kart = (KartBean) session.getAttribute("kart") == null ? new KartBean() : (KartBean) session.getAttribute("kart");
+		String code = request.getParameter("code");
+		KartItem item = null;
+		try {
+			item = new KartItem(dao.doRetriveByKey(code));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		kart.addItem(item);
+		session.setAttribute("kart", kart);
+		request.removeAttribute("code");
+		
 		doGet(request, response);
 	}
 

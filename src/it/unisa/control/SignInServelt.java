@@ -49,10 +49,10 @@ public class SignInServelt extends HttpServlet {
 		
 		UserBean user = new UserBean();
 		user.setName(request.getParameter("name"));
-		user.setName(request.getParameter("surname"));
-		user.setName(request.getParameter("address"));
-		user.setName(request.getParameter("email"));
-		user.setName(request.getParameter("password"));
+		user.setSurname(request.getParameter("surname"));
+		user.setAddress(request.getParameter("address"));
+		user.setEmail(request.getParameter("email"));
+		user.setPassword(request.getParameter("password"));
 		
 		try {
 			dao.doSave(user);

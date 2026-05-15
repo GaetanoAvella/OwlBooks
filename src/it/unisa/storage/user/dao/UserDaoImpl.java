@@ -58,10 +58,10 @@ public class UserDaoImpl implements UserDao {
 			try(ResultSet rs = statement.executeQuery()) {
 				if(rs.next()) {
 					user.setName(rs.getString("name"));
-					user.setName(rs.getString("surname"));
-					user.setName(rs.getString("address"));
-					user.setName(rs.getString("email"));
-					user.setName(rs.getString("password"));
+					user.setSurname(rs.getString("surname"));
+					user.setAddress(rs.getString("address"));
+					user.setEmail(rs.getString("email"));
+					user.setPassword(rs.getString("password"));
 				}
 			}
 		}
