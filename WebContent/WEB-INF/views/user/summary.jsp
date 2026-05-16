@@ -1,0 +1,44 @@
+<%@page import="it.unisa.model.KartBean"%>
+<%@page import="it.unisa.model.UserBean"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Riepilogo</title>
+</head>
+<body>
+	<% 
+	UserBean user = (UserBean) session.getAttribute("user");
+	KartBean kart = (KartBean) session.getAttribute("kart"); 	
+	%>
+	
+	<p>
+	In consegna a <%= user.getName() %> <%= user.getSurname() %><br>
+	<%= user.getAddress() %>
+	</p>
+	
+	<p>
+	<h1>Totale</h1><br>
+	<%= kart.getTotal() %>
+	</p>
+	
+	<p>
+	<h1>Selezionare metodo di pagamento</h1>
+	<form action="SummaryServlet" method="post">
+	
+	<select name="payment_method">
+		
+		<option value="credit_card">Carta di credito</option>
+		<option value="paypal">Carta di credito</option>
+		<option value="on_delivery">Carta di credito</option>
+		
+	</select>
+	
+	<input type="submit" value="ok">
+	</form>
+	<p>
+	
+</body>
+</html>

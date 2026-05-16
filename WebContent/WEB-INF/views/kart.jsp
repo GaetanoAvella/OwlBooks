@@ -32,5 +32,19 @@
 	<%= kart.getTotal() %>
 	<% } %>
 	
+	<% if(session.getAttribute("user") == null) { %>
+	<p>
+	<a href="LoginServlet">Login</a>
+	o
+	<a href="SignInServlet">Registrati</a>
+	per effettuare l'ordine.
+	</p>
+	<% } else { %>
+	<form action="SummaryServlet" method="get">
+	<input type="submit" value="Ordina">
+	</form>
+	<% } %>
+	
+	
 </body>
 </html>
