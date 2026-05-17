@@ -10,14 +10,16 @@ public class PurchaseOrderBean {
 	private String orderCode;
 	private Date orderDate;
 	private String paymentMethod;
-	private float total;
+	private double total;
 	private ArrayList<DetailOrderBean> details;
 
-	public PurchaseOrderBean() {
-		Random rand = new Random();
-		
-		orderCode = "ORD-" +  System.currentTimeMillis()
-		  		+ rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) ;
+	public PurchaseOrderBean(boolean withCode) {
+		if(withCode) {
+			Random rand = new Random();
+			
+			orderCode = "ORD-" +  System.currentTimeMillis()
+			  		+ rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) ;
+		}
 	}
 
 	public int getId() {
@@ -60,11 +62,11 @@ public class PurchaseOrderBean {
 		this.paymentMethod = paymentMethod;
 	}
 
-	public float getTotal() {
+	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal(float total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 

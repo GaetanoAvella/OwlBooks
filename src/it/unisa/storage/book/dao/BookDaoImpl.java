@@ -11,7 +11,7 @@
 	
 	public class BookDaoImpl implements BookDao{
 		private static final String TABLE_NAME = "book";
-	    private DataSource ds = null;
+	    private DataSource ds;
 		
 	    public BookDaoImpl(DataSource ds) {
 	    	this.ds = ds;
