@@ -6,7 +6,14 @@ public class DetailOrderBean {
 	private int bookId;
 	private int quantity;
 	private double priceAtPurchase;
+	private BookBean book;
 	
+	public BookBean getBook() {
+		return book;
+	}
+	public void setBook(BookBean book) {
+		this.book = book;
+	}
 	public int getId() {
 		return id;
 	}

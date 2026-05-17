@@ -1,6 +1,7 @@
 package it.unisa.model;
 
 public class BookBean {
+	private int id;
 	private String code;
 	private String name;
 	private String author;
@@ -10,6 +11,12 @@ public class BookBean {
 	private int stock_quantity;
 	private String editor;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getCode() {
 		return code;
 	}
