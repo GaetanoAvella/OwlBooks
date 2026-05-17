@@ -80,11 +80,11 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 		
 			statement.setInt(1, userId);
 			try(ResultSet rs = statement.executeQuery()) {
-				if(rs.next()) {
+				while(rs.next()) {
 					PurchaseOrderBean order = new PurchaseOrderBean(false);
 					order.setId(rs.getInt("id"));
-					order.setId(rs.getInt("user_id"));
-					order.setOrderCode("order_code");
+					order.setUserId(rs.getInt("userId"));
+					order.setOrderCode(rs.getString("order_code"));
 					order.setOrderDate(rs.getDate("order_date"));
 					order.setTotal(rs.getDouble("total"));
 					order.setPaymentMethod(rs.getString("payment_method"));

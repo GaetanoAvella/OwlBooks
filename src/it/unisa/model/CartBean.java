@@ -39,4 +39,9 @@ public class CartBean {
 			
 		return total;
 	}
+	
+	public void clear() {
+		cart = new ArrayList<CartItem>();
+	}
+	
 }

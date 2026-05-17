@@ -31,8 +31,8 @@
 	<select name="payment_method">
 		
 		<option value="credit_card">Carta di credito</option>
-		<option value="paypal">Carta di credito</option>
-		<option value="on_delivery">Carta di credito</option>
+		<option value="paypal">Paypal</option>
+		<option value="on_delivery">Pagamento in consegna</option>
 		
 	</select>
 	

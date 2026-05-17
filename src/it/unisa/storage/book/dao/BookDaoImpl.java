@@ -58,6 +58,7 @@
 				statement.setString(1, code);
 				try(ResultSet rs = statement.executeQuery()) {
 					if(rs.next()) {
+						book.setId(rs.getInt("id"));
 						book.setCode(rs.getString("code"));
 						book.setName(rs.getString("name"));
 						book.setAuthor(rs.getString("author"));

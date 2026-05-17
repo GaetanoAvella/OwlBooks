@@ -24,7 +24,7 @@
 	<%= book.getPrice() %> <br>
 	</p>
 	
-	<form action="KartServlet" method="post">
+	<form action="CartServlet" method="post">
 		<input type="hidden" name="code" value="<%= book.getCode() %>">
 		<input type="submit" value="Aggiungi al carrello">
 	</form>
