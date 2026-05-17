@@ -1,4 +1,4 @@
-<%@page import="it.unisa.model.KartBean"%>
+<%@page import="it.unisa.model.CartBean"%>
 <%@page import="it.unisa.model.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -9,9 +9,9 @@
 <title>Riepilogo</title>
 </head>
 <body>
-	<% 
+	<%
 	UserBean user = (UserBean) session.getAttribute("user");
-	KartBean kart = (KartBean) session.getAttribute("kart"); 	
+		CartBean kart = (CartBean) session.getAttribute("cart");
 	%>
 	
 	<p>
@@ -26,7 +26,7 @@
 	
 	<p>
 	<h1>Selezionare metodo di pagamento</h1>
-	<form action="SummaryServlet" method="post">
+	<form action="CheckOutServlet" method="post">
 	
 	<select name="payment_method">
 		
@@ -36,7 +36,7 @@
 		
 	</select>
 	
-	<input type="submit" value="ok">
+	<input type="submit" value="conferma">
 	</form>
 	<p>
 	

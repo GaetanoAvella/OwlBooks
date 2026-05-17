@@ -1,5 +1,5 @@
-<%@page import="it.unisa.model.KartBean"%>
-<%@page import="it.unisa.model.KartItem"%>
+<%@page import="it.unisa.model.CartBean"%>
+<%@page import="it.unisa.model.CartItem"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,17 +10,17 @@
 </head>
 <body>
 
-	<% KartBean kart = (KartBean) session.getAttribute("kart"); %>
+	<% CartBean cart = (CartBean) session.getAttribute("cart"); %>
 
 	<h1>Carrello</h1>
 	
-	<% if(kart == null) { %>
+	<% if(cart == null) { %>
 	
 	<h2>Carrello vuoto</h2>
 	
 	<% } else { 
-		for(int i=0; i<kart.sizeArrayList(); i++) {
-			KartItem item = kart.get(i); %>
+		for(int i=0; i<cart.sizeArrayList(); i++) {
+			CartItem item = cart.get(i); %>
 		<p>
 			<h2><%= item.getBook().getName() %></h2>
 			<%= item.getBook().getPrice() %>
@@ -29,7 +29,7 @@
 		
 	<% } %> 
 		Totale<br>
-	<%= kart.getTotal() %>
+	<%= cart.getTotal() %>
 	<% } %>
 	
 	<% if(session.getAttribute("user") == null) { %>
@@ -40,7 +40,7 @@
 	per effettuare l'ordine.
 	</p>
 	<% } else { %>
-	<form action="SummaryServlet" method="get">
+	<form action="CkeckOutServlet" method="get">
 	<input type="submit" value="Ordina">
 	</form>
 	<% } %>

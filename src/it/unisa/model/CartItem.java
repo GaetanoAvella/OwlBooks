@@ -1,10 +1,10 @@
 package it.unisa.model;
 
-public class KartItem {
+public class CartItem {
 	private BookBean book;
 	private int quantity;
 	
-	public KartItem(BookBean book) {
+	public CartItem(BookBean book) {
 		this.book = book;
 		quantity = 1;
 	}

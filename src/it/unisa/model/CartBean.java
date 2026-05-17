@@ -2,14 +2,14 @@ package it.unisa.model;
 
 import java.util.ArrayList;
 
-public class KartBean {
-	private ArrayList<KartItem> kart;
+public class CartBean {
+	private ArrayList<CartItem> kart;
 	
-	public KartBean() {
-		kart = new ArrayList<KartItem>();
+	public CartBean() {
+		kart = new ArrayList<CartItem>();
 	}
 	
-	public void addItem(KartItem item) {
+	public void addItem(CartItem item) {
 		if(item == null)
 			return;
 		
@@ -24,14 +24,14 @@ public class KartBean {
 		return kart.size();
 	}
 	
-	public KartItem get(int index) {
+	public CartItem get(int index) {
 		return kart.get(index);
 	}
 	
 	public float getTotal() {
 		float total = 0;
 		
-		for(KartItem item : kart)
+		for(CartItem item : kart)
 			total += item.subTotal();
 			
 		return total;

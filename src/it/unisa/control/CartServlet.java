@@ -14,13 +14,13 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.KartBean;
-import it.unisa.model.KartItem;
+import it.unisa.model.CartBean;
+import it.unisa.model.CartItem;
 import it.unisa.storage.book.dao.BookDao;
 import it.unisa.storage.book.dao.BookDaoImpl;
 
-@WebServlet("/KartServlet")
-public class KartServlet extends HttpServlet {
+@WebServlet("/CartServlet")
+public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 private BookDao dao;
@@ -36,23 +36,23 @@ private BookDao dao;
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/kart.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/cart.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		KartBean kart = (KartBean) session.getAttribute("kart") == null ? new KartBean() : (KartBean) session.getAttribute("kart");
+		CartBean cart = (CartBean) session.getAttribute("cart") == null ? new CartBean() : (CartBean) session.getAttribute("cart");
 		String code = request.getParameter("code");
-		KartItem item = null;
+		CartItem item = null;
 		try {
-			item = new KartItem(dao.doRetriveByKey(code));
+			item = new CartItem(dao.doRetriveByKey(code));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		kart.addItem(item);
-		session.setAttribute("kart", kart);
+		cart.addItem(item);
+		session.setAttribute("cart", cart);
 		request.removeAttribute("code");
 		
 		doGet(request, response);

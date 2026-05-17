@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class OrderBean {
 	private UserBean user;
-	private KartBean kart;
+	private CartBean cart;
 	private String code;
 	private Date date;
 	private String paymentMethod;
@@ -25,11 +25,11 @@ public class OrderBean {
 	public void setUser(UserBean user) {
 		this.user = user;
 	}
-	public KartBean getKart() {
-		return kart;
+	public CartBean getCart() {
+		return cart;
 	}
-	public void setKart(KartBean kart) {
-		this.kart = kart;
+	public void setCart(CartBean cart) {
+		this.cart = cart;
 	}
 	public String getCode() {
 		return code;
