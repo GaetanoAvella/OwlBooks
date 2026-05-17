@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import it.unisa.model.BookBean;
 import it.unisa.model.UserBean;
 
 public class UserDaoImpl implements UserDao {
@@ -20,7 +19,7 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public void doSave(UserBean user) throws SQLException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (name,surname,address,email,password) VALUES (?,?,?,?,?);";
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (name,surname,address,email,password,admin) VALUES (?,?,?,?,?,?);";
 		
 		try(Connection connection = ds.getConnection();
 				PreparedStatement statement = connection.prepareStatement(insertSQL)) {
@@ -29,6 +28,7 @@ public class UserDaoImpl implements UserDao {
 			statement.setString(3, user.getAddress());
 			statement.setString(4, user.getEmail());
 			statement.setString(5, user.getPassword());
+			statement.setBoolean(6, user.isAdmin());
 			statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -62,6 +62,7 @@ public class UserDaoImpl implements UserDao {
 					user.setAddress(rs.getString("address"));
 					user.setEmail(rs.getString("email"));
 					user.setPassword(rs.getString("password"));
+					user.setAdmin(rs.getBoolean("admin"));
 				}
 			}
 		}
@@ -72,7 +73,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public boolean isRegistered(String email) throws SQLException {
 		UserBean user = doRetriveByKey(email);
-		return user == null ? false : true;
+		return user.getEmail() == null ? false : true;
 	}
 	
 	@Override

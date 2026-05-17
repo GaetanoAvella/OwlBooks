@@ -41,8 +41,9 @@ public class SignInServelt extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			if(dao.isRegistered(request.getParameter("email")))
-				throw new Exception("Utente già registrato");
+			if(dao.isRegistered(request.getParameter("email"))) {
+				doGet(request, response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

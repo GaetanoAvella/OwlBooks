@@ -12,7 +12,9 @@ public class PurchaseOrderBean {
 	private float total;
 	private ArrayList<DetailOrderBean> details;
 
-	public PurchaseOrderBean() {
+	public PurchaseOrderBean(String userId) {
+		this.userId = userId;
+		
 		Random rand = new Random();
 		
 		orderCode = userId
