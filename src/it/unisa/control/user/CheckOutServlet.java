@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 import it.unisa.model.CartBean;
-import it.unisa.model.OrderBean;
+import it.unisa.model.PurchaseOrderBean;
 import it.unisa.model.UserBean;
 
 @WebServlet("/CheckOutServlet")
@@ -26,10 +26,7 @@ public class CheckOutServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		OrderBean order = new OrderBean();
-		order.setUser((UserBean) session.getAttribute("user"));
-		order.setCart((CartBean) session.getAttribute("cart"));
-		order.setPaymentMethod(request.getParameter("payment_method"));
+		
 	}
 
 }
