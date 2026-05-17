@@ -5,23 +5,29 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PurchaseOrderBean {
+	private int id;
+	private int userId;
 	private String orderCode;
-	private String userId;
 	private Date orderDate;
 	private String paymentMethod;
 	private float total;
 	private ArrayList<DetailOrderBean> details;
 
-	public PurchaseOrderBean(String userId) {
-		this.userId = userId;
-		
+	public PurchaseOrderBean() {
 		Random rand = new Random();
 		
-		orderCode = userId
-		  		+ rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) 
-		  		+ rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10);
+		orderCode = "ORD-" +  System.currentTimeMillis()
+		  		+ rand.nextInt(10) + rand.nextInt(10) + rand.nextInt(10) ;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getOrderCode() {
 		return orderCode;
 	}
@@ -30,11 +36,11 @@ public class PurchaseOrderBean {
 		this.orderCode = orderCode;
 	}
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 

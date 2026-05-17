@@ -1,16 +1,29 @@
 package it.unisa.model;
 
 public class DetailOrderBean {
+	private int id;
 	private int orderId;
+	private int bookId;
 	private int quantity;
-	private float priceAtPurchase;
-	private BookBean book;
+	private double priceAtPurchase;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getOrderId() {
 		return orderId;
 	}
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
+	}
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
 	}
 	public int getQuantity() {
 		return quantity;
@@ -18,19 +31,11 @@ public class DetailOrderBean {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public float getPriceAtPurchase() {
+	public double getPriceAtPurchase() {
 		return priceAtPurchase;
 	}
-	public void setPriceAtPurchase(float priceAtPurchase) {
+	public void setPriceAtPurchase(double priceAtPurchase) {
 		this.priceAtPurchase = priceAtPurchase;
 	}
-	public BookBean getBook() {
-		return book;
-	}
-	public void setBook(BookBean book) {
-		this.book = book;
-	}
-	
-	
 	
 }

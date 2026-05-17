@@ -36,6 +36,7 @@ CREATE TABLE purchase_order (
     order_code       VARCHAR(100)  NOT NULL UNIQUE,	
     order_date       DATE          NOT NULL,
     total            DECIMAL(10,2) NOT NULL,
+    payment_method	 VARCHAR(50)   NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(id)
         ON DELETE RESTRICT
 );
