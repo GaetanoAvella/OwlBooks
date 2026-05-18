@@ -19,13 +19,11 @@
 	<%= user.getAddress() %>
 	</p>
 	
-	<p>
-	<h1>Totale</h1><br>
-	<%= kart.getTotal() %>
-	</p>
+	<h1>Totale</h1>
+	<p><%= kart.getTotal() %>
 	
-	<p>
 	<h1>Selezionare metodo di pagamento</h1>
+	<p>
 	<form action="CheckOutServlet" method="post">
 	
 	<select name="payment_method">

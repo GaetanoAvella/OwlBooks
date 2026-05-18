@@ -22,7 +22,7 @@
 		for(int i=0; i<cart.sizeArrayList(); i++) {
 			CartItem item = cart.get(i); %>
 		<p>
-			<h2><%= item.getBook().getName() %></h2>
+			<%= item.getBook().getName() %>
 			<%= item.getBook().getPrice() %>
 			<%= item.getQuantity() %>
 		</p>

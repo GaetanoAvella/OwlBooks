@@ -15,7 +15,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import it.unisa.model.UserBean;
-import it.unisa.storage.book.dao.BookDaoImpl;
 import it.unisa.storage.user.dao.UserDao;
 import it.unisa.storage.user.dao.UserDaoImpl;
 
