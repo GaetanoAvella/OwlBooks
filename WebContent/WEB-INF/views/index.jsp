@@ -16,7 +16,7 @@
 	<% } else { %>
 	<h1><a href="ProfileServlet">Profilo</a></h1>
 	<h1><a href="OrdersServlet">Ordini</a></h1>
-	<h1><a href="LogoutServlet">Logout</a></h1>
+	<h1><a href="LogoutServlet" >Logout</a></h1>
 	
 	<% } %>
 	<h1><a href="CartServlet">Carrello</a></h1>
