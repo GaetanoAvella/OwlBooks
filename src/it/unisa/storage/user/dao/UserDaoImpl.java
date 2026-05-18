@@ -19,7 +19,7 @@ public class UserDaoImpl implements UserDao {
 	
 	@Override
 	public void doSave(UserBean user) throws SQLException {
-		String insertSQL = "INSERT INTO " + TABLE_NAME + " (name,surname,address,email,password) VALUES (?,?,?,?,?,);";
+		String insertSQL = "INSERT INTO " + TABLE_NAME + " (name,surname,address,email,password) VALUES (?,?,?,?,?);";
 		
 		try(Connection connection = ds.getConnection();
 				PreparedStatement statement = connection.prepareStatement(insertSQL)) {

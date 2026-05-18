@@ -83,7 +83,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 				while(rs.next()) {
 					PurchaseOrderBean order = new PurchaseOrderBean(false);
 					order.setId(rs.getInt("id"));
-					order.setUserId(rs.getInt("userId"));
+					order.setUserId(rs.getInt("user_id"));
 					order.setOrderCode(rs.getString("order_code"));
 					order.setOrderDate(rs.getDate("order_date"));
 					order.setTotal(rs.getDouble("total"));

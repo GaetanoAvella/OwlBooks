@@ -10,7 +10,9 @@
 <title>Ordini</title>
 </head>
 <body>
-
+	
+	<h1>Storico ordini</h1>
+	
 	<% 
 	ArrayList<PurchaseOrderBean> orders = (ArrayList<PurchaseOrderBean>) request.getAttribute("orders"); 
 	for(PurchaseOrderBean order : orders) { %>

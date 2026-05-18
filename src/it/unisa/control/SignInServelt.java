@@ -56,6 +56,7 @@ public class SignInServelt extends HttpServlet {
 		
 		try {
 			dao.doSave(user);
+			user = dao.doRetriveByKey(user.getEmail());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
