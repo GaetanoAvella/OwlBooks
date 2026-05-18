@@ -12,11 +12,10 @@
 <body>
 
 	<% 
-	UserBean user = (UserBean) session.getAttribute("user"); 
 	ArrayList<PurchaseOrderBean> orders = (ArrayList<PurchaseOrderBean>) request.getAttribute("orders"); 
 	for(PurchaseOrderBean order : orders) { %>
 		<ul>
-			<li>Ordine <a href="OrderServlet/<%= order.getOrderCode() %>"><%= order.getOrderCode() %></a></li>
+			<li>Ordine <%= order.getOrderCode() %></li>
 		</ul>
 		
 	<% } %>
