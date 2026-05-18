@@ -25,6 +25,7 @@
 	</p>
 	
 	<form action="CartServlet" method="post">
+		<input type="hidden" name="action" value="add">
 		<input type="hidden" name="code" value="<%= book.getCode() %>">
 		<input type="submit" value="Aggiungi al carrello">
 	</form>

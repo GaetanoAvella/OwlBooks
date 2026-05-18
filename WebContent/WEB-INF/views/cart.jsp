@@ -14,35 +14,53 @@
 
 	<h1>Carrello</h1>
 	
-	<% if(cart == null) { %>
+	<% if(cart == null || cart.sizeArrayList() == 0) { %>
 	
 	<h2>Carrello vuoto</h2>
 	
 	<% } else { 
 		for(int i=0; i<cart.sizeArrayList(); i++) {
 			CartItem item = cart.get(i); %>
-		<p>
-			<%= item.getBook().getName() %>
-			<%= item.getBook().getPrice() %>
-			<%= item.getQuantity() %>
-		</p>
+		
+			Nome <%= item.getBook().getName() %>
+			Prezzo <%= item.getBook().getPrice() %>
+			
+			<form action="CartServlet" method="post">
+                    <input type="hidden" name="action" value="update">
+                    <input type="hidden" name="code" value="<%= item.getBook().getCode() %>">
+                    <input type="number" name="quantity" value="<%= item.getQuantity() %>">
+                    <input type="submit" value="Aggiorna">
+           	</form>
+            
+            Subtotale <%= item.subTotal() %>
+            
+            <form action="CartServlet" method="post">
+                    <input type="hidden" name="action" value="remove">
+                    <input type="hidden" name="code" value="<%= item.getBook().getCode() %>">
+                    <input type="submit" value="Rimuovi">
+           	</form>
 		
 	<% } %> 
 		Totale<br>
-	<%= cart.getTotal() %>
+	<%= cart.getTotal() %><br>
+			
+			<form action="CartServlet" method="post">
+                    <input type="hidden" name="action" value="clear">
+                    <input type="submit" value="Svuota">
+           	</form>
 	
 		<% if(session.getAttribute("user") == null) { %>
-			<p>
-			<a href="LoginServlet">Login</a>
-			o
-			<a href="SignInServlet">Registrati</a>
-			per effettuare l'ordine.
-			</p>
-			<% } else { %>
-			<form action="CheckOutServlet" method="get">
-			<input type="submit" value="Ordina">
-			</form>
-			<% } %>
+		<p>
+		<a href="LoginServlet">Login</a>
+		o
+		<a href="SignInServlet">Registrati</a>
+		per effettuare l'ordine.
+		</p>
+		<% } else { %>
+		<form action="CheckOutServlet" method="get">
+		<input type="submit" value="Ordina">
+		</form>
+		<% } %>
 	
 	<% } %>
 	

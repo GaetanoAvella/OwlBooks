@@ -44,4 +44,16 @@ public class CartBean {
 		cart = new ArrayList<CartItem>();
 	}
 	
+	public CartItem get(String code) {
+		for(CartItem x : cart) {
+			if(x.getBook().getCode().equals(code)) 
+				return x;
+		}
+		return null;
+	}
+	
+	public void removeItem(String code) {
+		cart.removeIf(item -> item.getBook().getCode().equals(code));
+	}
+	
 }

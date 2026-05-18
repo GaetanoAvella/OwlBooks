@@ -44,16 +44,34 @@ private BookDao dao;
 		HttpSession session = request.getSession();
 		CartBean cart = (CartBean) session.getAttribute("cart") == null ? new CartBean() : (CartBean) session.getAttribute("cart");
 		String code = request.getParameter("code");
-		CartItem item = null;
-		try {
-			item = new CartItem(dao.doRetriveByKey(code));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		String action = request.getParameter("action");
+		CartItem item;
 		
-		cart.addItem(item);
-		session.setAttribute("cart", cart);
-		request.removeAttribute("code");
+		switch(action) {
+			case "add":
+				try {
+					item = new CartItem(dao.doRetriveByKey(code));
+					cart.addItem(item);
+					session.setAttribute("cart", cart);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				break;
+			case "update":
+				item = cart.get(code);
+				item.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+				session.setAttribute("cart", cart);
+				break;
+			case "remove":
+				cart.removeItem(code);
+				session.setAttribute("cart", cart);
+				break;
+			case "clear":
+				cart.clear();
+				session.setAttribute("cart", cart);
+				break;
+		}
 		
 		doGet(request, response);
 	}
