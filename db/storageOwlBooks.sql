@@ -11,7 +11,9 @@ CREATE TABLE user (
 	address 		 VARCHAR(255)  NOT NULL,
     email            VARCHAR(255)  NOT NULL UNIQUE,
     password         VARCHAR(255)  NOT NULL,
-    admin            BOOLEAN       NOT NULL DEFAULT FALSE
+    admin            BOOLEAN       NOT NULL DEFAULT FALSE,
+    pic				 LONGBLOB	   DEFAULT NULL,
+    mime_type		 VARCHAR(50)   DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS book;
