@@ -67,6 +67,8 @@
 						book.setDescription(rs.getString("description"));
 						book.setStock_quantity(rs.getInt("stock_quantity"));
 						book.setEditor(rs.getString("editor"));
+						book.setPath(rs.getString("path"));
+						book.setMimeType(rs.getString("mime_type"));
 					}
 				}
 			}
@@ -93,6 +95,8 @@
 					book.setDescription(rs.getString("description"));
 					book.setStock_quantity(rs.getInt("stock_quantity"));
 					book.setEditor(rs.getString("editor"));
+					book.setPath(rs.getString("path"));
+					book.setMimeType(rs.getString("mime_type"));
 					list.add(book);
 				}
 			}
@@ -122,6 +126,8 @@
 						book.setDescription(rs.getString("description"));
 						book.setStock_quantity(rs.getInt("stock_quantity"));
 						book.setEditor(rs.getString("editor"));
+						book.setPath(rs.getString("path"));
+						book.setMimeType(rs.getString("mime_type"));
 						list.add(book);
 					}
 				}

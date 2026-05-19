@@ -10,6 +10,8 @@ public class BookBean {
 	private String description;
 	private int stock_quantity;
 	private String editor;
+	private String path;
+	private String mimeType;
 	
 	public int getId() {
 		return id;
@@ -64,6 +66,18 @@ public class BookBean {
 	}
 	public void setEditor(String editor) {
 		this.editor = editor;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	public String getMimeType() {
+		return mimeType;
+	}
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
 	}
 	
 	

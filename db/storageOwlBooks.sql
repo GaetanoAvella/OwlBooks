@@ -11,9 +11,7 @@ CREATE TABLE user (
 	address 		 VARCHAR(255)  NOT NULL,
     email            VARCHAR(255)  NOT NULL UNIQUE,
     password         VARCHAR(255)  NOT NULL,
-    admin            BOOLEAN       NOT NULL DEFAULT FALSE,
-    pic				 LONGBLOB	   DEFAULT NULL,
-    mime_type		 VARCHAR(50)   DEFAULT NULL
+    admin            BOOLEAN       NOT NULL DEFAULT FALSE
 );
 
 DROP TABLE IF EXISTS book;
@@ -27,7 +25,9 @@ CREATE TABLE book (
     price           DECIMAL(10,2) NOT NULL,
     description     VARCHAR(255),
     stock_quantity  INT           NOT NULL DEFAULT 0,
-    editor          VARCHAR(150)
+    editor          VARCHAR(150)  NOT NULL,
+    path 			VARCHAR(255)   DEFAULT NULL,
+    mime_type		VARCHAR(50)   DEFAULT NULL
 );
 
 DROP TABLE IF EXISTS purchase_order;
