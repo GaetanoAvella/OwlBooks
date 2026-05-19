@@ -14,7 +14,7 @@
 	<h1><a href="LoginServlet">Login</a></h1>
 	<h1><a href="SignInServelt">Registrati</a></h1>
 	<% } else { %>
-	<h1><a href="ProfileServlet">Profilo</a></h1>
+	<a href="ProfileServlet"><img src="<%= request.getContextPath() %>/img/default_user.jpg"></a>
 	<h1><a href="OrdersServlet">Ordini</a></h1>
 	<h1><a href="LogoutServlet" >Logout</a></h1>
 	

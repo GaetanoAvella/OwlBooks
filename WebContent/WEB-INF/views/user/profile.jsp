@@ -12,7 +12,6 @@
 	<%
 	UserBean user = (UserBean) session.getAttribute("user");
 	%>
-	
 	<h1><%= user.getName() %> <%= user.getSurname() %></h1>
 	<p>
 	Indirizzo <%= user.getAddress() %> <br>

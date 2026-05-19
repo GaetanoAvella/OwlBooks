@@ -63,8 +63,6 @@ public class UserDaoImpl implements UserDao {
 					user.setEmail(rs.getString("email"));
 					user.setPassword(rs.getString("password"));
 					user.setAdmin(rs.getBoolean("admin"));
-					user.setPic(rs.getBytes("pic"));
-					user.setMimeType(rs.getString("mime_type"));
 				}
 			}
 		}
