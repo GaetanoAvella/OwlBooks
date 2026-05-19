@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/ProfileServlet")
+@WebServlet("/user/ProfileServlet")
 public class ProfileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

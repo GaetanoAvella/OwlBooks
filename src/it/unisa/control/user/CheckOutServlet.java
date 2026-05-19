@@ -21,7 +21,7 @@ import it.unisa.model.UserBean;
 import it.unisa.storage.order.PurchaseOrderDao;
 import it.unisa.storage.order.PurchaseOrderDaoImpl;
 
-@WebServlet("/CheckOutServlet")
+@WebServlet("/user/CheckOutServlet")
 public class CheckOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PurchaseOrderDao dao;

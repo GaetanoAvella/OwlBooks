@@ -18,7 +18,7 @@ import it.unisa.model.UserBean;
 import it.unisa.storage.order.PurchaseOrderDao;
 import it.unisa.storage.order.PurchaseOrderDaoImpl;
 
-@WebServlet("/OrdersServlet")
+@WebServlet("/user/OrdersServlet")
 public class OrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PurchaseOrderDao dao;
@@ -43,7 +43,7 @@ public class OrdersServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/user/orders.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/orders.jsp");
 		dispatcher.forward(request, response);
 	}
 

@@ -15,7 +15,7 @@ public class AuthFilter extends HttpFilter {
 	@Override
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		boolean isLogged = session != null && session.getAttribute("user") != null ? true : false;
 		
 		if(isLogged)
