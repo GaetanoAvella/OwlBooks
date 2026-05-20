@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 
 import it.unisa.storage.user.dao.UserDao;
 import it.unisa.storage.user.dao.UserDaoImpl;
+import it.unisa.util.PasswordDigest;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
@@ -44,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		try {
 			if(dao.isRegistered(email)) {
-				if(dao.checkPassword(email, request.getParameter("password"))) {
+				if(dao.checkPassword(email, PasswordDigest.digestPassword(request.getParameter("password")))) {
 					HttpSession session = request.getSession();
 					session.setAttribute("user", dao.doRetriveByKey(email));
 					response.sendRedirect("IndexServlet");
