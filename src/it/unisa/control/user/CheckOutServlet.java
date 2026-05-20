@@ -62,7 +62,7 @@ public class CheckOutServlet extends HttpServlet {
 		
 		cart.clear();
 		session.setAttribute("cart", cart);
-		response.sendRedirect("IndexServlet");
+		response.sendRedirect(request.getContextPath() + "/IndexServlet");
 	}
 
 }

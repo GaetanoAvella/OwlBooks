@@ -24,7 +24,7 @@
 	
 	<h1>Selezionare metodo di pagamento</h1>
 	<p>
-	<form action="user/CheckOutServlet" method="post">
+	<form action="<%= request.getContextPath() %>/user/CheckOutServlet" method="post">
 	
 	<select name="payment_method">
 		

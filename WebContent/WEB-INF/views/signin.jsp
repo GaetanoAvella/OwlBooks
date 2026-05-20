@@ -10,7 +10,7 @@
 	
 	<h1>Registrati</h1>
 	
-	<form action="SignInServelt" method="post">
+	<form action="SignInServlet" method="post">
 		Nome
 		<input type="text" name="name"><br>
 		Cognome

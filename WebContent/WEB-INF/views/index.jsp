@@ -12,7 +12,7 @@
 
 	<% if (session.getAttribute("user") == null) {%>
 	<h1><a href="LoginServlet">Login</a></h1>
-	<h1><a href="SignInServelt">Registrati</a></h1>
+	<h1><a href="SignInServlet">Registrati</a></h1>
 	<% } else { %>
 	<a href="user/ProfileServlet"><img src="<%= request.getContextPath() %>/img/user/default_user.jpg"></a>
 	<h1><a href="user/OrdersServlet">Ordini</a></h1>

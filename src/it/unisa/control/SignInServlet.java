@@ -18,8 +18,8 @@ import it.unisa.model.UserBean;
 import it.unisa.storage.user.dao.UserDao;
 import it.unisa.storage.user.dao.UserDaoImpl;
 
-@WebServlet("/SignInServelt")
-public class SignInServelt extends HttpServlet {
+@WebServlet("/SignInServlet")
+public class SignInServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserDao dao;
 	
