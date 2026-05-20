@@ -16,6 +16,7 @@ import javax.sql.DataSource;
 import it.unisa.model.UserBean;
 import it.unisa.storage.user.dao.UserDao;
 import it.unisa.storage.user.dao.UserDaoImpl;
+import it.unisa.util.PasswordDigest;
 
 @WebServlet("/user/ProfileServlet")
 public class ProfileServlet extends HttpServlet {
@@ -52,7 +53,7 @@ public class ProfileServlet extends HttpServlet {
 		user.setSurname(request.getParameter("surname"));
 		user.setAddress(request.getParameter("address"));
 		user.setEmail(request.getParameter("email"));
-		user.setPassword(request.getParameter("password"));
+		user.setPassword(PasswordDigest.digestPassword(request.getParameter("password")));
 		
 		try {
 			dao.doUpdate(user);

@@ -8,12 +8,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import it.unisa.model.BookBean;
 import it.unisa.model.CartBean;
 import it.unisa.model.CartItem;
 import it.unisa.storage.book.dao.BookDao;
@@ -50,7 +50,13 @@ private BookDao dao;
 		switch(action) {
 			case "add":
 				try {
-					item = new CartItem(dao.doRetriveByKey(code));
+					BookBean book = dao.doRetriveByCode(code);
+					if(book.getStock_quantity() <= 0) {
+						request.setAttribute("error", "Libro non disponibile");
+						doGet(request, response);
+						return;
+					}
+					item = new CartItem(book);
 					cart.addItem(item);
 					session.setAttribute("cart", cart);
 				} catch (SQLException e) {
@@ -60,7 +66,15 @@ private BookDao dao;
 				break;
 			case "update":
 				item = cart.get(code);
-				item.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				try {
+					BookBean book = dao.doRetriveByCode(code);
+					if(quantity > book.getStock_quantity())
+						quantity = book.getStock_quantity();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				item.setQuantity(quantity);
 				session.setAttribute("cart", cart);
 				break;
 			case "remove":

@@ -33,7 +33,7 @@ public class ImageBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String code = request.getParameter("code");
 		try {
-			BookBean book = dao.doRetriveByKey(code);
+			BookBean book = dao.doRetriveByCode(code);
 			String path = book.getPath();
 			String mimeType = book.getMimeType();
 			

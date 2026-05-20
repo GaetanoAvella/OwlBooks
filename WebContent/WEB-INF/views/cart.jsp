@@ -28,7 +28,7 @@
 			<form action="CartServlet" method="post">
                     <input type="hidden" name="action" value="update">
                     <input type="hidden" name="code" value="<%= item.getBook().getCode() %>">
-                    <input type="number" name="quantity" value="<%= item.getQuantity() %>">
+                    <input type="number" name="quantity" min="1" max="<%= item.getBook().getStock_quantity() %>" value="<%= item.getQuantity() %>">
                     <input type="submit" value="Aggiorna">
            	</form>
             

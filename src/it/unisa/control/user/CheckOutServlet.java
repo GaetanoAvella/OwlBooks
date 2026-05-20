@@ -15,16 +15,21 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import it.unisa.model.BookBean;
 import it.unisa.model.CartBean;
+import it.unisa.model.CartItem;
 import it.unisa.model.PurchaseOrderBean;
 import it.unisa.model.UserBean;
+import it.unisa.storage.book.dao.BookDao;
+import it.unisa.storage.book.dao.BookDaoImpl;
 import it.unisa.storage.order.PurchaseOrderDao;
 import it.unisa.storage.order.PurchaseOrderDaoImpl;
 
 @WebServlet("/user/CheckOutServlet")
 public class CheckOutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private PurchaseOrderDao dao;
+	private PurchaseOrderDao orderDao;
+	private BookDao bookDao; 
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -33,7 +38,8 @@ public class CheckOutServlet extends HttpServlet {
 		if(ds == null)
 			throw new ServletException("Datasource non disponibile nel contest");
 		
-		dao = new PurchaseOrderDaoImpl(ds);
+		orderDao = new PurchaseOrderDaoImpl(ds);
+		bookDao = new BookDaoImpl(ds);
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,6 +53,20 @@ public class CheckOutServlet extends HttpServlet {
 		CartBean cart = (CartBean) session.getAttribute("cart");
 		String paymentMethod = request.getParameter("payment_method");
 		
+		try {
+			for(int i=0; i<cart.sizeArrayList(); i++) {
+				CartItem item = cart.get(i);
+				BookBean book = bookDao.doRetriveByCode(item.getBook().getCode());
+				if(item.getQuantity() > book.getStock_quantity()) {
+					request.setAttribute("error", "Quantità non disponibile per " + book.getName());
+					doGet(request, response);
+					return;
+				}
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		PurchaseOrderBean order = new PurchaseOrderBean();
 		order.setUserId(user.getId());
 		order.setOrderDate(new Date(System.currentTimeMillis()));
@@ -55,7 +75,7 @@ public class CheckOutServlet extends HttpServlet {
 		order.setDetails(cart);
 		
 		try {
-			dao.doSave(order);
+			orderDao.doSave(order);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -48,7 +48,7 @@
 		}
 		
 		@Override
-		public BookBean doRetriveByKey(String code) throws SQLException {
+		public BookBean doRetriveByCode(String code) throws SQLException {
 			BookBean book = new BookBean();
 			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE code=?";
 			
@@ -79,7 +79,7 @@
 		@Override
 		public ArrayList<BookBean> doRetriveAll(String order) throws SQLException {
 			ArrayList<BookBean> list = new ArrayList<>();
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + setOrderString(order);
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE stock_quantity > 0 " + setOrderString(order) ;
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL);

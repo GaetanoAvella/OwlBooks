@@ -60,5 +60,5 @@ VALUES ('ISBN-9788804520673', 'Io Robot', 'Isaac Asimov', 'Fantascienza', 12.90,
 INSERT INTO book (code, name, author, genre, price, description, stock_quantity, editor)
 VALUES ('ISBN-9788806176136', 'Se questo è un uomo', 'Primo Levi', 'Autobiografia', 12.00, 'La testimonianza di Primo Levi sulla sua deportazione nel campo di Auschwitz.', 50, 'Einaudi');
 
-INSERT INTO user (name, surname, address, email, password) 
-VALUES ('Sofia','Mastrogregori','Corchiano','sofiamastrogregori03@gmail.com','root');
+INSERT INTO user (name,surname,address,email,password,admin) 
+VALUES ('Sofia','Mastrogregori','Corchiano','sofiamastrogregori03@gmail.com','99adc231b045331e514a516b4b7680f588e3823213abe901738bc3ad67b2f6fcb3c64efb93d18002588d3ccc1a49efbae1ce20cb43df36b38651f11fa75678e8',false);

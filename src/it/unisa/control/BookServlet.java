@@ -36,7 +36,7 @@ public class BookServlet extends HttpServlet {
 		BookBean book = null;
 		
 		try {
-			book = dao.doRetriveByKey(code);
+			book = dao.doRetriveByCode(code);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
