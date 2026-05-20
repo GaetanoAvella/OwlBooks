@@ -10,4 +10,5 @@ public interface UserDao {
 	public UserBean doRetriveByKey(String email) throws SQLException;
 	public boolean isRegistered(String email) throws SQLException;
 	public boolean checkPassword(String email, String password) throws SQLException;
+	public void doUpdate(UserBean user) throws SQLException;
 }

@@ -37,7 +37,7 @@ public class CheckOutServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/user/checkout.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/user/checkout.jsp");
 		dispatcher.forward(request, response);
 	}
 

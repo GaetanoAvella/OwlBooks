@@ -57,9 +57,7 @@
 		per effettuare l'ordine.
 		</p>
 		<% } else { %>
-		<form action="user/CheckOutServlet" method="get">
-		<input type="submit" value="Ordina">
-		</form>
+		<a href="user/CheckOutServlet">Ordina</a>
 		<% } %>
 	
 	<% } %>

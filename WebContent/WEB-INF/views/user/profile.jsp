@@ -17,6 +17,8 @@
 	Indirizzo <%= user.getAddress() %> <br>
 	Email <%= user.getEmail() %> <br>
 	</p>
+	
+	<a href="ProfileServlet?action=edit">Modifica</a>
 
 </body>
 </html>

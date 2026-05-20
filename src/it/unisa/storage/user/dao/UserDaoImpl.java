@@ -29,9 +29,7 @@ public class UserDaoImpl implements UserDao {
 			statement.setString(4, user.getEmail());
 			statement.setString(5, user.getPassword());
 			statement.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
 	@Override
@@ -89,9 +87,24 @@ public class UserDaoImpl implements UserDao {
 						return true;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
+		
 		return false;
+	}
+	
+	@Override
+	public void doUpdate(UserBean user) throws SQLException {
+		String updateUser = "UPDATE " + TABLE_NAME + " set name = ?, surname = ?, address = ?, email = ?, password = ? where id=?";
+		
+		try(Connection connection = ds.getConnection();
+				PreparedStatement statement = connection.prepareStatement(updateUser)) {
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getSurname());
+			statement.setString(3, user.getAddress());
+			statement.setString(4, user.getEmail());
+			statement.setString(5, user.getPassword());
+			statement.setInt(6, user.getId());
+			statement.executeUpdate();
+		}
 	}
 }
