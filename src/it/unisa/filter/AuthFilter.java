@@ -21,6 +21,6 @@ public class AuthFilter extends HttpFilter {
 		if(isLogged)
 			chain.doFilter(request, response);
 		else
-			response.sendRedirect("LoginServlet");
+			response.sendRedirect(request.getContextPath() + "/LoginServlet");
 	}
 }
