@@ -35,14 +35,16 @@ public class SignInServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/signin.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/signin.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			if(dao.isRegistered(request.getParameter("email"))) {
+				request.setAttribute("error", "L'email è già registrata");
 				doGet(request, response);
+				return;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

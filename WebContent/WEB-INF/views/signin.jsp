@@ -10,17 +10,26 @@
 	
 	<h1>Registrati</h1>
 	
-	<form action="SignInServlet" method="post">
+	<form action="<%= request.getContextPath() %>/SignInServlet" method="post">
 		Nome
-		<input type="text" name="name"><br>
+		<input type="text" name="name" required
+		value="<%= request.getParameter("name") != null ? request.getParameter("name") : "" %>"><br>
 		Cognome
-		<input type="text" name="surname"><br>
+		<input type="text" name="surname" required
+		value="<%= request.getParameter("surname") != null ? request.getParameter("surname") : "" %>"><br>
 		Indirizzo di spedizione
-		<input type="text" name="address"><br>
+		<input type="text" name="address" required
+		value="<%= request.getParameter("address") != null ? request.getParameter("address") : "" %>"><br>
 		Email
-		<input type="email" name="email"><br>
+		<input type="email" name="email" required>
+		
+		<% if(request.getAttribute("error") != null) { %>
+			<%= request.getAttribute("error") %>
+		<% } %>
+		<br>
+		
 		Password
-		<input type="password" name="password"><br>
+		<input type="password" name="password" required><br>
 		
 		<input type="submit" value="submit">
 	</form>
