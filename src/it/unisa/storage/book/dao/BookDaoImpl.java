@@ -153,6 +153,26 @@
 			return genres;
 		}
 		
+		@Override
+		public void doUpdate(BookBean book) throws SQLException {
+			String updateSQL = "UPDATE " + TABLE_NAME + 
+	                 " SET name=?, author=?, genre=?, price=?, description=?, stock_quantity=?, editor=? " +
+	                 " WHERE code=?";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement statement = connection.prepareStatement(updateSQL)) {
+				statement.setString(1, book.getName());
+				statement.setString(2, book.getAuthor());
+				statement.setString(3, book.getGenre());
+				statement.setFloat(4, book.getPrice());
+				statement.setString(5, book.getDescription());
+				statement.setInt(6, book.getStock_quantity());
+				statement.setString(7, book.getEditor());
+				statement.setString(8, book.getCode());
+				statement.executeUpdate();
+			}
+		}
+		
 		public String setOrderString(String order) {
 			switch(order) {
 				case "az":
