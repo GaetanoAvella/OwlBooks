@@ -21,15 +21,17 @@
 	<% } %>
 	<h1><a href="CartServlet">Carrello</a></h1>
 
+	<% String currentSort = request.getParameter("sort") != null ? request.getParameter("sort") : "az"; %>
+
 	<form method="get" action="IndexServlet">
 		
 		<label for="sort">Ordina i libri per: </label>
 		<select name="sort">
 			
-			<option value="az">Alfabetico(A-Z)</option>
-			<option value="za">Alfabetico(Z-A)</option>
-			<option value="pricelow">Dal meno costoso</option>
-			<option value="pricehigh">Dal più costoso</option>
+			<option value="az" <%= currentSort.equals("az") ? "selected" : "" %>>Alfabetico(A-Z)</option>
+			<option value="za" <%= currentSort.equals("za") ? "selected" : "" %>>Alfabetico(Z-A)</option>
+			<option value="pricelow" <%= currentSort.equals("pricelow") ? "selected" : "" %>>Dal meno costoso</option>
+			<option value="pricehigh" <%= currentSort.equals("pricehigh") ? "selected" : "" %>>Dal più costoso</option>
 			
 		</select>
 		
@@ -42,13 +44,16 @@
 	</form>
 
 	<h1>Generi</h1>
+	
 	<ul>
-	<%
+		<li><a href="IndexServlet?sort=<%= currentSort %>">Mostra tutti</a></li>
+	
+	<% 
 	ArrayList<String> genres = (ArrayList<String>) request.getAttribute("genres");
 	for (String genre : genres) {
 	%>
 		
-		<li><a href="IndexServlet?filter=<%= genre %>"><%= genre %></a></li>
+		<li><a href="IndexServlet?filter=<%= genre %>&sort=<%= currentSort %>"><%= genre %></a></li>
 		
 	<% } %>
 	</ul>
