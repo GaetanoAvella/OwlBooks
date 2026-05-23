@@ -27,7 +27,7 @@
 			<td><a><%= book.getName() %></a></td>
 			<td><a><%= book.getAuthor() %></a></td>
 			<td><a><%= book.getPrice() %></a></td>
-			<td><a>Modifica</a></td>
+			<td><a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode()%>">Modifica</a></td>
 			<td><a href="<%= request.getContextPath() %>/admin/AdminIndex?code=<%= book.getCode() %>&action=delete">Elimina</a></td>
 		</tr>
 	

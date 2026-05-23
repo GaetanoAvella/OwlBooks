@@ -16,7 +16,7 @@ import it.unisa.model.BookBean;
 import it.unisa.storage.book.dao.BookDao;
 import it.unisa.storage.book.dao.BookDaoImpl;
 
-@WebServlet("/AdminBook")
+@WebServlet("/admin/AdminBook")
 public class AdminBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BookDao dao;
@@ -43,7 +43,7 @@ public class AdminBook extends HttpServlet {
 		
 		request.setAttribute("book", book);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/book.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/admin/admin_book.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -61,10 +61,13 @@ public class AdminBook extends HttpServlet {
 			book.setPrice(Float.parseFloat(request.getParameter("price")));
 			book.setStock_quantity(Integer.parseInt(request.getParameter("quantity")));
 			
+			request.setAttribute("book", book);
 			dao.doUpdate(book);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		request.getRequestDispatcher("/WEB-INF/views/book.jsp").forward(request, response);
 	}
 
 }
