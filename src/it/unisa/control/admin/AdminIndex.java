@@ -1,0 +1,62 @@
+package it.unisa.control.admin;
+
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
+import it.unisa.model.BookBean;
+import it.unisa.storage.book.dao.BookDao;
+import it.unisa.storage.book.dao.BookDaoImpl;
+
+@WebServlet("/admin/AdminIndex")
+public class AdminIndex extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private BookDao dao;
+	
+	@Override
+	public void init() throws ServletException {
+		DataSource ds = (DataSource) getServletContext().getAttribute("datasource");
+		if(ds == null)
+			throw new ServletException("Datasource non disponibile nel contest");
+		
+		dao = new BookDaoImpl(ds);
+	}
+       
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+		String code = request.getParameter("code") != null ? request.getParameter("code") : "";
+		ArrayList<BookBean> catalogue = null;
+		
+		if(action.equals("delete")) {
+			try {
+				if(!dao.doDelete(code))
+					request.setAttribute("error", "Eliminazione fallita");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		try {
+			catalogue = dao.doRetriveAll("az");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("catalogue", catalogue);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/admin/admin_index.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}
