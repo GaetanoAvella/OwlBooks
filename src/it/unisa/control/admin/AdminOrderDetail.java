@@ -14,7 +14,7 @@ import it.unisa.model.PurchaseOrderBean;
 import it.unisa.storage.order.dao.PurchaseOrderDao;
 import it.unisa.storage.order.dao.PurchaseOrderDaoImpl;
 
-@WebServlet("/AdminOrderDetail")
+@WebServlet("/admin/AdminOrderDetail")
 public class AdminOrderDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PurchaseOrderDao dao;
@@ -38,7 +38,7 @@ public class AdminOrderDetail extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		request.getRequestDispatcher("WEB-INF/views/admin/admin_order_detail.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/admin/admin_order_detail.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

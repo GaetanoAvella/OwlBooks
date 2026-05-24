@@ -34,7 +34,7 @@ public class AdminOrderList extends HttpServlet {
 		try {
 			ArrayList<PurchaseOrderBean> orders = dao.doRetrieveAll();
 			request.getSession().setAttribute("orders", orders);
-			request.getRequestDispatcher("WEB-INF/views/admin/admin_order_list.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/admin/admin_order_list.jsp").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

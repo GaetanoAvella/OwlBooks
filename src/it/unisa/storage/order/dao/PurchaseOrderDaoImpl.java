@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import it.unisa.model.BookBean;
 import it.unisa.model.DetailOrderBean;
 import it.unisa.model.PurchaseOrderBean;
 
@@ -101,6 +102,11 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 	public PurchaseOrderBean doRetriveByCode(String orderCode) throws SQLException {
 		PurchaseOrderBean order = new PurchaseOrderBean(false);
 		String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + " WHERE order_code=?";
+		String selectDetailsSQL = "SELECT d.id AS detail_id, d.order_id, d.book_id, d.quantity, d.price_at_purchase, " +
+                "b.code AS book_code, b.name, b.author, b.genre, b.price, b.description, b.stock_quantity, b.editor, b.path, b.mime_type " +
+                "FROM " + DETAIL_ORDER + " d " +
+                "JOIN book b ON d.book_id = b.id " +
+                "WHERE d.order_id = ?";
 		
 		try(Connection connection = ds.getConnection();
 				PreparedStatement statement = connection.prepareStatement(selectSQL)) {
@@ -109,11 +115,42 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 			try(ResultSet rs = statement.executeQuery()) {
 				if(rs.next()) {
 					order.setId(rs.getInt("id"));
-					order.setId(rs.getInt("user_id"));
-					order.setOrderCode("order_code");
+					order.setUserId(rs.getInt("user_id"));
+					order.setOrderCode(rs.getString("order_code"));
 					order.setOrderDate(rs.getDate("order_date"));
 					order.setTotal(rs.getDouble("total"));
 					order.setPaymentMethod(rs.getString("payment_method"));
+					
+					try(PreparedStatement detailStatement = connection.prepareStatement(selectDetailsSQL)) {
+						detailStatement.setInt(1, order.getId());
+						
+						try(ResultSet rsDetail = detailStatement.executeQuery()) {
+							while(rsDetail.next()) {
+								DetailOrderBean detail = new DetailOrderBean();
+								detail.setId(rsDetail.getInt("detail_id"));		
+								detail.setOrderId(rsDetail.getInt("order_id"));
+	                            detail.setBookId(rsDetail.getInt("book_id"));
+	                            detail.setQuantity(rsDetail.getInt("quantity"));
+	                            detail.setPriceAtPurchase(rsDetail.getDouble("price_at_purchase"));
+	                            
+	                            BookBean book = new BookBean();
+	                            book.setId(rsDetail.getInt("book_id"));
+	                            book.setCode(rsDetail.getString("book_code"));
+	                            book.setName(rsDetail.getString("name"));
+	                            book.setAuthor(rsDetail.getString("author"));
+	                            book.setGenre(rsDetail.getString("genre"));
+	                            book.setPrice(rsDetail.getFloat("price"));
+	                            book.setDescription(rsDetail.getString("description"));
+	                            book.setStock_quantity(rsDetail.getInt("stock_quantity"));
+	                            book.setEditor(rsDetail.getString("editor"));
+	                            book.setPath(rsDetail.getString("path"));
+	                            book.setMimeType(rsDetail.getString("mime_type"));
+	                            
+	                            detail.setBook(book);
+	                            order.getDetails().add(detail);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -147,7 +184,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 	@Override
 	public ArrayList<PurchaseOrderBean> doRetrieveAllbyTime(Date from, Date to) throws SQLException {
 		ArrayList<PurchaseOrderBean> orders = new ArrayList<>();
-	    String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + "WHERE order_date BETWEEN ? AND ? ORDER BY order_date DESC";
+	    String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + " WHERE order_date BETWEEN ? AND ? ORDER BY order_date DESC";
 
 	    try(Connection connection = ds.getConnection();
 	        PreparedStatement statement = connection.prepareStatement(selectSQL)) {

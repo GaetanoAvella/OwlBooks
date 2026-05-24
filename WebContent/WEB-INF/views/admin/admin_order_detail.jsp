@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 
 <% 
-PurchaseOrderBean order = (PurchaseOrderBean) request.getAttribute("code");
+PurchaseOrderBean order = (PurchaseOrderBean) request.getAttribute("order");
 ArrayList<DetailOrderBean> details = order.getDetails();
 %>
 
@@ -19,11 +19,11 @@ ArrayList<DetailOrderBean> details = order.getDetails();
 
 	Id: <%= order.getId() %><br>
 	Id utente: <%= order.getUserId() %><br>
-	Codice ordini: <%= order.getOrderCode() %><br>
+	Codice ordine: <%= order.getOrderCode() %><br>
 	Data ordini: <%= order.getOrderDate() %><br>
 	Metodo di pagamento: <%= order.getPaymentMethod() %><br>
 	
-	<table>
+	<table border="1">
 	
 		<tr>
 		
