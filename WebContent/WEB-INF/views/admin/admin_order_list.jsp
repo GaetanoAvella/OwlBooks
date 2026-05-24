@@ -10,7 +10,21 @@
 </head>
 <body>
 
-<% ArrayList<PurchaseOrderBean> orders = (ArrayList<PurchaseOrderBean>) session.getAttribute("orders"); %>
+<form action="<%= request.getContextPath() %>/admin/AdminOrderList" method="post">
+	<input type="date" name="from" value="<%= request.getAttribute("from_date") %>"> 
+	<input type="date" name="to" value="<%= request.getAttribute("to_date") %>"> 
+	
+	<input type="submit" value="Cerca"> 		
+</form>
+
+<% if(request.getAttribute("error") != null) { %>
+
+	<p><%= request.getAttribute("error") %>
+
+<% 
+	}
+	ArrayList<PurchaseOrderBean> orders = (ArrayList<PurchaseOrderBean>) request.getAttribute("orders");
+%>
 
 <table border="1">
 

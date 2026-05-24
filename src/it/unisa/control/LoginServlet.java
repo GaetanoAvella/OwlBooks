@@ -50,9 +50,11 @@ public class LoginServlet extends HttpServlet {
 					HttpSession session = request.getSession();
 					UserBean user = dao.doRetriveByKey(email);
 					session.setAttribute("user", user);
-					if(user.isAdmin())
+					if(user.isAdmin()) {
 						session.setAttribute("admin", "true");
-					response.sendRedirect("IndexServlet");
+						response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
+					} else 
+						response.sendRedirect("IndexServlet");
 				}
 			}
 		} catch (SQLException e) {

@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -31,17 +32,43 @@ public class AdminOrderList extends HttpServlet {
 	
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		Date to = new Date(System.currentTimeMillis());
+		Date from = new Date(System.currentTimeMillis());
+		
 		try {
 			ArrayList<PurchaseOrderBean> orders = dao.doRetrieveAll();
-			request.getSession().setAttribute("orders", orders);
-			request.getRequestDispatcher("/WEB-INF/views/admin/admin_order_list.jsp").forward(request, response);
+			request.setAttribute("orders", orders);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		request.setAttribute("from_date", from);
+		request.setAttribute("to_date", to);
+		request.getRequestDispatcher("/WEB-INF/views/admin/admin_order_list.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String fromString = request.getParameter("from");
+		String toString = request.getParameter("to");
+	
+		if(fromString != null && !fromString.isEmpty() && toString != null && !toString.isEmpty()) {
+			Date from = Date.valueOf(fromString);
+			Date to = Date.valueOf(toString);
+			
+			try {
+				ArrayList<PurchaseOrderBean> orders = dao.doRetrieveAllbyTime(from, to);
+				request.setAttribute("orders", orders);
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			request.setAttribute("from_date", from);
+			request.setAttribute("to_date", to);
+		} else {
+			request.setAttribute("error", "Inserisci entrambe le date");
+		}
+		
+		request.getRequestDispatcher("/WEB-INF/views/admin/admin_order_list.jsp").forward(request, response);
 	}
 
 }

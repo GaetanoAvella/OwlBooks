@@ -184,7 +184,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 	@Override
 	public ArrayList<PurchaseOrderBean> doRetrieveAllbyTime(Date from, Date to) throws SQLException {
 		ArrayList<PurchaseOrderBean> orders = new ArrayList<>();
-	    String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + " WHERE order_date BETWEEN ? AND ? ORDER BY order_date DESC";
+		String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + " WHERE DATE(order_date) >= DATE(?) AND DATE(order_date) <= DATE(?) ORDER BY order_date DESC";
 
 	    try(Connection connection = ds.getConnection();
 	        PreparedStatement statement = connection.prepareStatement(selectSQL)) {
