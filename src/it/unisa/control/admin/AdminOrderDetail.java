@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
@@ -15,8 +14,8 @@ import it.unisa.model.PurchaseOrderBean;
 import it.unisa.storage.order.dao.PurchaseOrderDao;
 import it.unisa.storage.order.dao.PurchaseOrderDaoImpl;
 
-@WebServlet("/admin/AdminOrderList")
-public class AdminOrderList extends HttpServlet {
+@WebServlet("/AdminOrderDetail")
+public class AdminOrderDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PurchaseOrderDao dao;
 	
@@ -29,15 +28,17 @@ public class AdminOrderList extends HttpServlet {
 		dao = new PurchaseOrderDaoImpl(ds);
 	}
 	
-    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String code = request.getParameter("code");
+		
 		try {
-			ArrayList<PurchaseOrderBean> orders = dao.doRetrieveAll();
-			request.getSession().setAttribute("orders", orders);
-			request.getRequestDispatcher("WEB-INF/views/admin/admin_order_list.jsp").forward(request, response);
+			PurchaseOrderBean order = dao.doRetriveByCode(code);
+			request.setAttribute("order", order);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		request.getRequestDispatcher("WEB-INF/views/admin/admin_order_detail.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
