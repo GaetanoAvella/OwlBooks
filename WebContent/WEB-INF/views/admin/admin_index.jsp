@@ -16,9 +16,11 @@
 	<table border="1">
 	
 		<tr>
-			<th>Nome</th>
-			<th>Autore</th>
+			<th>Id</th>
+			<th>Codice</th>
+			<th>Nome</th>	
 			<th>Prezzo</th>	
+			<th>Quantità</th>	
 		</tr>
 		
 	<%

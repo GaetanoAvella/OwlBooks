@@ -14,6 +14,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import it.unisa.model.UserBean;
 import it.unisa.storage.user.dao.UserDao;
 import it.unisa.storage.user.dao.UserDaoImpl;
 import it.unisa.util.PasswordDigest;
@@ -47,7 +48,10 @@ public class LoginServlet extends HttpServlet {
 			if(dao.isRegistered(email)) {
 				if(dao.checkPassword(email, PasswordDigest.digestPassword(request.getParameter("password")))) {
 					HttpSession session = request.getSession();
-					session.setAttribute("user", dao.doRetriveByKey(email));
+					UserBean user = dao.doRetriveByKey(email);
+					session.setAttribute("user", user);
+					if(user.isAdmin())
+						session.setAttribute("admin", "true");
 					response.sendRedirect("IndexServlet");
 				}
 			}

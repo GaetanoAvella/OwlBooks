@@ -64,9 +64,9 @@ public class AdminBook extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String code = request.getParameter("code") != null ? request.getParameter("code") : "";
-		String action = request.getParameter("action");
+		String action = request.getParameter("action") ;
 		
-		if(action.equals("add")) {
+		if("add".equals(action)) {
 			try {
 				if(dao.isRegistered(request.getParameter("code"))) {
 					request.setAttribute("error", "Il codice è già registrato");
@@ -91,11 +91,11 @@ public class AdminBook extends HttpServlet {
 			try {
 				dao.doSave(book);
 				book = dao.doRetriveByCode(book.getCode());
-				response.sendRedirect(request.getContextPath() + "/BookServlet?code=" + book.getCode());
+				response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		} else if(action.equals("edit")){
+		} else if("edit".equals(action)){
 			try {
 				BookBean book = dao.doRetriveByCode(code);
 				
@@ -112,11 +112,9 @@ public class AdminBook extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
-			
 		}
 		
-		
+		response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
 	}
 
 }
