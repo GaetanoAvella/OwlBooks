@@ -22,8 +22,8 @@ import it.unisa.model.PurchaseOrderBean;
 import it.unisa.model.UserBean;
 import it.unisa.storage.book.dao.BookDao;
 import it.unisa.storage.book.dao.BookDaoImpl;
-import it.unisa.storage.order.PurchaseOrderDao;
-import it.unisa.storage.order.PurchaseOrderDaoImpl;
+import it.unisa.storage.order.dao.PurchaseOrderDao;
+import it.unisa.storage.order.dao.PurchaseOrderDaoImpl;
 
 @WebServlet("/user/CheckOutServlet")
 public class CheckOutServlet extends HttpServlet {

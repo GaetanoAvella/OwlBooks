@@ -15,8 +15,8 @@ import javax.sql.DataSource;
 
 import it.unisa.model.PurchaseOrderBean;
 import it.unisa.model.UserBean;
-import it.unisa.storage.order.PurchaseOrderDao;
-import it.unisa.storage.order.PurchaseOrderDaoImpl;
+import it.unisa.storage.order.dao.PurchaseOrderDao;
+import it.unisa.storage.order.dao.PurchaseOrderDaoImpl;
 
 @WebServlet("/user/OrdersServlet")
 public class OrdersServlet extends HttpServlet {

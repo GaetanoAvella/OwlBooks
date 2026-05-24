@@ -6,11 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Catalogo</title>
+<title>Amministratore</title>
 </head>
 <body>
 
-	<h1><a href="<%= request.getContextPath() %>/admin/AdminBook?action=add">Aggiungi libro</a></h1>
+	<ul>
+		<li><a href="<%= request.getContextPath() %>/IndexServlet">Index</a></li>
+		<li><a href="<%= request.getContextPath() %>/admin/AdminBook?action=add">Aggiungi libro</a></li>
+		<li><a href="<%= request.getContextPath() %>/admin/AdminOrderList">Ordini</a></li>
+		<li><a href="<%= request.getContextPath() %>/admin/AdminLogout">Logout</a></li>
+	</ul>
 	
 	<h1>Catalogo</h1>
 	<table border="1">

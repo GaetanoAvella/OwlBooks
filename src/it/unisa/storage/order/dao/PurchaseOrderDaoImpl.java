@@ -1,6 +1,7 @@
-package it.unisa.storage.order;
+package it.unisa.storage.order.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -118,6 +119,54 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 		}
 		
 		return order;
+	}
+	
+	@Override
+	public ArrayList<PurchaseOrderBean> doRetrieveAll() throws SQLException {
+		ArrayList<PurchaseOrderBean> orders = new ArrayList<>();
+		String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + " ORDER BY order_date DESC";
+		
+		try(Connection connection = ds.getConnection();
+				PreparedStatement statement = connection.prepareStatement(selectSQL);
+				ResultSet rs = statement.executeQuery()) {
+			while(rs.next()) {
+				PurchaseOrderBean order = new PurchaseOrderBean(false);
+				
+	            order.setId(rs.getInt("id"));
+	            order.setUserId(rs.getInt("user_id"));
+	            order.setOrderCode(rs.getString("order_code"));
+	            order.setOrderDate(rs.getDate("order_date"));
+	            order.setTotal(rs.getDouble("total"));
+	            order.setPaymentMethod(rs.getString("payment_method"));
+	            orders.add(order);
+			}
+		}
+		return orders;
+	}
+	
+	@Override
+	public ArrayList<PurchaseOrderBean> doRetrieveAllbyTime(Date from, Date to) throws SQLException {
+		ArrayList<PurchaseOrderBean> orders = new ArrayList<>();
+	    String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + "WHERE order_date BETWEEN ? AND ? ORDER BY order_date DESC";
+
+	    try(Connection connection = ds.getConnection();
+	        PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+	        statement.setDate(1, from);
+	        statement.setDate(2, to);
+	        try(ResultSet rs = statement.executeQuery()) {
+	            while(rs.next()) {
+	                PurchaseOrderBean order = new PurchaseOrderBean(false);
+	                order.setId(rs.getInt("id"));
+	                order.setUserId(rs.getInt("user_id"));
+	                order.setOrderCode(rs.getString("order_code"));
+	                order.setOrderDate(rs.getDate("order_date"));
+	                order.setTotal(rs.getDouble("total"));
+	                order.setPaymentMethod(rs.getString("payment_method"));
+	                orders.add(order);
+	            }
+	        }
+	    }
+	    return orders;
 	}
 
 }
