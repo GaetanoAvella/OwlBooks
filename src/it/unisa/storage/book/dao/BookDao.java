@@ -12,4 +12,5 @@ public interface BookDao {
 	public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order) throws SQLException;
 	public ArrayList<String> doRetriveGenres() throws SQLException;
 	public void doUpdate(BookBean book) throws SQLException;
+	public boolean isRegistered(String code) throws SQLException;
 }

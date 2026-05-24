@@ -31,18 +31,7 @@ public class AdminIndex extends HttpServlet {
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action") != null ? request.getParameter("action") : "";
-		String code = request.getParameter("code") != null ? request.getParameter("code") : "";
 		ArrayList<BookBean> catalogue = null;
-		
-		if(action.equals("delete")) {
-			try {
-				if(!dao.doDelete(code))
-					request.setAttribute("error", "Eliminazione fallita");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 		
 		try {
 			catalogue = dao.doRetriveAll("az");

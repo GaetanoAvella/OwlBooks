@@ -62,3 +62,6 @@ VALUES ('ISBN-9788806176136', 'Se questo è un uomo', 'Primo Levi', 'Autobiograf
 
 INSERT INTO user (name,surname,address,email,password,admin) 
 VALUES ('Sofia','Mastrogregori','Corchiano','sofiamastrogregori03@gmail.com','99adc231b045331e514a516b4b7680f588e3823213abe901738bc3ad67b2f6fcb3c64efb93d18002588d3ccc1a49efbae1ce20cb43df36b38651f11fa75678e8',false);
+
+INSERT INTO user (name,surname,address,email,password,admin) 
+VALUES ('matteo','greco','via puglia','matteogreco03@gmail.com','99adc231b045331e514a516b4b7680f588e3823213abe901738bc3ad67b2f6fcb3c64efb93d18002588d3ccc1a49efbae1ce20cb43df36b38651f11fa75678e8',true)

@@ -2,6 +2,7 @@ package it.unisa.filter;
 
 import java.io.IOException;
 
+import it.unisa.model.UserBean;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
@@ -16,11 +17,19 @@ public class AuthFilter extends HttpFilter {
 	protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpSession session = request.getSession(false);
-		boolean isLogged = session != null && session.getAttribute("user") != null ? true : false;
+		UserBean user = session != null ? (UserBean) session.getAttribute("user") : null;
+		String path = request.getRequestURI();
 		
-		if(isLogged)
-			chain.doFilter(request, response);
-		else
-			response.sendRedirect(request.getContextPath() + "/LoginServlet");
+		if(path.contains("/admin")) {
+			if(user != null && user.isAdmin())
+				chain.doFilter(request, response);
+			else
+				response.sendRedirect(request.getContextPath() + "/IndexServlet");
+		} else if(path.contains("/user")) {
+			if(user != null)
+				chain.doFilter(request, response);
+			else
+				response.sendRedirect(request.getContextPath() + "/LoginServlet");
+		}
 	}
 }

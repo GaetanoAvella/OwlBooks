@@ -1,6 +1,5 @@
 package it.unisa.control.admin;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -32,27 +31,55 @@ public class AdminBook extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String code = request.getParameter("code");
-		BookBean book = null;
+		String action = request.getParameter("action") != null ? request.getParameter("action") : "";
+		String code = request.getParameter("code") != null ? request.getParameter("code") : "";
 		
-		try {
-			book = dao.doRetriveByCode(code);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		switch(action) {
+			case "add":
+				request.getRequestDispatcher("/WEB-INF/views/admin/admin_new_book.jsp").forward(request, response);
+				break;
+			case "edit":
+				try {
+					BookBean book = dao.doRetriveByCode(code);
+					request.setAttribute("book", book);
+					request.getRequestDispatcher("/WEB-INF/views/admin/admin_edit_book.jsp").forward(request, response);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "delete":
+				try {
+					if(!dao.doDelete(code))
+						request.setAttribute("error", "Eliminazione fallita");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
+				break;
+			default:
+				response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
+				break;
 		}
-		
-		request.setAttribute("book", book);
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/admin/admin_book.jsp");
-		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String code = request.getParameter("code");
+		String code = request.getParameter("code") != null ? request.getParameter("code") : "";
+		String action = request.getParameter("action");
 		
-		try {
-			BookBean book = dao.doRetriveByCode(code);
+		if(action.equals("add")) {
+			try {
+				if(dao.isRegistered(request.getParameter("code"))) {
+					request.setAttribute("error", "Il codice è già registrato");
+					request.getRequestDispatcher("/WEB-INF/views/admin/admin_new_book.jsp").forward(request, response);
+					return;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+				
+			BookBean book = new BookBean();
 			
+			book.setCode(request.getParameter("code"));
 			book.setName(request.getParameter("name"));
 			book.setAuthor(request.getParameter("author"));
 			book.setEditor(request.getParameter("editor"));
@@ -61,13 +88,35 @@ public class AdminBook extends HttpServlet {
 			book.setPrice(Float.parseFloat(request.getParameter("price")));
 			book.setStock_quantity(Integer.parseInt(request.getParameter("quantity")));
 			
-			request.setAttribute("book", book);
-			dao.doUpdate(book);
-		} catch (SQLException e) {
-			e.printStackTrace();
+			try {
+				dao.doSave(book);
+				book = dao.doRetriveByCode(book.getCode());
+				response.sendRedirect(request.getContextPath() + "/BookServlet?code=" + book.getCode());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if(action.equals("edit")){
+			try {
+				BookBean book = dao.doRetriveByCode(code);
+				
+				book.setName(request.getParameter("name"));
+				book.setAuthor(request.getParameter("author"));
+				book.setEditor(request.getParameter("editor"));
+				book.setGenre(request.getParameter("genre"));
+				book.setDescription(request.getParameter("description"));
+				book.setPrice(Float.parseFloat(request.getParameter("price")));
+				book.setStock_quantity(Integer.parseInt(request.getParameter("quantity")));
+				
+				dao.doUpdate(book);
+				response.sendRedirect(request.getContextPath() + "/BookServlet?code=" + book.getCode());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
 		}
 		
-		request.getRequestDispatcher("/WEB-INF/views/book.jsp").forward(request, response);
+		
 	}
 
 }

@@ -8,7 +8,7 @@
 
 <% BookBean book = (BookBean) request.getAttribute("book"); %>
 
-<title><%= book.getName() %>></title>
+<title><%= book.getName() %></title>
 </head>
 <body>
 
@@ -28,7 +28,8 @@
 		Descrizione<textarea name="description" rows="5" cols="50"><%= book.getDescription() %></textarea><br>
 		Prezzo<input type="number" name="price" min="0" value="<%= book.getPrice() %>" required><br>
 		Quantità<input type="number" name="quantity" min="0" value="<%= book.getStock_quantity() %>" required><br>
-		<input type="hidden" name="code" value=<%= book.getCode() %>>
+		<input type="hidden" name="code" value="<%= book.getCode() %>">
+		<input type="hidden" name="action" value="edit">
 		
 		<input type="submit" value="Conferma">
 	</form>

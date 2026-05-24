@@ -9,6 +9,8 @@
 <title>Catalogo</title>
 </head>
 <body>
+
+	<h1><a href="<%= request.getContextPath() %>/admin/AdminBook?action=add">Aggiungi libro</a></h1>
 	
 	<h1>Catalogo</h1>
 	<table border="1">
@@ -24,11 +26,13 @@
 	for (BookBean book : catalogue) {
 	%>
 		<tr>
-			<td><a><%= book.getName() %></a></td>
-			<td><a><%= book.getAuthor() %></a></td>
-			<td><a><%= book.getPrice() %></a></td>
-			<td><a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode()%>">Modifica</a></td>
-			<td><a href="<%= request.getContextPath() %>/admin/AdminIndex?code=<%= book.getCode() %>&action=delete">Elimina</a></td>
+			<td><%= book.getId() %></td>
+			<td><a href="<%= request.getContextPath() %>/BookServlet?code=<%= book.getCode() %>"><%= book.getCode() %></a></td>
+			<td><%= book.getName() %></td>
+			<td><%= book.getPrice() %></td>
+			<td><%= book.getStock_quantity() %></td>
+			<td><a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode()%>&action=edit">Modifica</a></td>
+			<td><a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode() %>&action=delete">Elimina</a></td>
 		</tr>
 	
 	<% } %>

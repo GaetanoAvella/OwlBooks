@@ -173,6 +173,12 @@
 			}
 		}
 		
+		@Override
+		public boolean isRegistered(String code) throws SQLException{
+			BookBean book = doRetriveByCode(code);
+			return book.getCode() != null ? true : false;
+		}
+		
 		public String setOrderString(String order) {
 			switch(order) {
 				case "az":
