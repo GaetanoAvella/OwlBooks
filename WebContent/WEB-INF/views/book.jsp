@@ -12,11 +12,8 @@
 </head>
 <body>
 
-	<% if(book.getPath() == null || book.getPath().equals("")) { %>
-		<img src="<%= request.getContextPath() %>/img/book/default_book.png">
-	<% } else { %>
-		<img src="ImageBookServlet?code=<%= book.getCode() %>">
-	<% } %>
+	<img src="<%= request.getContextPath() %>/ImageBookServlet?code=<%= book.getCode() %>">
+	
 	<h1><%= book.getName() %></h1>
 	
 	<p>

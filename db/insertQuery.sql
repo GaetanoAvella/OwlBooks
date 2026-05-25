@@ -65,3 +65,15 @@ VALUES ('Sofia','Mastrogregori','Corchiano','sofiamastrogregori03@gmail.com','99
 
 INSERT INTO user (name,surname,address,email,password,admin) 
 VALUES ('matteo','greco','via puglia','matteogreco03@gmail.com','99adc231b045331e514a516b4b7680f588e3823213abe901738bc3ad67b2f6fcb3c64efb93d18002588d3ccc1a49efbae1ce20cb43df36b38651f11fa75678e8',true);
+
+INSERT INTO purchase_order (user_id,order_code,order_date,total,payment_method)
+VALUES (1,'ORD-1779643137476389','2026-05-24',49.70,'credit_card');
+
+INSERT INTO detail_order (order_id,book_id,quantity,price_at_purchase)
+VALUES (1,18,1,13.90);
+
+INSERT INTO detail_order (order_id,book_id,quantity,price_at_purchase)
+VALUES (1,2,1,16.90);
+
+INSERT INTO detail_order (order_id,book_id,quantity,price_at_purchase)
+VALUES (1,10,1,18.90);

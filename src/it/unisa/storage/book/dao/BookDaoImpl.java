@@ -1,6 +1,7 @@
 	package it.unisa.storage.book.dao;
 	
-	import java.sql.Connection;
+	import java.io.File;
+import java.sql.Connection;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
@@ -20,7 +21,7 @@
 		@Override
 		public void doSave(BookBean book) throws SQLException {
 			String insertSQL = "INSERT INTO " + TABLE_NAME
-					+ " (code, name, author, genre, price, description, stock_quantity, editor) VALUES (?,?,?,?,?,?,?,?);";
+					+ " (code, name, author, genre, price, description, stock_quantity, editor, path, mime_type) VALUES (?,?,?,?,?,?,?,?,?,?);";
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(insertSQL)) {
@@ -32,12 +33,22 @@
 				statement.setString(6, book.getDescription());
 				statement.setInt(7, book.getStock_quantity());
 				statement.setString(8, book.getEditor());
+				statement.setString(9, book.getPath());
+				statement.setString(10, book.getMimeType());
 				statement.execute();
 			}
 		}
 		
 		@Override
 		public boolean doDelete(String code) throws SQLException {
+			BookBean book = doRetriveByCode(code);
+			
+			if(book != null && book.getPath() != null && !book.getPath().isEmpty()) {
+				File imageFile = new File(book.getPath());
+				if(imageFile.exists())
+					imageFile.delete();
+			}
+			
 			String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE code = ?";
 	        try (Connection connection = ds.getConnection();
 	        		PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
@@ -154,9 +165,9 @@
 		}
 		
 		@Override
-		public void doUpdate(BookBean book) throws SQLException {
+		public void doUpdate(BookBean book) throws SQLException {		
 			String updateSQL = "UPDATE " + TABLE_NAME + 
-	                 " SET name=?, author=?, genre=?, price=?, description=?, stock_quantity=?, editor=? " +
+	                 " SET name=?, author=?, genre=?, price=?, description=?, stock_quantity=?, editor=?, path=?, mime_type=?" +
 	                 " WHERE code=?";
 			
 			try(Connection connection = ds.getConnection();
@@ -169,6 +180,8 @@
 				statement.setInt(6, book.getStock_quantity());
 				statement.setString(7, book.getEditor());
 				statement.setString(8, book.getCode());
+				statement.setString(9, book.getPath());
+				statement.setString(10, book.getMimeType());
 				statement.executeUpdate();
 			}
 		}

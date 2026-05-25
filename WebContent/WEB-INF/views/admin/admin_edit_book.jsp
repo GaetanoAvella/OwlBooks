@@ -12,15 +12,11 @@
 </head>
 <body>
 
-<% if(book.getPath() == null || book.getPath().equals("")) { %>
-		<img src="<%= request.getContextPath() %>/img/book/default_book.png">
-	<% } else { %>
-		<img src="ImageBookServlet?code=<%= book.getCode() %>">
-	<% } %>
+	<img src="<%= request.getContextPath() %>/ImageBookServlet?code=<%= book.getCode() %>">
 	
 	<h1>Codice: <%= book.getCode() %></h1>
 	
-	<form action="<%= request.getContextPath() %>/admin/AdminBook" method="post">
+	<form action="<%= request.getContextPath() %>/admin/AdminBook" method="post" enctype="multipart/form-data">
 		Nome<input type="text" name="name" value="<%= book.getName() %>" required><br>
 		Autore<input type="text" name="author" value="<%= book.getAuthor() %>" required><br>
 		Editore<input type="text" name="editor" value="<%= book.getEditor() %>" required><br>
@@ -28,6 +24,8 @@
 		Descrizione<textarea name="description" rows="5" cols="50"><%= book.getDescription() %></textarea><br>
 		Prezzo<input type="number" name="price" min="0" value="<%= book.getPrice() %>" required><br>
 		Quantità<input type="number" name="quantity" min="0" value="<%= book.getStock_quantity() %>" required><br>
+		Immagine<input type="file" accept="image/*" name="image"><br>
+		
 		<input type="hidden" name="code" value="<%= book.getCode() %>">
 		<input type="hidden" name="action" value="edit">
 		

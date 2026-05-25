@@ -37,6 +37,11 @@ public class ImageBookServlet extends HttpServlet {
 			String path = book.getPath();
 			String mimeType = book.getMimeType();
 			
+			if(path == null || path.isEmpty()) {
+	            response.sendRedirect(request.getContextPath() + "/img/book/default_book.png");
+	            return;
+	        }
+			
 			response.setContentType(mimeType);
 			try(InputStream in = new FileInputStream(path);
 					OutputStream out = response.getOutputStream()) {

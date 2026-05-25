@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<form action="<%= request.getContextPath() %>/admin/AdminBook" method="post">
+	<form action="<%= request.getContextPath() %>/admin/AdminBook" method="post" enctype="multipart/form-data">
 		Codice<input type="text" name="code" required><br>
 		Nome<input type="text" name="name" required><br>
 		Autore<input type="text" name="author" required><br>
@@ -17,6 +17,7 @@
 		Descrizione<textarea name="description" rows="5" cols="50"></textarea><br>
 		Prezzo<input type="number" name="price" min="0" required><br>
 		Quantità<input type="number" name="quantity" min="0" required><br>
+		Carica immagine<input type="file" accept="image/*" name="image">
 		
 		<input type="hidden" name="action" value="add">
 		
