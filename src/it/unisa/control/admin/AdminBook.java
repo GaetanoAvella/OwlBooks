@@ -24,7 +24,7 @@ import it.unisa.storage.book.dao.BookDaoImpl;
 @MultipartConfig
 public class AdminBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String UPLOAD_DIR = "C:\\Users\\avell\\git\\WeBooks\\WebContent\\img\\book";
+	private static final String UPLOAD_DIR = "C:\\WeBooks\\img\\book";
 	private BookDao dao;
 	
 	@Override
