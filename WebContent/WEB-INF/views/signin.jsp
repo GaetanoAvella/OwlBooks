@@ -7,6 +7,11 @@
 <title>Registrazione</title>
 </head>
 <body>
+
+<% 
+if(request.getAttribute("user") == null)
+	response.sendRedirect(request.getContextPath() + "IndexServlet");	
+%>
 	
 	<h1>Registrati</h1>
 	

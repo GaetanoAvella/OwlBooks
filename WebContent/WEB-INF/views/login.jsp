@@ -8,6 +8,11 @@
 </head>
 <body>
 
+<% 
+if(request.getAttribute("user") == null)
+	response.sendRedirect(request.getContextPath() + "IndexServlet");	
+%>
+
 <form action="LoginServlet" method="post">
 	Email
 	<input type="email" name="email"><br>
