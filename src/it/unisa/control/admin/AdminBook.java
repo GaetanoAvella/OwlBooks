@@ -24,7 +24,6 @@ import it.unisa.storage.book.dao.BookDaoImpl;
 @MultipartConfig
 public class AdminBook extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String UPLOAD_DIR = "C:\\WeBooks\\img\\book";
 	private BookDao dao;
 	
 	@Override
@@ -99,9 +98,9 @@ public class AdminBook extends HttpServlet {
 			
 			Part part = request.getPart("image");
 			if(part != null && part.getSize() > 0) {
-				new File(UPLOAD_DIR).mkdirs();
 				String uniqueFileName = buildUniqueFileName(part);
-				String filePath = UPLOAD_DIR + File.separator + uniqueFileName;
+				String filePath = request.getServletContext().getRealPath("/img/book") + File.separator + uniqueFileName;
+				
 				part.write(filePath);
 				
 				book.setPath(filePath);
@@ -133,9 +132,8 @@ public class AdminBook extends HttpServlet {
 						new File(book.getPath()).delete();
 					}
 					
-					new File(UPLOAD_DIR).mkdirs();
 					String uniqueFileName = buildUniqueFileName(part);
-					String filePath = UPLOAD_DIR + File.separator + uniqueFileName;
+					String filePath = request.getServletContext().getRealPath("/img/book") + File.separator + uniqueFileName;
 					part.write(filePath);
 					
 					book.setPath(filePath);

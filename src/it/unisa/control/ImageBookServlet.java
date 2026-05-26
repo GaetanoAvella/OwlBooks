@@ -34,13 +34,8 @@ public class ImageBookServlet extends HttpServlet {
 		String code = request.getParameter("code");
 		try {
 			BookBean book = dao.doRetriveByCode(code);
-			String path = book.getPath();
-			String mimeType = book.getMimeType();
-			
-			if(path == null || path.isEmpty()) {
-	            response.sendRedirect(request.getContextPath() + "/img/book/default_book.png");
-	            return;
-	        }
+			String path = book.getPath() != null && !book.getPath().isEmpty() ? book.getPath() : getServletContext().getRealPath("/img/book/default_book.png");
+			String mimeType = book.getMimeType() != null && !book.getMimeType().isEmpty() ? book.getMimeType() : "image/png";
 			
 			response.setContentType(mimeType);
 			try(InputStream in = new FileInputStream(path);

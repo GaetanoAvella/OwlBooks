@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/book.css">
 
 <% BookBean book = (BookBean) request.getAttribute("book"); %>
 <title><%= book.getName() %></title>
@@ -12,29 +13,39 @@
 </head>
 <body>
 
-	<img src="<%= request.getContextPath() %>/ImageBookServlet?code=<%= book.getCode() %>">
-	
-	<h1><%= book.getName() %></h1>
-	
-	<p>
-	<%= book.getCode() %> <br>
-	<%= book.getName() %> <br>
-	<%= book.getAuthor() %> <br>
-	<%= book.getEditor() %> <br>
-	<%= book.getGenre() %> <br>
-	<%= book.getDescription() %> <br>
-	<%= book.getPrice() %> <br>
-	</p>
-	
-	<% if(!"true".equals(session.getAttribute("admin"))) { %>
-	
-	<form action="CartServlet" method="post">
-		<input type="hidden" name="action" value="add">
-		<input type="hidden" name="code" value="<%= book.getCode() %>">
-		<input type="submit" value="Aggiungi al carrello">
-	</form>
-
-	<% } %>
+	<div class="book-detail-container">
+        <div class="book-image">
+            <img src="<%= request.getContextPath() %>/ImageBookServlet?code=<%= book.getCode() %>" alt="Copertina di <%= book.getName() %>">
+        </div>
+        
+        <div class="book-info">
+            <h1><%= book.getName() %></h1>
+            <h2 class="book-author">di <%= book.getAuthor() %></h2>
+            
+            <div class="book-meta">
+                <p><strong>Codice ISBN:</strong> <%= book.getCode() %></p>
+                <p><strong>Editore:</strong> <%= book.getEditor() %></p>
+                <p><strong>Genere:</strong> <%= book.getGenre() %></p>
+            </div>
+            
+            <div class="book-description">
+                <h3>Trama</h3>
+                <p><%= book.getDescription() %></p>
+            </div>
+            
+            <div class="book-price-section">
+                <span class="price">€ <%= String.format("%.2f", book.getPrice()) %></span>
+            </div>
+            
+            <% if(!"true".equals(session.getAttribute("admin"))) { %>
+            <form action="CartServlet" method="post" class="add-to-cart-form">
+                <input type="hidden" name="action" value="add">
+                <input type="hidden" name="code" value="<%= book.getCode() %>">
+                <button type="submit" class="btn-cart">🛒 Aggiungi al carrello</button>
+            </form>
+            <% } %>
+        </div>
+    </div>
 
 </body>
 </html>
