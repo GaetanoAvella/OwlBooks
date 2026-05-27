@@ -38,12 +38,7 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
-}
-
-.book-image img:hover {
-    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); 
 }
 
 .book-info {
@@ -83,6 +78,14 @@ body {
 
 .book-meta p:last-child {
     margin-bottom: 0;
+}
+
+.book-description {
+	border: 2px solid #bdc3c7;
+	padding: 20px;
+	border-radius: 8px;
+	background-color: #ffffff;
+	margin-bottom: 30px;
 }
 
 .book-description h3 {

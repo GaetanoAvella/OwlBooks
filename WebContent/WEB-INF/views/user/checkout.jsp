@@ -1,42 +1,77 @@
 <%@page import="it.unisa.model.CartBean"%>
 <%@page import="it.unisa.model.UserBean"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-<meta charset="UTF-8">
-<title>Riepilogo</title>
+    <meta charset="UTF-8">
+    <title>OwlBooks - Riepilogo Ordine</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/index.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/checkout.css">
 </head>
 <body>
-	<%
-	UserBean user = (UserBean) session.getAttribute("user");
-		CartBean kart = (CartBean) session.getAttribute("cart");
-	%>
-	
-	<p>
-	In consegna a <%= user.getName() %> <%= user.getSurname() %><br>
-	<%= user.getAddress() %>
-	</p>
-	
-	<h1>Totale</h1>
-	<p><%= kart.getTotal() %>
-	
-	<h1>Selezionare metodo di pagamento</h1>
-	<p>
-	<form action="<%= request.getContextPath() %>/user/CheckOutServlet" method="post">
-	
-	<select name="payment_method">
-		
-		<option value="credit_card">Carta di credito</option>
-		<option value="paypal">Paypal</option>
-		<option value="on_delivery">Pagamento in consegna</option>
-		
-	</select>
-	
-	<input type="submit" value="conferma">
-	</form>
-	<p>
-	
+
+    <header class="navbar">
+        <div class="nav-logo">
+            <a href="<%= request.getContextPath() %>/IndexServlet">🦉 OwlBooks</a>
+        </div>
+        
+        <div class="nav-links">
+            <div class="user-dropdown">
+                <div class="profile-img">
+                    <img src="<%= request.getContextPath() %>/img/user/default_user.jpg" alt="Profilo">
+                </div>
+                <div class="dropdown-content">
+                    <a href="<%= request.getContextPath() %>/user/ProfileServlet">👤 Profilo</a>
+                    <a href="<%= request.getContextPath() %>/CartServlet">🛒 Carrello</a>
+                    <a href="<%= request.getContextPath() %>/user/OrdersServlet">📦 I Miei Ordini</a>
+                    <a href="<%= request.getContextPath() %>/user/LogoutServlet" class="logout">🚪 Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <%
+        UserBean user = (UserBean) session.getAttribute("user");
+        CartBean kart = (CartBean) session.getAttribute("cart");
+    %>
+    
+    <div class="checkout-wrapper">
+        <div class="checkout-card">
+            <div class="checkout-header">
+                <h2>Riepilogo Ordine</h2>
+                <p>Controlla i tuoi dati e procedi al pagamento</p>
+            </div>
+            
+            <div class="checkout-info">
+                <div class="info-group">
+                    <span class="info-label">In consegna a:</span>
+                    <span class="info-value"><%= user.getName() %> <%= user.getSurname() %></span>
+                </div>
+                <div class="info-group">
+                    <span class="info-label">Indirizzo:</span>
+                    <span class="info-value"><%= user.getAddress() %></span>
+                </div>
+                <div class="info-group total-group">
+                    <span class="info-label">Totale da pagare:</span>
+                    <span class="info-value total-price">€ <%= kart.getTotal() %></span>
+                </div>
+            </div>
+            
+            <form action="<%= request.getContextPath() %>/user/CheckOutServlet" method="post" class="checkout-form">
+                <div class="form-group">
+                    <label for="payment_method">Metodo di Pagamento</label>
+                    <select name="payment_method" id="payment_method">
+                        <option value="credit_card">Carta di credito</option>
+                        <option value="paypal">Paypal</option>
+                        <option value="on_delivery">Pagamento alla consegna</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn-submit">Conferma Ordine</button>
+            </form>
+        </div>
+    </div>
+    
 </body>
 </html>

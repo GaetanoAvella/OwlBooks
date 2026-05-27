@@ -17,9 +17,10 @@
         
         <div class="nav-links">
             <% if (session.getAttribute("user") == null) {%>
-                <a href="LoginServlet" class="btn-nav">Login</a>
-                <a href="SignInServlet" class="btn-nav btn-orange">Registrati</a>
-                <a href="CartServlet" class="btn-nav cart-btn">🛒 Carrello</a>
+            	<a href="CartServlet" class="btn-nav" id="cart-btn">🛒 Carrello</a>
+                <a href="LoginServlet" class="btn-nav" id="login-btn">Login</a>
+                <a href="SignInServlet" class="btn-nav" id="signin-btn">Registrati</a>
+                
             <% } else { %>
                 <div class="user-dropdown">
                     <div class="profile-img">

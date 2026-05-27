@@ -1,26 +1,12 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background-color: #f4f7f6;
+.checkout-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 72px);
+    padding: 40px 20px;
 }
 
-.signin-container {
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-}
-
-.signin-card {
+.checkout-card {
     background-color: #ffffff;
     max-width: 450px;
     width: 100%;
@@ -29,29 +15,67 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.signin-header {
+.checkout-header {
     text-align: center;
     margin-bottom: 30px;
 }
 
-.signin-header h2 {
+.checkout-header h2 {
     color: #2c3e50;
     font-size: 28px;
     margin-bottom: 8px;
 }
 
-.signin-header p {
+.checkout-header p {
     color: #7f8c8d;
     font-size: 14px;
 }
 
-.form-row {
-    display: flex;
-    gap: 15px;
+.checkout-info {
+    margin-bottom: 30px;
+    background-color: #f9fbfa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ecf0f1;
 }
 
-.form-row .form-group {
-    flex: 1;
+.info-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.info-group:last-child {
+    margin-bottom: 0;
+}
+
+.total-group {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #dcdde1;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-label {
+    font-size: 13px;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.info-value {
+    font-size: 16px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.total-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e67e22;
 }
 
 .form-group {
@@ -66,7 +90,7 @@ body {
     font-weight: 600;
 }
 
-.form-group input {
+.form-group select {
     width: 100%;
     padding: 12px 15px;
     border: 1px solid #dcdde1;
@@ -74,9 +98,11 @@ body {
     font-size: 14px;
     color: #2c3e50;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none;
+    background-color: #ffffff;
 }
 
-.form-group input:focus {
+.form-group select:focus {
     outline: none;
     border-color: #e67e22;
     box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
@@ -102,21 +128,4 @@ body {
 
 .btn-submit:active {
     transform: scale(0.98);
-}
-
-.signin-footer {
-    text-align: center;
-    margin-top: 25px;
-    font-size: 14px;
-    color: #7f8c8d;
-}
-
-.signin-footer a {
-    color: #e67e22;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.signin-footer a:hover {
-    text-decoration: underline;
 }

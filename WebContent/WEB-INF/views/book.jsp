@@ -37,13 +37,11 @@
                 <span class="price">€ <%= String.format("%.2f", book.getPrice()) %></span>
             </div>
             
-            <% if(!"true".equals(session.getAttribute("admin"))) { %>
             <form action="CartServlet" method="post" class="add-to-cart-form">
                 <input type="hidden" name="action" value="add">
                 <input type="hidden" name="code" value="<%= book.getCode() %>">
                 <button type="submit" class="btn-cart">🛒 Aggiungi al carrello</button>
             </form>
-            <% } %>
         </div>
     </div>
 
