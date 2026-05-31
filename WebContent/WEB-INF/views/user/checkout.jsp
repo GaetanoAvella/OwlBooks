@@ -6,30 +6,12 @@
 <head>
     <meta charset="UTF-8">
     <title>OwlBooks - Riepilogo Ordine</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/index.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/checkout.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="nav-logo">
-            <a href="<%= request.getContextPath() %>/IndexServlet">🦉 OwlBooks</a>
-        </div>
-        
-        <div class="nav-links">
-            <div class="user-dropdown">
-                <div class="profile-img">
-                    <img src="<%= request.getContextPath() %>/img/user/default_user.jpg" alt="Profilo">
-                </div>
-                <div class="dropdown-content">
-                    <a href="<%= request.getContextPath() %>/user/ProfileServlet">👤 Profilo</a>
-                    <a href="<%= request.getContextPath() %>/CartServlet">🛒 Carrello</a>
-                    <a href="<%= request.getContextPath() %>/user/OrdersServlet">📦 I Miei Ordini</a>
-                    <a href="<%= request.getContextPath() %>/user/LogoutServlet" class="logout">🚪 Logout</a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <%@ include file="../header.jsp" %>
 
     <%
         UserBean user = (UserBean) session.getAttribute("user");

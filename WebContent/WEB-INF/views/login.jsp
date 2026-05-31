@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css">
-<title>Login</title>
+<title>OwlBooks - Login</title>
 </head>
 <body>
 

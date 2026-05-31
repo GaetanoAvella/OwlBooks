@@ -6,37 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <title>OwlBooks - Home</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css">
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/index.css">
 </head>
 <body>
 
-    <header class="navbar">
-        <div class="nav-logo">
-            <a href="IndexServlet">🦉 OwlBooks</a>
-        </div>
-        
-        <div class="nav-links">
-            <% if (session.getAttribute("user") == null) {%>
-            	<a href="CartServlet" class="btn-nav" id="cart-btn">🛒 Carrello</a>
-                <a href="LoginServlet" class="btn-nav" id="login-btn">Login</a>
-                <a href="SignInServlet" class="btn-nav" id="signin-btn">Registrati</a>
-                
-            <% } else { %>
-                <div class="user-dropdown">
-                    <div class="profile-img">
-                        <img src="<%= request.getContextPath() %>/img/user/default_user.jpg" alt="Profilo">
-                    </div>
-                    <div class="dropdown-content">
-                        <a href="user/ProfileServlet">👤 Profilo</a>
-                        <a href="CartServlet">🛒 Carrello</a>
-                        <a href="user/OrdersServlet">📦 I Miei Ordini</a>
-                        <a href="user/LogoutServlet" class="logout">🚪 Logout</a>
-                    </div>
-                </div>
-            <% } %>
-        </div>
-    </header>
-
+	<%@ include file = "header.jsp" %>
+	
     <div class="main-container">
 
         <aside class="sidebar">
@@ -70,7 +46,6 @@
                 <% 
                 ArrayList<String> genres = (ArrayList<String>) request.getAttribute("genres");
                 for (String genre : genres) {
-                    // Controlla se questo genere è quello attualmente selezionato
                     boolean isSelected = genre.equals(request.getParameter("filter"));
                 %>
                     <li>

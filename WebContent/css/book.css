@@ -1,22 +1,9 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-    background-color: #f4f7f6;
-    color: #2c3e50;
-    padding: 40px 20px;
-}
-
 .book-detail-container {
     display: flex;
     flex-wrap: wrap;
     background-color: #ffffff;
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 40px auto;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     overflow: hidden;

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/signin.css">
-<title>Registrazione</title>
+<title>OwlBooks - Registrazione</title>
 </head>
 <body>
 

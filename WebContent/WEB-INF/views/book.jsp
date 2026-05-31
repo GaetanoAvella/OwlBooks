@@ -5,13 +5,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/book.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css?v=1">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/book.css?v=1">
 
 <% BookBean book = (BookBean) request.getAttribute("book"); %>
-<title><%= book.getName() %></title>
+<title>OwlBooks - <%= book.getName() %></title>
 
 </head>
 <body>
+
+	<%@ include file = "header.jsp" %>
 
 	<div class="book-detail-container">
         <div class="book-image">
