@@ -43,19 +43,22 @@ public class LoginServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
+		String email = request.getParameter("email") != null ? request.getParameter("email") : "";
+		
 		try {
-			if(dao.isRegistered(email)) {
-				if(dao.checkPassword(email, PasswordDigest.digestPassword(request.getParameter("password")))) {
-					HttpSession session = request.getSession();
-					UserBean user = dao.doRetriveByKey(email);
-					session.setAttribute("user", user);
-					if(user.isAdmin()) {
-						session.setAttribute("admin", "true");
-						response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
-					} else 
-						response.sendRedirect("IndexServlet");
-				}
+			if(dao.isRegistered(email) && dao.checkPassword(email, PasswordDigest.digestPassword(request.getParameter("password")))) {
+				HttpSession session = request.getSession();
+				UserBean user = dao.doRetriveByKey(email);
+				session.setAttribute("user", user);
+				if(user.isAdmin()) {
+					session.setAttribute("admin", "true");
+					response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
+				} else 
+					response.sendRedirect("IndexServlet");
+			} else {
+				request.setAttribute("error", "Email o password errate");
+				request.setAttribute("email_placeholder", email);
+				doGet(request, response);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

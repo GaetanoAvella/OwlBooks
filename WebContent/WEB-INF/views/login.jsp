@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/login.css">
 <title>OwlBooks - Login</title>
 </head>
@@ -28,9 +29,20 @@ if(session.getAttribute("user") != null)  {
 	
 	    <form action="<%= request.getContextPath() %>/LoginServlet" method="post" class="login-form">
 	        
+	        <% String errorMsg = (String) request.getAttribute("error"); %>
+            
+            <% if(errorMsg != null) { %>
+                <div class="error-message">
+                    ⚠️ <%= errorMsg %>
+                </div>
+            <% } %>
+	        
 	        <div class="form-group">
+	        	<%
+	        	String email = request.getAttribute("email_placeholder") != null ? (String) request.getAttribute("email_placeholder") : "";
+	        	%>
 	            <label for="email">Email</label>
-	            <input type="email" id="email" name="email" required placeholder="mario.rossi@email.com">
+	            <input type="email" id="email" name="email" value="<%= email %>" placeholder="mario.rossi@email.com" required>
 	        </div>
 	        
 	        <div class="form-group">

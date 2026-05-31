@@ -66,7 +66,16 @@ public class PurchaseOrderBean {
 	}
 
 	public String getPaymentMethod() {
-		return paymentMethod;
+		switch(paymentMethod) {
+			case "credit_card":
+				return "Carta di credito";
+			case "paypal":
+				return "Paypal";
+			case "on_delivery":
+				return "Pagamento alla consegna";
+			default:
+				return "Nessun metodo di pagamento selezionato";
+		}
 	}
 
 	public void setPaymentMethod(String paymentMethod) {

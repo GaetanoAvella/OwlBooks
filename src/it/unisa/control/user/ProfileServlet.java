@@ -53,7 +53,8 @@ public class ProfileServlet extends HttpServlet {
 		user.setSurname(request.getParameter("surname"));
 		user.setAddress(request.getParameter("address"));
 		user.setEmail(request.getParameter("email"));
-		user.setPassword(PasswordDigest.digestPassword(request.getParameter("password")));
+		if(!request.getParameter("password").isEmpty())
+			user.setPassword(PasswordDigest.digestPassword(request.getParameter("password")));
 		
 		try {
 			dao.doUpdate(user);
