@@ -51,9 +51,10 @@ private BookDao dao;
 			case "add":
 				try {
 					BookBean book = dao.doRetriveByCode(code);
-					if(book.getStock_quantity() <= 0) {
-						request.setAttribute("error", "Libro non disponibile");
-						doGet(request, response);
+					if(cart.get(code) != null && cart.get(code).getQuantity() + 1 > book.getStock_quantity()) {
+						request.setAttribute("book", book);
+						request.setAttribute("error", "Impossibile aggiungere questo libro nel carrello!");
+						request.getRequestDispatcher("/WEB-INF/views/book.jsp").forward(request, response);
 						return;
 					}
 					item = new CartItem(book);

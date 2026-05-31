@@ -16,7 +16,13 @@
     <%
         UserBean user = (UserBean) session.getAttribute("user");
         CartBean kart = (CartBean) session.getAttribute("cart");
-    %>
+        String errorMsg = (String) request.getAttribute("error"); 
+        
+        if(errorMsg != null) { %>
+           <div class="error-message">
+               ⚠️ <%= errorMsg %>
+           </div>
+       <% } %>
     
     <div class="checkout-wrapper">
         <div class="checkout-card">

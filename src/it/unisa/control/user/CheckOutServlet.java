@@ -60,7 +60,6 @@ public class CheckOutServlet extends HttpServlet {
 				if(item.getQuantity() > book.getStock_quantity()) {
 					request.setAttribute("error", "Quantità non disponibile per " + book.getName());
 					doGet(request, response);
-					return;
 				}
 			} 
 		} catch (SQLException e) {

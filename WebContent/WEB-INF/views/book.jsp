@@ -15,6 +15,14 @@
 <body>
 
 	<%@ include file = "header.jsp" %>
+	
+	<% 
+	String errorMsg = (String) request.getAttribute("error");
+	if(errorMsg != null) { %>
+	    <div class="error-message">
+	        ⚠️ <%= errorMsg %>
+	    </div>
+    <% } %>
 
 	<div class="book-detail-container">
         <div class="book-image">

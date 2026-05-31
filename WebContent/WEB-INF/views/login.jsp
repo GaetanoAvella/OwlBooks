@@ -29,9 +29,9 @@ if(session.getAttribute("user") != null)  {
 	
 	    <form action="<%= request.getContextPath() %>/LoginServlet" method="post" class="login-form">
 	        
-	        <% String errorMsg = (String) request.getAttribute("error"); %>
+	        <% String errorMsg = (String) request.getAttribute("error"); 
             
-            <% if(errorMsg != null) { %>
+             if(errorMsg != null) { %>
                 <div class="error-message">
                     ⚠️ <%= errorMsg %>
                 </div>

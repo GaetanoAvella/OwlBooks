@@ -13,7 +13,15 @@
 
 	<%@ include file = "header.jsp" %>
 
-	<% CartBean cart = (CartBean) session.getAttribute("cart"); %>
+	<% 
+	CartBean cart = (CartBean) session.getAttribute("cart");
+	String errorMsg = (String) request.getAttribute("error"); 
+            
+    if(errorMsg != null) { %>
+	    <div class="error-message">
+	        ⚠️ <%= errorMsg %>
+	    </div>
+    <% } %>
 
     <div class="cart-wrapper">
     
