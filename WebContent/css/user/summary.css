@@ -1,0 +1,131 @@
+.summary-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: calc(100vh - 72px);
+    padding: 40px 20px;
+}
+
+.summary-card {
+    background-color: #ffffff;
+    max-width: 800px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.summary-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.summary-header h2 {
+    color: #2c3e50;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.summary-header p {
+    color: #7f8c8d;
+    font-size: 15px;
+}
+
+.summary-info-box {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9fbfa;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ecf0f1;
+    margin-bottom: 35px;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-label {
+    font-size: 13px;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    font-size: 18px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.total-price {
+    color: #e67e22;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.summary-table-section h3 {
+    color: #34495e;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.summary-table th {
+    background-color: #2c3e50;
+    color: #ffffff;
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.summary-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ecf0f1;
+    color: #2c3e50;
+    font-size: 15px;
+    vertical-align: middle;
+}
+
+.summary-table tr:hover td {
+    background-color: #fcfcfc;
+}
+
+.book-name {
+    font-weight: 600;
+}
+
+.qty-cell {
+    text-align: center;
+}
+
+.summary-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-back {
+    display: inline-block;
+    background-color: #ecf0f1;
+    color: #34495e;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-back:hover {
+    background-color: #bdc3c7;
+    color: #2c3e50;
+}

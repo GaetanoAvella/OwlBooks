@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <title>OwlBooks - I Miei Ordini</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/orders.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/user/orders.css?v=1">
 </head>
 <body>
 
@@ -32,16 +32,18 @@
                 <% } else {
                     for(PurchaseOrderBean order : orders) { 
                 %>
-                    <div class="order-item">
-                        <div class="order-info">
-                            <span class="order-code">Ordine #<%= order.getOrderCode() %></span>
-                            <span class="order-date">Data: <%= order.getOrderDate() %></span>
-                        </div>
-                        <div class="order-total-box">
-                            <span class="order-total-label">Totale</span>
-                            <span class="order-total-value">€ <%= order.getTotal() %></span>
-                        </div>
-                    </div>
+                	<a href="<%= request.getContextPath() %>/user/SummaryServlet?code=<%= order.getOrderCode() %>" class="order-link">
+	                    <div class="order-item">
+	                        <div class="order-info">
+	                            <span class="order-code">Ordine #<%= order.getOrderCode() %></span>
+	                            <span class="order-date">Data: <%= order.getOrderDate() %></span>
+	                        </div>
+	                        <div class="order-total-box">
+	                            <span class="order-total-label">Totale</span>
+	                            <span class="order-total-value">€ <%= order.getTotal() %></span>
+	                        </div>
+	                    </div>
+					</a>
                 <%  }
                 } %>
             </div>
