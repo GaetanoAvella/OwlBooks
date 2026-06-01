@@ -51,6 +51,12 @@ public class CheckOutServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		UserBean user = (UserBean) session.getAttribute("user");
 		CartBean cart = (CartBean) session.getAttribute("cart");
+		
+		if (user == null || cart == null || cart.sizeArrayList() == 0) {
+	        response.sendRedirect(request.getContextPath() + "/IndexServlet");
+	        return;
+	    }
+		
 		String paymentMethod = request.getParameter("payment_method");
 		
 		try {
@@ -60,6 +66,7 @@ public class CheckOutServlet extends HttpServlet {
 				if(item.getQuantity() > book.getStock_quantity()) {
 					request.setAttribute("error", "Quantità non disponibile per " + book.getName());
 					doGet(request, response);
+					return;
 				}
 			} 
 		} catch (SQLException e) {

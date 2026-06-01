@@ -22,7 +22,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
     public PurchaseOrderDaoImpl(DataSource ds) {
     	this.ds = ds;
     }
-	
+    
 	@Override
 	public void doSave(PurchaseOrderBean order) throws SQLException {
 		String insertOrder = "INSERT INTO " + PURCHASE_ORDER + " (user_id, order_code, order_date, total, payment_method)"
@@ -31,8 +31,11 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 				+ " VALUES (?,?,?,?)"; 
 		String updateStock = "UPDATE book SET stock_quantity = stock_quantity - ? WHERE id = ?";
 		
+		Connection connection = null;
 		
-		try(Connection connection = ds.getConnection()) {
+		try{
+			connection = ds.getConnection();
+			connection.setAutoCommit(false);
 			try(PreparedStatement psOrder = connection.prepareStatement(insertOrder, Statement.RETURN_GENERATED_KEYS)) {
 				psOrder.setInt(1, order.getUserId());
 				psOrder.setString(2, order.getOrderCode());
@@ -67,8 +70,18 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 			        psStock.executeBatch();
 				}
 			}
-			
-		}
+			connection.commit();
+		} catch (SQLException e) {
+			if (connection != null) {
+	            connection.rollback(); 
+	        }
+			throw e;
+		} finally {
+	        if (connection != null) {
+	            connection.setAutoCommit(true); 
+	            connection.close(); 
+	        }
+	    }
 		
 	}
 
