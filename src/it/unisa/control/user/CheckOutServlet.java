@@ -63,6 +63,13 @@ public class CheckOutServlet extends HttpServlet {
 			for(int i=0; i<cart.sizeArrayList(); i++) {
 				CartItem item = cart.get(i);
 				BookBean book = bookDao.doRetriveByCode(item.getBook().getCode());
+				
+				if (book == null || !book.isActive()) {
+		            request.setAttribute("error", "Siamo spiacenti, il libro '" + item.getBook().getName() + "' è stato rimosso dal catalogo e non è più acquistabile.");
+		            doGet(request, response);
+		            return; 
+		        }
+				
 				if(item.getQuantity() > book.getStock_quantity()) {
 					request.setAttribute("error", "Quantità non disponibile per " + book.getName());
 					doGet(request, response);

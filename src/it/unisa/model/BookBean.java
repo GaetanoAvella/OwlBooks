@@ -10,6 +10,7 @@ public class BookBean {
 	private String description;
 	private int stock_quantity;
 	private String editor;
+	private boolean active;
 	private String path;
 	private String mimeType;
 	
@@ -66,6 +67,12 @@ public class BookBean {
 	}
 	public void setEditor(String editor) {
 		this.editor = editor;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	public String getPath() {
 		return path;

@@ -74,13 +74,14 @@
                 <%
                 ArrayList<BookBean> catalogue = (ArrayList<BookBean>) request.getAttribute("catalogue");
                 for (BookBean book : catalogue) {
+                	if(book.isActive()) {
                 %>
                     <tr>
                         <td class="title-cell"><a href="BookServlet?code=<%= book.getCode() %>">📘 <%= book.getName() %></a></td>
                         <td><%= book.getAuthor() %></td>
                         <td class="price-cell">€ <%= String.format("%.2f", book.getPrice()) %></td>
                     </tr>
-                <% } %>
+                <% }}%>
                 </tbody>
             </table>
         </main>

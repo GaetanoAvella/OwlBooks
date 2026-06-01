@@ -37,13 +37,13 @@ public class BookServlet extends HttpServlet {
 		
 		try {
 			book = dao.doRetriveByCode(code);
+			if(book == null || !book.isActive()) {
+				response.sendRedirect(request.getContextPath() + "/IndexServlet");
+				return;
+			}
+				
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
-		if(book == null) {
-			response.sendRedirect(request.getContextPath() + "/IndexServlet");
-			return;
 		}
 		
 		request.setAttribute("book", book);

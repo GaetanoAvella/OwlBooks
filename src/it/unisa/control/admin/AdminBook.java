@@ -56,8 +56,15 @@ public class AdminBook extends HttpServlet {
 				break;
 			case "delete":
 				try {
-					if(!dao.doDelete(code))
-						request.setAttribute("error", "Eliminazione fallita");
+					dao.doSetActivate(code, false);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				response.sendRedirect(request.getContextPath() + "/admin/AdminIndex");
+				break;
+			case "activate":
+				try {
+					dao.doSetActivate(code, true);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -95,6 +102,7 @@ public class AdminBook extends HttpServlet {
 			book.setDescription(request.getParameter("description"));
 			book.setPrice(Float.parseFloat(request.getParameter("price")));
 			book.setStock_quantity(Integer.parseInt(request.getParameter("quantity")));
+			book.setActive(true);
 			
 			Part part = request.getPart("image");
 			if(part != null && part.getSize() > 0) {
@@ -126,18 +134,25 @@ public class AdminBook extends HttpServlet {
 				book.setPrice(Float.parseFloat(request.getParameter("price")));
 				book.setStock_quantity(Integer.parseInt(request.getParameter("quantity")));
 				
-				Part part = request.getPart("image");
-				if(part != null && part.getSize() > 0) {
-					if(book.getPath() != null && !book.getPath().isEmpty()) {
-						new File(book.getPath()).delete();
+				if("true".equals(request.getParameter("delete_image"))) {
+					new File(book.getPath()).delete();
+					book.setPath(null);
+					book.setMimeType(null);
+				} else {
+					Part part = request.getPart("image");
+					
+					if(part != null && part.getSize() > 0) {
+						if(book.getPath() != null && !book.getPath().isEmpty()) {
+							new File(book.getPath()).delete();
+						}
+						
+						String uniqueFileName = buildUniqueFileName(part);
+						String filePath = request.getServletContext().getRealPath("/img/book") + File.separator + uniqueFileName;
+						part.write(filePath);
+						
+						book.setPath(filePath);
+						book.setMimeType(part.getContentType());
 					}
-					
-					String uniqueFileName = buildUniqueFileName(part);
-					String filePath = request.getServletContext().getRealPath("/img/book") + File.separator + uniqueFileName;
-					part.write(filePath);
-					
-					book.setPath(filePath);
-					book.setMimeType(part.getContentType());
 				}
 				
 				dao.doUpdate(book);

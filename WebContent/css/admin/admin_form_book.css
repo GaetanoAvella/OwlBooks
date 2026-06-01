@@ -110,3 +110,33 @@
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
+
+.form-row-extended {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+    max-width: 80%; 
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 25px; 
+}
+
+.checkbox-label {
+    color: #c0392b !important;
+    margin-bottom: 0 !important;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #e74c3c;
+}

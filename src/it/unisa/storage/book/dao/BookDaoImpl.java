@@ -1,7 +1,6 @@
 	package it.unisa.storage.book.dao;
 	
-	import java.io.File;
-import java.sql.Connection;
+	import java.sql.Connection;
 	import java.sql.PreparedStatement;
 	import java.sql.ResultSet;
 	import java.sql.SQLException;
@@ -21,7 +20,7 @@ import java.sql.Connection;
 		@Override
 		public void doSave(BookBean book) throws SQLException {
 			String insertSQL = "INSERT INTO " + TABLE_NAME
-					+ " (code, name, author, genre, price, description, stock_quantity, editor, path, mime_type) VALUES (?,?,?,?,?,?,?,?,?,?);";
+					+ " (code, name, author, genre, price, description, stock_quantity, editor, is_active, path, mime_type) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(insertSQL)) {
@@ -33,28 +32,21 @@ import java.sql.Connection;
 				statement.setString(6, book.getDescription());
 				statement.setInt(7, book.getStock_quantity());
 				statement.setString(8, book.getEditor());
-				statement.setString(9, book.getPath());
-				statement.setString(10, book.getMimeType());
+				statement.setBoolean(9, book.isActive());
+				statement.setString(10, book.getPath());
+				statement.setString(11, book.getMimeType());
 				statement.execute();
 			}
 		}
 		
 		@Override
-		public boolean doDelete(String code) throws SQLException {
-			BookBean book = doRetriveByCode(code);
-			
-			if(book != null && book.getPath() != null && !book.getPath().isEmpty()) {
-				File imageFile = new File(book.getPath());
-				if(imageFile.exists())
-					imageFile.delete();
-			}
-			
-			String deleteSQL = "DELETE FROM " + TABLE_NAME + " WHERE code = ?";
+		public void doSetActivate(String code, boolean active) throws SQLException {
+			String updateSQL = "UPDATE " + TABLE_NAME + " SET is_active=? WHERE code = ?";
 	        try (Connection connection = ds.getConnection();
-	        		PreparedStatement preparedStatement = connection.prepareStatement(deleteSQL)) {
-	            preparedStatement.setString(1, code);
-	            int result = preparedStatement.executeUpdate();
-	            return result != 0;
+	        		PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+	        	preparedStatement.setBoolean(1, active);
+	            preparedStatement.setString(2, code);
+	            preparedStatement.executeUpdate();
 	        }
 		}
 		
@@ -78,6 +70,7 @@ import java.sql.Connection;
 						book.setDescription(rs.getString("description"));
 						book.setStock_quantity(rs.getInt("stock_quantity"));
 						book.setEditor(rs.getString("editor"));
+						book.setActive(rs.getBoolean("is_active"));
 						book.setPath(rs.getString("path"));
 						book.setMimeType(rs.getString("mime_type"));
 						
@@ -90,9 +83,15 @@ import java.sql.Connection;
 		}
 		
 		@Override
-		public ArrayList<BookBean> doRetriveAll(String order) throws SQLException {
+		public ArrayList<BookBean> doRetriveAll(String order, boolean isActive) throws SQLException {
 			ArrayList<BookBean> list = new ArrayList<>();
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE stock_quantity > 0 " + setOrderString(order) ;
+			String selectSQL = null;
+			
+			if(isActive) {
+				selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE is_active=true" + setOrderString(order);
+			} else {
+				selectSQL = "SELECT * FROM " + TABLE_NAME + setOrderString(order);
+			}
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL);
@@ -108,6 +107,7 @@ import java.sql.Connection;
 					book.setDescription(rs.getString("description"));
 					book.setStock_quantity(rs.getInt("stock_quantity"));
 					book.setEditor(rs.getString("editor"));
+					book.setActive(rs.getBoolean("is_active"));
 					book.setPath(rs.getString("path"));
 					book.setMimeType(rs.getString("mime_type"));
 					list.add(book);
@@ -119,10 +119,10 @@ import java.sql.Connection;
 		@Override
 		public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order) throws SQLException {
 			if(filterValue == null || filterValue.equals(""))
-				return doRetriveAll(order);
+				return doRetriveAll(order, false);
 			
 			ArrayList<BookBean> list = new ArrayList<>();
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE " + filter + "=?" + setOrderString(order);
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE is_active=true AND " + filter + "=?" + setOrderString(order);
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
@@ -139,6 +139,7 @@ import java.sql.Connection;
 						book.setDescription(rs.getString("description"));
 						book.setStock_quantity(rs.getInt("stock_quantity"));
 						book.setEditor(rs.getString("editor"));
+						book.setActive(true);
 						book.setPath(rs.getString("path"));
 						book.setMimeType(rs.getString("mime_type"));
 						list.add(book);
@@ -151,7 +152,7 @@ import java.sql.Connection;
 		@Override
 		public ArrayList<String> doRetriveGenres() throws SQLException{
 			ArrayList<String> genres = new ArrayList<String>();
-			String selectSQL = "SELECT DISTINCT genre FROM " + TABLE_NAME + " ORDER BY genre ASC";
+			String selectSQL = "SELECT DISTINCT genre FROM " + TABLE_NAME + " WHERE is_active=true ORDER BY genre ASC";
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL);
@@ -169,7 +170,7 @@ import java.sql.Connection;
 		@Override
 		public void doUpdate(BookBean book) throws SQLException {		
 			String updateSQL = "UPDATE " + TABLE_NAME + 
-	                 " SET name=?, author=?, genre=?, price=?, description=?, stock_quantity=?, editor=?, path=?, mime_type=?" +
+	                 " SET name=?, author=?, genre=?, price=?, description=?, stock_quantity=?, editor=?, is_active=?, path=?, mime_type=?" +
 	                 " WHERE code=?";
 			
 			try(Connection connection = ds.getConnection();
@@ -181,9 +182,10 @@ import java.sql.Connection;
 				statement.setString(5, book.getDescription());
 				statement.setInt(6, book.getStock_quantity());
 				statement.setString(7, book.getEditor());
-				statement.setString(8, book.getCode());
+				statement.setBoolean(8, book.isActive());
 				statement.setString(9, book.getPath());
 				statement.setString(10, book.getMimeType());
+				statement.setString(11, book.getCode());
 				statement.executeUpdate();
 			}
 		}
@@ -191,7 +193,7 @@ import java.sql.Connection;
 		@Override
 		public boolean isRegistered(String code) throws SQLException{
 			BookBean book = doRetriveByCode(code);
-			return book.getCode() != null ? true : false;
+			return book != null;
 		}
 		
 		public String setOrderString(String order) {

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>OwlBooks - Pannello Amministratore</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/admin_index.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/admin_index.css?v=1">
 </head>
 <body>
 
@@ -30,6 +30,7 @@
                             <th>Nome Libro</th>	
                             <th>Prezzo</th>	
                             <th>Q.tà</th>
+                            <th>Attivo</th>
                             <th>Azioni</th>
                         </tr>
                     </thead>
@@ -49,9 +50,20 @@
                                     <%= book.getStock_quantity() %>
                                 </span>
                             </td>
+                            <td>
+                            <% if(book.isActive()) { %>
+                            	Si
+                            <% } else { %>
+                            	No
+                            <% } %>
+                            </td>
                             <td class="actions-cell">
                                 <a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode()%>&action=edit" class="btn-action btn-edit">Modifica</a>
-                                <a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode() %>&action=delete" class="btn-action btn-delete">Elimina</a>
+                                <% if(book.isActive()) { %>
+                            	<a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode() %>&action=delete" class="btn-action btn-delete">Elimina</a>
+                            	<% } else { %>
+                            	<a href="<%= request.getContextPath() %>/admin/AdminBook?code=<%= book.getCode() %>&action=activate" class="btn-action btn-activate">Attiva</a>
+                            	<% } %>
                             </td>
                         </tr>
                     <%  } 

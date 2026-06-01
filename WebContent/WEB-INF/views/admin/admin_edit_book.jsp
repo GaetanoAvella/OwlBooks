@@ -7,7 +7,8 @@
     <% BookBean book = (BookBean) request.getAttribute("book"); %>
     <title>OwlBooks - Modifica <%= book.getName() %></title>
     
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/admin_form_book.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/admin_form_book.css?v=1">
+    <script src="<%= request.getContextPath() %>/scripts/admin_form.js"></script>
 </head>
 <body>
 
@@ -56,17 +57,24 @@
                         </div>
                     </div>
 
-                    <div class="form-row-small">
-                        <div class="form-group">
-                            <label for="price">Prezzo (€)</label>
-                            <input type="number" id="price" name="price" min="0" step="0.01" value="<%= book.getPrice() %>" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="quantity">Quantità in Magazzino</label>
-                            <input type="number" id="quantity" name="quantity" min="0" value="<%= book.getStock_quantity() %>" required>
-                        </div>
-                    </div>
+                    <div class="form-row-extended">
+					    <div class="form-group">
+					        <label for="price">Prezzo (€)</label>
+					        <input type="number" id="price" name="price" min="0" step="0.01" value="<%= book.getPrice() %>" required>
+					    </div>
+					    
+					    <div class="form-group">
+					        <label for="quantity">Quantità in Magazzino</label>
+					        <input type="number" id="quantity" name="quantity" min="0" value="<%= book.getStock_quantity() %>" required>
+					    </div>
+					
+					    <% if(book.getPath() != null && !book.getPath().isBlank()) { %>
+					    <div class="checkbox-group">
+					        <input type="checkbox" id="delete_image" name="delete_image" value="true" onchange="toggleImage()"> 
+					        <label for="delete_image" class="checkbox-label">🗑️ Rimuovi copertina</label>
+					    </div>
+					    <% } %>
+					</div>
                     
                     <div class="form-group full-width">
                         <label for="description">Trama / Descrizione</label>

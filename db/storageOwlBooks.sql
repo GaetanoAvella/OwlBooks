@@ -26,7 +26,8 @@ CREATE TABLE book (
     description     VARCHAR(255),
     stock_quantity  INT           NOT NULL DEFAULT 0,
     editor          VARCHAR(150)  NOT NULL,
-    path 			VARCHAR(255)   DEFAULT NULL,
+    is_active		boolean		  DEFAULT true,
+    path 			VARCHAR(255)  DEFAULT NULL,
     mime_type		VARCHAR(50)   DEFAULT NULL
 );
 

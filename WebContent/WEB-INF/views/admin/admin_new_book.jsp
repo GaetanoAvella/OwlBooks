@@ -50,7 +50,7 @@
                         
                         <div class="form-group">
                             <label for="image">Copertina Libro (Immagine)</label>
-                            <input type="file" id="image" accept="image/*" name="image" class="file-input" required>
+                            <input type="file" id="image" accept="image/*" name="image" class="file-input">
                         </div>
                     </div>
 
