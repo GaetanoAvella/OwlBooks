@@ -10,6 +10,12 @@ body {
     color: #333;
 }
 
+.admin-logo a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .admin-dashboard {
     display: flex;
     min-height: 100vh;

@@ -13,7 +13,7 @@ INSERT INTO book (code, name, author, genre, price, description, stock_quantity,
 VALUES ('ISBN-9788804668237', '1984', 'George Orwell', 'Distopico', 11.00, 'In un futuro totalitario, Winston Smith lotta contro il controllo del Grande Fratello.', 60, 'Mondadori');
 
 INSERT INTO book (code, name, author, genre, price, description, stock_quantity, editor)
-VALUES ('ISBN-9788804701validation', 'La Fattoria degli Animali', 'George Orwell', 'Distopico', 9.90, 'Gli animali di una fattoria si ribellano agli uomini ma finiscono per ripetere gli stessi errori.', 55, 'Mondadori');
+VALUES ('ISBN-9788804701901', 'La Fattoria degli Animali', 'George Orwell', 'Distopico', 9.90, 'Gli animali di una fattoria si ribellano agli uomini ma finiscono per ripetere gli stessi errori.', 55, 'Mondadori');
 
 INSERT INTO book (code, name, author, genre, price, description, stock_quantity, editor)
 VALUES ('ISBN-9788877827029', 'Harry Potter e la Pietra Filosofale', 'J.K. Rowling', 'Fantasy', 12.50, 'Un giovane mago scopre di essere speciale e inizia la sua avventura a Hogwarts.', 100, 'Salani');
