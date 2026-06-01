@@ -65,7 +65,7 @@
 					    
 					    <div class="form-group">
 					        <label for="quantity">Quantità in Magazzino</label>
-					        <input type="number" id="quantity" name="quantity" min="0" value="<%= book.getStock_quantity() %>" required>
+					        <input type="number" id="quantity" name="quantity" min="1" value="<%= book.getStock_quantity() %>" required>
 					    </div>
 					
 					    <% if(book.getPath() != null && !book.getPath().isBlank()) { %>

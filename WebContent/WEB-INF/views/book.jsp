@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/book.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/book.css?v=1">
 
 <% BookBean book = (BookBean) request.getAttribute("book"); %>
 <title>OwlBooks - <%= book.getName() %></title>
@@ -41,11 +41,15 @@
                 <span class="price">€ <%= String.format("%.2f", book.getPrice()) %></span>
             </div>
             
+            <% if(book.getStock_quantity() > 0) { %>
             <form action="CartServlet" method="post" class="add-to-cart-form">
                 <input type="hidden" name="action" value="add">
                 <input type="hidden" name="code" value="<%= book.getCode() %>">
                 <button type="submit" class="btn-cart">🛒 Aggiungi al carrello</button>
             </form>
+            <% } else { %>
+            	<button class="btn-out-of-stock" disabled>🚫 Non disponibile</button>
+            <% } %>
         </div>
     </div>
 
