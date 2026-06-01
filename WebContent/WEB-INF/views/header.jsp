@@ -20,6 +20,9 @@
                     </div>
                     <div class="dropdown-content" id="dropdown-menu">
                         <a href="<%= request.getContextPath() %>/user/ProfileServlet">👤 Profilo</a>
+                        <% if("true".equals(session.getAttribute("admin"))) { %>
+                        	<a href="<%= request.getContextPath() %>/admin/AdminIndex">⚙️ Pannello Admin </a>
+                        <% } %>
                         <a href="<%= request.getContextPath() %>/CartServlet">🛒 Carrello</a>
                         <a href="<%= request.getContextPath() %>/user/OrdersServlet">📦 I Miei Ordini</a>
                         <a href="<%= request.getContextPath() %>/user/LogoutServlet" class="logout">🚪 Logout</a>

@@ -5,7 +5,7 @@
 
 <aside class="admin-sidebar">
         <div class="admin-logo">
-            <a href="<%= request.getContextPath() %>/admin/AdminIndex"><h2>⚙️ Admin Panel</h2></a>
+            <a href="<%= request.getContextPath() %>/admin/AdminIndex"><h2>⚙️ Pannello Admin</h2></a>
         </div>
         <ul class="admin-menu">
             <li><a href="<%= request.getContextPath() %>/IndexServlet">🏠 Torna al Sito</a></li>
