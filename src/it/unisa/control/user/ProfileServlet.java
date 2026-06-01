@@ -46,18 +46,29 @@ public class ProfileServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-		UserBean user = (UserBean) session.getAttribute("user");
-		
-		user.setName(request.getParameter("name"));
-		user.setSurname(request.getParameter("surname"));
-		user.setAddress(request.getParameter("address"));
-		user.setEmail(request.getParameter("email"));
-		if(!request.getParameter("password").isEmpty())
-			user.setPassword(PasswordDigest.digestPassword(request.getParameter("password")));
-		
 		try {
+			HttpSession session = request.getSession(false);
+			UserBean user = (UserBean) session.getAttribute("user");
+			
+			user.setName(request.getParameter("name"));
+			user.setSurname(request.getParameter("surname"));
+			user.setAddress(request.getParameter("address"));
+		
+			if(!request.getParameter("email").equals(user.getEmail())) {
+				if(dao.isRegistered(request.getParameter("email"))) {
+					request.setAttribute("error", "Email non valida!");
+					request.getRequestDispatcher("/WEB-INF/views/user/edit_profile.jsp").forward(request, response);
+					return;
+				} else {
+					user.setEmail(request.getParameter("email"));
+				}
+			}
+			
+			if(!request.getParameter("password").isEmpty())
+				user.setPassword(PasswordDigest.digestPassword(request.getParameter("password")));
+			
 			dao.doUpdate(user);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

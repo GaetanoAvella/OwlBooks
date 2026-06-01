@@ -12,6 +12,7 @@
 <body>
 
     <%@ include file="../header.jsp" %>
+    <%@ include file="../error.jsp" %>
 
     <div class="edit-wrapper">
         <div class="edit-card">

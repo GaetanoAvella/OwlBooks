@@ -1,0 +1,91 @@
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    padding: 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ecf0f1;
+    color: #555;
+    vertical-align: middle;
+}
+
+.admin-table tr:hover {
+    background-color: #fcfcfc;
+}
+
+.book-title {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.code-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.code-link:hover {
+    text-decoration: underline;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-in-stock {
+    background-color: #e8f8f5;
+    color: #27ae60;
+}
+
+.badge-out-stock {
+    background-color: #fdedec;
+    color: #c0392b;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-action {
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+    color: white;
+    transition: opacity 0.2s;
+}
+
+.btn-action:hover {
+    opacity: 0.8;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+}

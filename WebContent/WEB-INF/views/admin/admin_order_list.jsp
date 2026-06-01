@@ -1,58 +1,79 @@
 <%@page import="it.unisa.model.PurchaseOrderBean"%>
 <%@page import="java.util.ArrayList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-<meta charset="UTF-8">
-<title>Ordini</title>
+    <meta charset="UTF-8">
+    <title>OwlBooks - Gestione Ordini</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/admin/admin_order_list.css">
 </head>
 <body>
 
-<form action="<%= request.getContextPath() %>/admin/AdminOrderList" method="post">
-	<input type="date" name="from" value="<%= request.getAttribute("from_date") %>"> 
-	<input type="date" name="to" value="<%= request.getAttribute("to_date") %>"> 
-	
-	<input type="submit" value="Cerca"> 		
-</form>
+    <%@ include file="../error.jsp" %>
 
-<% if(request.getAttribute("error") != null) { %>
+    <div class="admin-dashboard">
+        
+        <%@ include file="admin_global.jsp" %>
 
-	<p><%= request.getAttribute("error") %>
+        <main class="admin-content">
+            <div class="content-header">
+                <h1>📦 Gestione Ordini</h1>
+            </div>
+            
+            <div class="filter-card">
+                <form action="<%= request.getContextPath() %>/admin/AdminOrderList" method="post" class="filter-form">
+                    <div class="date-inputs">
+                        <div class="input-group">
+                            <label for="from">Da:</label>
+                            <input type="date" id="from" name="from" value="<%= request.getAttribute("from_date") != null ? request.getAttribute("from_date") : "" %>">
+                        </div>
+                        <div class="input-group">
+                            <label for="to">A:</label>
+                            <input type="date" id="to" name="to" value="<%= request.getAttribute("to_date") != null ? request.getAttribute("to_date") : "" %>">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-search">🔍 Cerca Ordini</button>
+                </form>
+            </div>
 
-<% 
-	}
-	ArrayList<PurchaseOrderBean> orders = (ArrayList<PurchaseOrderBean>) request.getAttribute("orders");
-%>
+            <% ArrayList<PurchaseOrderBean> orders = (ArrayList<PurchaseOrderBean>) request.getAttribute("orders"); %>
 
-<table border="1">
+            <div class="table-container">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Id Ordine</th>
+                            <th>Id Utente</th>
+                            <th>Codice Ordine</th>
+                            <th>Data Acquisto</th>
+                            <th>Metodo Pagamento</th>
+                            <th>Totale</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <% if(orders != null && !orders.isEmpty()) {
+                        for(PurchaseOrderBean order : orders) { %>
+                        <tr>
+                            <td>#<%= order.getId() %></td>
+                            <td><%= order.getUserId() %></td>
+                            <td><a href="<%= request.getContextPath() %>/admin/AdminOrderDetail?code=<%= order.getOrderCode() %>" class="code-link"><%= order.getOrderCode() %></a></td>
+                            <td><%= order.getOrderDate() %></td>
+                            <td><%= order.getPaymentMethod() %></td>
+                            <td class="price-cell">€ <%= String.format("%.2f", order.getTotal()) %></td>
+                        </tr>
+                    <%  } 
+                    } else { %>
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 30px; color: #7f8c8d;">Nessun ordine trovato in questo intervallo di date.</td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
 
-	<tr>
-	
-		<th>Id</th>
-		<th>Id utente</th>
-		<th>Codice ordine</th>
-		<th>Data acquisto</th>
-		<th>Metodo di pagamento</th>
-		<th>Totale</th>
-	
-	</tr>
-	
-	<% for(PurchaseOrderBean order : orders) { %>
-	
-		<tr>
-			<td><%= order.getId() %></td>
-			<td><%= order.getUserId() %></td>
-			<td><a href="<%= request.getContextPath() %>/admin/AdminOrderDetail?code=<%= order.getOrderCode() %>"><%= order.getOrderCode() %></a></td>
-			<td><%= order.getOrderDate() %></td>
-			<td><%= order.getPaymentMethod() %></td>
-			<td><%= order.getTotal() %></td>
-		</tr>
-	
-	<% } %>
-
-</table>
+        </main>
+    </div>
 
 </body>
 </html>

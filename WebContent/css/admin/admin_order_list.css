@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+.filter-card {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.filter-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+
+.date-inputs {
+    display: flex;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 13px;
+    color: #34495e;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.input-group input[type="date"] {
+    padding: 10px 15px;
+    border: 1px solid #bdc3c7;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #2c3e50;
+    background-color: #fcfcfc;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group input[type="date"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: #ffffff;
+}
+
+.btn-search {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 11px 25px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    height: 42px;
+}
+
+.btn-search:hover {
+    background-color: #2980b9;
+}
+
+.btn-search:active {
+    transform: scale(0.98);
+}
+
+.table-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    padding: 15px;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+.admin-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ecf0f1;
+    color: #555;
+    vertical-align: middle;
+}
+
+.admin-table tr:hover {
+    background-color: #fcfcfc;
+}
+
+.code-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.code-link:hover {
+    text-decoration: underline;
+}
+
+.price-cell {
+    font-weight: bold;
+    color: #27ae60;
+}
