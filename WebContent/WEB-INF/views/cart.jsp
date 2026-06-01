@@ -12,17 +12,10 @@
 <body>
 
 	<%@ include file = "header.jsp" %>
+	<%@ include file = "error.jsp" %>
 
-	<% 
-	CartBean cart = (CartBean) session.getAttribute("cart");
-	String errorMsg = (String) request.getAttribute("error"); 
-            
-    if(errorMsg != null) { %>
-	    <div class="error-message">
-	        ⚠️ <%= errorMsg %>
-	    </div>
-    <% } %>
-
+	<% CartBean cart = (CartBean) session.getAttribute("cart"); %>
+	
     <div class="cart-wrapper">
     
         <% if(cart == null || cart.sizeArrayList() == 0) { %>

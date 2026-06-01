@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css?v=1">
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/book.css?v=1">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/book.css">
 
 <% BookBean book = (BookBean) request.getAttribute("book"); %>
 <title>OwlBooks - <%= book.getName() %></title>
@@ -15,14 +15,7 @@
 <body>
 
 	<%@ include file = "header.jsp" %>
-	
-	<% 
-	String errorMsg = (String) request.getAttribute("error");
-	if(errorMsg != null) { %>
-	    <div class="error-message">
-	        ⚠️ <%= errorMsg %>
-	    </div>
-    <% } %>
+	<%@ include file = "error.jsp" %>
 
 	<div class="book-detail-container">
         <div class="book-image">

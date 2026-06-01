@@ -60,7 +60,6 @@ import java.sql.Connection;
 		
 		@Override
 		public BookBean doRetriveByCode(String code) throws SQLException {
-			BookBean book = new BookBean();
 			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE code=?";
 			
 			try(Connection connection = ds.getConnection();
@@ -69,6 +68,7 @@ import java.sql.Connection;
 				statement.setString(1, code);
 				try(ResultSet rs = statement.executeQuery()) {
 					if(rs.next()) {
+						BookBean book = new BookBean();
 						book.setId(rs.getInt("id"));
 						book.setCode(rs.getString("code"));
 						book.setName(rs.getString("name"));
@@ -80,11 +80,13 @@ import java.sql.Connection;
 						book.setEditor(rs.getString("editor"));
 						book.setPath(rs.getString("path"));
 						book.setMimeType(rs.getString("mime_type"));
+						
+						return book;
 					}
 				}
 			}
 			
-			return book;		
+			return null;		
 		}
 		
 		@Override

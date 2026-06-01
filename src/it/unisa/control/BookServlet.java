@@ -41,9 +41,14 @@ public class BookServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		if(book == null) {
+			response.sendRedirect(request.getContextPath() + "/IndexServlet");
+			return;
+		}
+		
 		request.setAttribute("book", book);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/book.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/book.jsp");
 		dispatcher.forward(request, response);
 	}
 

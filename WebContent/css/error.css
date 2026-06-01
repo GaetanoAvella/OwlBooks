@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+.error-message {
+    background-color: #fdedec;
+    color: #e74c3c;
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #fadbd8;
+}
