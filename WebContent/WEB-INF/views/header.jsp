@@ -8,6 +8,13 @@
             <a href="<%= request.getContextPath() %>/IndexServlet">🦉 OwlBooks</a>
         </div>
         
+        <div class="search-container">
+		    <form action="SearchBarServlet" method="get" class="search-form">
+		        <input type="search" name="searchQuery" class="search-input" placeholder="Cerca per titolo, autore o ISBN..." required>
+		        <button type="submit" class="search-button">🔍 Cerca</button>
+		    </form>
+		</div>
+        
         <div class="nav-links">
             <% if (session.getAttribute("user") == null) {%>
             	<a href="<%= request.getContextPath() %>/CartServlet" class="btn-nav" id="cart-btn">🛒 Carrello</a>
