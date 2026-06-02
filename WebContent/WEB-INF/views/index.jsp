@@ -60,7 +60,15 @@
         </aside>
 
         <main class="catalogue-section">
-            <h2>Catalogo Libri</h2>
+            <h2>
+			    <% if(request.getParameter("searchQuery") != null && !request.getParameter("searchQuery").isEmpty()) { %>
+			        Risultati per: "<%= request.getParameter("searchQuery") %>"
+			    <% } else if(request.getParameter("filter") != null) { %>
+			        Genere: <%= request.getParameter("filter") %>
+			    <% } else { %>
+			        Tutto il Catalogo
+			    <% } %>
+			</h2>
             
             <table class="book-table">
                 <thead>

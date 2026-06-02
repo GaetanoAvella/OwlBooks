@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/header.css?v=1">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/header.css">
 <script src="<%= request.getContextPath() %>/scripts/menubar.js"></script>
+<script src="<%= request.getContextPath() %>/scripts/searchbar.js"></script>
 
 <header class="navbar">
         <div class="nav-logo">
@@ -9,12 +10,15 @@
         </div>
         
         <div class="search-container">
-		    <form action="SearchBarServlet" method="get" class="search-form">
-		        <input type="search" name="searchQuery" class="search-input" placeholder="Cerca per titolo, autore o ISBN..." required>
+		    <form action="IndexServlet" method="get" class="search-form">
+		        <input type="search" name="searchQuery" class="search-input"  placeholder="Cerca per titolo, autore o ISBN..." 
+		        	value="<%= request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "" %>" 
+		        	oninput="searchBar(this)" autocomplete="off" required>
 		        <button type="submit" class="search-button">🔍 Cerca</button>
 		    </form>
+		    <div id="search-result" class="search-results-dropdown"></div>
 		</div>
-        
+		
         <div class="nav-links">
             <% if (session.getAttribute("user") == null) {%>
             	<a href="<%= request.getContextPath() %>/CartServlet" class="btn-nav" id="cart-btn">🛒 Carrello</a>

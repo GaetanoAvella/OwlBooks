@@ -196,7 +196,45 @@
 			return book != null;
 		}
 		
+		public ArrayList<BookBean> doRetrieveByString(String query, String order) throws SQLException {
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + 
+                    " WHERE is_active=true AND (name LIKE ? OR author LIKE ? OR code LIKE ?)" + 
+                    setOrderString(order);
+			ArrayList<BookBean> books = new ArrayList<BookBean>();
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
+				String searchPattern = "%" + query + "%";
+				statement.setString(1, searchPattern);
+				statement.setString(2, searchPattern);
+				statement.setString(3, query);
+				try(ResultSet rs = statement.executeQuery()) {
+					while(rs.next()) {
+						BookBean book = new BookBean();
+						book.setId(rs.getInt("id"));
+		                book.setCode(rs.getString("code"));
+		                book.setName(rs.getString("name"));
+		                book.setAuthor(rs.getString("author"));
+		                book.setGenre(rs.getString("genre"));
+		                book.setPrice(rs.getFloat("price"));
+		                book.setDescription(rs.getString("description"));
+		                book.setStock_quantity(rs.getInt("stock_quantity"));
+		                book.setEditor(rs.getString("editor"));
+		                book.setActive(true);
+		                book.setPath(rs.getString("path"));
+		                book.setMimeType(rs.getString("mime_type"));
+		                books.add(book);
+					}
+				}
+			}
+			
+			return books.isEmpty() ? null : books;
+		}
+		
 		public String setOrderString(String order) {
+			if(order == null)
+				return " ORDER BY name ASC";
+			
 			switch(order) {
 				case "az":
 					return " ORDER BY name ASC";

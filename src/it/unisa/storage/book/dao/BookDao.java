@@ -13,4 +13,5 @@ public interface BookDao {
 	public ArrayList<String> doRetriveGenres() throws SQLException;
 	public void doUpdate(BookBean book) throws SQLException;
 	public boolean isRegistered(String code) throws SQLException;
+	public ArrayList<BookBean> doRetrieveByString(String query, String order) throws SQLException;
 }

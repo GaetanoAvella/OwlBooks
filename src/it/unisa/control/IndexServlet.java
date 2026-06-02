@@ -20,7 +20,6 @@ import it.unisa.storage.book.dao.BookDaoImpl;
 @WebServlet("/IndexServlet")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
 	private BookDao dao;
 	
 	@Override
@@ -36,6 +35,7 @@ public class IndexServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<String> genres = null;
 		ArrayList<BookBean> catalogue = null;
+		String searchQuery = request.getParameter("searchQuery");
 		
 		try {
 			genres = dao.doRetriveGenres();
@@ -43,7 +43,12 @@ public class IndexServlet extends HttpServlet {
 			String sort = request.getParameter("sort") != null ? request.getParameter("sort") : "az";
 			String genreFilter = genres.contains(request.getParameter("filter")) ? request.getParameter("filter") : null;
 			
-			catalogue = dao.doRetriveAll("genre", genreFilter, sort);
+			if(searchQuery != null && !searchQuery.isEmpty()) {
+				catalogue = dao.doRetrieveByString(searchQuery, sort);
+			}
+			
+			if(catalogue == null)
+				catalogue = dao.doRetriveAll("genre", genreFilter, sort);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
