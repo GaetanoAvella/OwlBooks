@@ -59,7 +59,7 @@
                             <td><%= order.getUserId() %></td>
                             <td><a href="<%= request.getContextPath() %>/admin/AdminOrderDetail?code=<%= order.getOrderCode() %>" class="code-link"><%= order.getOrderCode() %></a></td>
                             <td><%= order.getOrderDate() %></td>
-                            <td><%= order.getPaymentMethod() %></td>
+                            <td><%= order.getPaymentMethod(true) %></td>
                             <td class="price-cell">€ <%= String.format("%.2f", order.getTotal()) %></td>
                         </tr>
                     <%  } 

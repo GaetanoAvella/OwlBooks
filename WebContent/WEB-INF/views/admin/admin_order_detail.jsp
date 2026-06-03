@@ -43,7 +43,7 @@
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Metodo Pagamento:</span>
-                        <span class="summary-value"><%= order.getPaymentMethod() %></span>
+                        <span class="summary-value"><%= order.getPaymentMethod(true) %></span>
                     </div>
                 </div>
             </div>

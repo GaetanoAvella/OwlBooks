@@ -65,19 +65,22 @@ public class PurchaseOrderBean {
 		this.orderDate = orderDate;
 	}
 
-	public String getPaymentMethod() {
-		switch(paymentMethod) {
-			case "credit_card":
-				return "Carta di credito";
-			case "paypal":
-				return "Paypal";
-			case "on_delivery":
-				return "Pagamento alla consegna";
-			default:
-				return "Nessun metodo di pagamento selezionato";
+	public String getPaymentMethod(boolean customString) {
+		if(customString) {
+			switch(paymentMethod) {
+				case "credit_card":
+					return "Carta di credito";
+				case "paypal":
+					return "Paypal";
+				case "on_delivery":
+					return "Pagamento alla consegna";
+				default:
+					return "Nessun metodo di pagamento selezionato";
+			}
 		}
+		return paymentMethod;
 	}
-
+	
 	public void setPaymentMethod(String paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}

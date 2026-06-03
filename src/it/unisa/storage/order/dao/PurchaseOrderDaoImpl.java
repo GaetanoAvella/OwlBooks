@@ -41,7 +41,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 				psOrder.setString(2, order.getOrderCode());
 				psOrder.setDate(3, order.getOrderDate());	
 				psOrder.setDouble(4, order.getTotal());
-				psOrder.setString(5, order.getPaymentMethod());
+				psOrder.setString(5, order.getPaymentMethod(false));
 				psOrder.execute();
 			
 				int orderId = -1;
