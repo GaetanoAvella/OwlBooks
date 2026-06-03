@@ -31,12 +31,16 @@ public class SummaryServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String code = request.getParameter("code");
+		String code = request.getParameter("code") != null ? request.getParameter("code") : "";
 		
 		try {
 			PurchaseOrderBean order = dao.doRetriveByCode(code);
-			request.setAttribute("order", order);
-			request.getRequestDispatcher("/WEB-INF/views/user/summary.jsp").forward(request, response);
+			if(order != null) {
+				request.setAttribute("order", order);
+				request.getRequestDispatcher("/WEB-INF/views/user/summary.jsp").forward(request, response);
+			} else {
+				response.sendRedirect(request.getContextPath() + "/user/OrdersServlet");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

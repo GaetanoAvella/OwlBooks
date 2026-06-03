@@ -58,6 +58,11 @@ public class CheckOutServlet extends HttpServlet {
 	    }
 		
 		String paymentMethod = request.getParameter("payment_method");
+		if(!"credit_card".equals(paymentMethod) && !"paypal".equals(paymentMethod) && !"on_delivery".equals(paymentMethod)) {
+			request.setAttribute("error", "Metodo di pagamento non valido");
+			doGet(request, response);
+			return;
+		}
 		
 		try {
 			for(int i=0; i<cart.sizeArrayList(); i++) {

@@ -67,16 +67,23 @@ private BookDao dao;
 				break;
 			case "update":
 				item = cart.get(code);
-				int quantity = Integer.parseInt(request.getParameter("quantity"));
+				String quantityString = request.getParameter("quantity") != null && !request.getParameter("quantity").isEmpty() 
+						? request.getParameter("quantity") : "1";
 				try {
+					int quantity = Integer.parseInt(quantityString);
 					BookBean book = dao.doRetriveByCode(code);
+					
 					if(quantity > book.getStock_quantity())
 						quantity = book.getStock_quantity();
+					
+					item.setQuantity(quantity);
+					session.setAttribute("cart", cart);
+				} catch(NumberFormatException e) {
+					request.setAttribute("error", "Valore inserito non valido");
+					request.getRequestDispatcher("/WEB-INF/views/cart.jsp").forward(request, response);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				item.setQuantity(quantity);
-				session.setAttribute("cart", cart);
 				break;
 			case "remove":
 				cart.removeItem(code);

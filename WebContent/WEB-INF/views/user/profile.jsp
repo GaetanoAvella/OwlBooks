@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.text.StringEscapeUtils"%>
 <%@page import="it.unisa.model.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -21,17 +22,17 @@
                 <div class="profile-avatar">
                     👤
                 </div>
-                <h1><%= user.getName() %> <%= user.getSurname() %></h1>
+                <h1><%= StringEscapeUtils.escapeHtml4(user.getName()) %> <%= StringEscapeUtils.escapeHtml4(user.getSurname()) %></h1>
             </div>
             
             <div class="profile-details">
                 <div class="info-group">
                     <span class="info-label">Indirizzo</span>
-                    <span class="info-value"><%= user.getAddress() %></span>
+                    <span class="info-value"><%= StringEscapeUtils.escapeHtml4(user.getAddress()) %></span>
                 </div>
                 <div class="info-group">
                     <span class="info-label">Email</span>
-                    <span class="info-value"><%= user.getEmail() %></span>
+                    <span class="info-value"><%= StringEscapeUtils.escapeHtml4(user.getEmail()) %></span>
                 </div>
             </div>
             

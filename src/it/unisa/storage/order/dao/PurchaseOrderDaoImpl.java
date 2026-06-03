@@ -113,7 +113,6 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 
 	@Override
 	public PurchaseOrderBean doRetriveByCode(String orderCode) throws SQLException {
-		PurchaseOrderBean order = new PurchaseOrderBean(false);
 		String selectSQL = "SELECT * FROM " + PURCHASE_ORDER + " WHERE order_code=?";
 		String selectDetailsSQL = "SELECT d.id AS detail_id, d.order_id, d.book_id, d.quantity, d.price_at_purchase, " +
                 "b.code AS book_code, b.name, b.author, b.genre, b.price, b.description, b.stock_quantity, b.editor, b.path, b.mime_type " +
@@ -127,6 +126,7 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 			statement.setString(1, orderCode);
 			try(ResultSet rs = statement.executeQuery()) {
 				if(rs.next()) {
+					PurchaseOrderBean order = new PurchaseOrderBean(false);
 					order.setId(rs.getInt("id"));
 					order.setUserId(rs.getInt("user_id"));
 					order.setOrderCode(rs.getString("order_code"));
@@ -164,11 +164,13 @@ public class PurchaseOrderDaoImpl implements PurchaseOrderDao{
 							}
 						}
 					}
+					
+					return order;
 				}
 			}
 		}
 		
-		return order;
+		return null;
 	}
 	
 	@Override

@@ -11,7 +11,7 @@ let searchBar = function(elem) {
 	}
 	
 	let params = "searchQuery=" + encodeURIComponent(query);
-	loadAJAXDoc("SearchBarServlet", "GET", params, handleSearch);
+	loadAJAXDoc(contextPath + "/SearchBarServlet", "GET", params, handleSearch);
 }
 
 function handleSearch(request) {
@@ -29,7 +29,7 @@ function handleSearch(request) {
 	for(let i=0; i<response.length; i++) {
 		let book = response[i];
 		let a = document.createElement("a");
-		a.href = "BookServlet?code=" + book.code;
+		a.href = contextPath + "/BookServlet?code=" + book.code;
 		a.className = "search-result-item";
 		a.innerHTML = "<strong>" + book.name + "</strong><br><small>di " + book.author + "</small>";	
 		searchResultDiv.appendChild(a);

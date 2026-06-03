@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/header.css">
+
+<script>
+	const contextPath = '<%= request.getContextPath() %>';
+</script>
+
 <script src="<%= request.getContextPath() %>/scripts/menubar.js"></script>
 <script src="<%= request.getContextPath() %>/scripts/searchbar.js"></script>
 
@@ -10,7 +15,7 @@
         </div>
         
         <div class="search-container">
-		    <form action="IndexServlet" method="get" class="search-form">
+		    <form action="<%= request.getContextPath() %>/IndexServlet" method="get" class="search-form">
 		        <input type="search" name="searchQuery" class="search-input"  placeholder="Cerca per titolo, autore o ISBN..." 
 		        	value="<%= request.getAttribute("searchQuery") != null ? request.getAttribute("searchQuery") : "" %>" 
 		        	oninput="searchBar(this)" autocomplete="off" required>

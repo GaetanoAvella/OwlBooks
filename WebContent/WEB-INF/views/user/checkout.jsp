@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.text.StringEscapeUtils"%>
 <%@page import="it.unisa.model.CartBean"%>
 <%@page import="it.unisa.model.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -29,11 +30,11 @@
             <div class="checkout-info">
                 <div class="info-group">
                     <span class="info-label">In consegna a:</span>
-                    <span class="info-value"><%= user.getName() %> <%= user.getSurname() %></span>
+                    <span class="info-value"><%= StringEscapeUtils.escapeHtml4(user.getName()) %> <%= StringEscapeUtils.escapeHtml4(user.getSurname()) %></span>
                 </div>
                 <div class="info-group">
                     <span class="info-label">Indirizzo:</span>
-                    <span class="info-value"><%= user.getAddress() %></span>
+                    <span class="info-value"><%= StringEscapeUtils.escapeHtml4(user.getAddress()) %></span>
                 </div>
                 <div class="info-group total-group">
                     <span class="info-label">Totale da pagare:</span>

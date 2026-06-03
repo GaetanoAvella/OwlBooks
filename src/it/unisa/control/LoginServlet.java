@@ -14,6 +14,8 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import it.unisa.model.UserBean;
 import it.unisa.storage.user.dao.UserDao;
 import it.unisa.storage.user.dao.UserDaoImpl;
@@ -57,7 +59,7 @@ public class LoginServlet extends HttpServlet {
 					response.sendRedirect("IndexServlet");
 			} else {
 				request.setAttribute("error", "Email o password errate");
-				request.setAttribute("email_placeholder", email);
+				request.setAttribute("email_placeholder", StringEscapeUtils.escapeHtml4(email));
 				doGet(request, response);
 			}
 		} catch (SQLException e) {
