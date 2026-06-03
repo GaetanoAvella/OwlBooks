@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.text.StringEscapeUtils;
+
 import it.unisa.model.BookBean;
 import it.unisa.storage.book.dao.BookDao;
 import it.unisa.storage.book.dao.BookDaoImpl;
@@ -56,6 +58,7 @@ public class IndexServlet extends HttpServlet {
 		
 		request.setAttribute("catalogue", catalogue);
 		request.setAttribute("genres", genres);
+		request.setAttribute("searchQuery", StringEscapeUtils.escapeHtml4(request.getParameter("searchQuery")));
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
 		dispatcher.forward(request, response);

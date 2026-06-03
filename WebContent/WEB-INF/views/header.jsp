@@ -12,7 +12,7 @@
         <div class="search-container">
 		    <form action="IndexServlet" method="get" class="search-form">
 		        <input type="search" name="searchQuery" class="search-input"  placeholder="Cerca per titolo, autore o ISBN..." 
-		        	value="<%= request.getParameter("searchQuery") != null ? request.getParameter("searchQuery") : "" %>" 
+		        	value="<%= request.getAttribute("searchQuery") != null ? request.getAttribute("searchQuery") : "" %>" 
 		        	oninput="searchBar(this)" autocomplete="off" required>
 		        <button type="submit" class="search-button">🔍 Cerca</button>
 		    </form>

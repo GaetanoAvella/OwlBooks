@@ -61,8 +61,8 @@
 
         <main class="catalogue-section">
             <h2>
-			    <% if(request.getParameter("searchQuery") != null && !request.getParameter("searchQuery").isEmpty()) { %>
-			        Risultati per: "<%= request.getParameter("searchQuery") %>"
+			    <% if(request.getAttribute("searchQuery") != null && !(((String) request.getAttribute("searchQuery")).isEmpty())) { %>
+			        Risultati per: "<%= request.getAttribute("searchQuery") %>"
 			    <% } else if(request.getParameter("filter") != null) { %>
 			        Genere: <%= request.getParameter("filter") %>
 			    <% } else { %>
