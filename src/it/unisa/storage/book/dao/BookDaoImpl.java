@@ -275,7 +275,7 @@
 		
 		@Override
 		public int doCountAll(String query) throws SQLException {
-			String countSQL = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE is_active=true AND (name LIKE ? OR author LIKE=? OR code LIKE ?)";
+			String countSQL = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE is_active=true AND (name LIKE ? OR author LIKE ? OR code LIKE ?)";
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement ps = connection.prepareStatement(countSQL)) {

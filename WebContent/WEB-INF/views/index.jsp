@@ -34,6 +34,10 @@
                     <input type="hidden" name="filter" value="<%= request.getParameter("filter") %>">
                     <% } %>
                     
+                    <% if(request.getParameter("searchQuery") != null) { %>
+                    <input type="hidden" name="searchQuery" value="<%= request.getParameter("searchQuery") %>">
+                    <% } %>
+                    
                     <input type="submit" value="Ordina" class="btn-sort">
                 </form>
             </div>
