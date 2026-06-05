@@ -1,1 +1,1 @@
-SELECT * FROM book WHERE is_active=true LIMIT 10 OFFSET 10;
+SELECT * FROM user;

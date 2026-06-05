@@ -120,3 +120,14 @@ body {
 .signin-footer a:hover {
     text-decoration: underline;
 }
+
+.error {
+	border: thin solid red;
+}
+
+#errorEmail {
+	color: #e74c3c;
+	font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
