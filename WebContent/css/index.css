@@ -150,6 +150,41 @@
     font-size: 16px;
 }
 
+.pagination {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.btn-page {
+    display: inline-block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #4a5568;
+    background-color: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-page:hover {
+    background-color: #e2e8f0;
+    color: #2b6cb0;
+    text-decoration: none;
+}
+
+.btn-page.active-page {
+    background-color: #3182ce;
+    color: #ffffff !important;
+    border-color: #3182ce;
+    pointer-events: none;
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
     .main-container {
         flex-direction: column;

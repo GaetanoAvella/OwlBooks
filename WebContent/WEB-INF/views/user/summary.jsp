@@ -31,7 +31,7 @@
 	        <div class="summary-info-box">
 	            <div class="info-item">
 	                <span class="info-label">Metodo di Pagamento</span>
-	                <span class="info-value"><%= order.getPaymentMethod() %></span>
+	                <span class="info-value"><%= order.getPaymentMethod(true) %></span>
 	            </div>
 	            <div class="info-item">
 	                <span class="info-label">Totale Pagato</span>

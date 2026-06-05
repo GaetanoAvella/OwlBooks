@@ -38,20 +38,37 @@ public class IndexServlet extends HttpServlet {
 		ArrayList<String> genres = null;
 		ArrayList<BookBean> catalogue = null;
 		String searchQuery = request.getParameter("searchQuery");
+		String pageString = request.getParameter("page") != null ? request.getParameter("page") : "1";
+		int currentPage;
+		int totalPages = 1;
+		
+		try {
+			currentPage = Integer.parseInt(pageString);
+		} catch (NumberFormatException e) {
+			currentPage = 1;
+		}
 		
 		try {
 			genres = dao.doRetriveGenres();
 			
 			String sort = request.getParameter("sort") != null ? request.getParameter("sort") : "az";
-			String genreFilter = genres.contains(request.getParameter("filter")) ? request.getParameter("filter") : null;
+			String genreFilter = request.getParameter("filter");
+			int totalBooks;			
 			
 			if(searchQuery != null && !searchQuery.isEmpty()) {
-				catalogue = dao.doRetrieveByString(searchQuery, sort);
+				catalogue = dao.doRetrieveByString(searchQuery, sort, currentPage-1);
+				totalBooks = dao.doCountAll(searchQuery);
+			} else if(genres.contains(genreFilter)){
+				catalogue = dao.doRetriveAll("genre", genreFilter, sort, currentPage-1);
+				totalBooks = dao.doCountAll("genre", genreFilter);
+			} else {
+				catalogue = dao.doRetriveAll(sort, true, currentPage - 1);
+				totalBooks = dao.doCountAll();
 			}
 			
-			if(catalogue == null)
-				catalogue = dao.doRetriveAll("genre", genreFilter, sort);
-			
+			totalPages = (int) Math.ceil((double) totalBooks / 10);
+			if(totalPages == 0)
+				totalPages = 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
@@ -59,6 +76,8 @@ public class IndexServlet extends HttpServlet {
 		request.setAttribute("catalogue", catalogue);
 		request.setAttribute("genres", genres);
 		request.setAttribute("searchQuery", StringEscapeUtils.escapeHtml4(request.getParameter("searchQuery")));
+		request.setAttribute("currentPage", currentPage);
+		request.setAttribute("totalPages", totalPages);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
 		dispatcher.forward(request, response);

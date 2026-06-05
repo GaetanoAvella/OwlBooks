@@ -11,8 +11,10 @@
 	
 	public class BookDaoImpl implements BookDao{
 		private static final String TABLE_NAME = "book";
+	    private static final int LIMIT = 10;
+	    
 	    private DataSource ds;
-		
+
 	    public BookDaoImpl(DataSource ds) {
 	    	this.ds = ds;
 	    }
@@ -83,14 +85,15 @@
 		}
 		
 		@Override
-		public ArrayList<BookBean> doRetriveAll(String order, boolean isActive) throws SQLException {
+		public ArrayList<BookBean> doRetriveAll(String order, boolean isActive, int page) throws SQLException {
 			ArrayList<BookBean> list = new ArrayList<>();
 			String selectSQL = null;
 			
 			if(isActive) {
 				selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE is_active=true" + setOrderString(order);
 			} else {
-				selectSQL = "SELECT * FROM " + TABLE_NAME + setOrderString(order);
+				selectSQL = "SELECT * FROM " + TABLE_NAME + setOrderString(order) 
+				+ " LIMIT " + LIMIT + " OFFSET " + page*LIMIT;
 			}
 			
 			try(Connection connection = ds.getConnection();
@@ -117,12 +120,13 @@
 		}
 	
 		@Override
-		public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order) throws SQLException {
+		public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order, int page) throws SQLException {
 			if(filterValue == null || filterValue.equals(""))
-				return doRetriveAll(order, false);
+				return doRetriveAll(order, false, page);
 			
 			ArrayList<BookBean> list = new ArrayList<>();
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE is_active=true AND " + filter + "=?" + setOrderString(order);
+			String selectSQL = "SELECT * FROM " + TABLE_NAME + " WHERE is_active=true AND " + filter + "=?" + setOrderString(order) 
+				+ " LIMIT " + LIMIT + " OFFSET " + page*LIMIT;
 			
 			try(Connection connection = ds.getConnection();
 					PreparedStatement statement = connection.prepareStatement(selectSQL)) {
@@ -196,10 +200,18 @@
 			return book != null;
 		}
 		
-		public ArrayList<BookBean> doRetrieveByString(String query, String order) throws SQLException {
-			String selectSQL = "SELECT * FROM " + TABLE_NAME + 
+		public ArrayList<BookBean> doRetrieveByString(String query, String order, int page) throws SQLException {
+			String selectSQL;
+			
+			if(page == -1) {
+				selectSQL = "SELECT * FROM " + TABLE_NAME + 
                     " WHERE is_active=true AND (name LIKE ? OR author LIKE ? OR code LIKE ?)" + 
                     setOrderString(order);
+			} else {
+				selectSQL = "SELECT * FROM " + TABLE_NAME + 
+	                    " WHERE is_active=true AND (name LIKE ? OR author LIKE ? OR code LIKE ?)" + 
+	                    setOrderString(order) + " LIMIT " + LIMIT + " OFFSET " + page*LIMIT;
+			}
 			ArrayList<BookBean> books = new ArrayList<BookBean>();
 			
 			try(Connection connection = ds.getConnection();
@@ -229,6 +241,54 @@
 			}
 			
 			return books.isEmpty() ? null : books;
+		}
+		
+		@Override
+		public int doCountAll() throws SQLException {
+			String countSQL = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE is_active=true";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement ps = connection.prepareStatement(countSQL);
+					ResultSet rs = ps.executeQuery()) {
+				while(rs.next())
+					return rs.getInt(1);
+			}
+			
+			return 0;
+		}
+		
+		@Override
+		public int doCountAll(String filter, String filterValue) throws SQLException {
+			String countSQL = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE is_active=true AND " + filter + "=?";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement ps = connection.prepareStatement(countSQL)) {
+				ps.setString(1, filterValue);
+				try(ResultSet rs = ps.executeQuery()) {
+					while(rs.next())
+						return rs.getInt(1);
+				}
+			}
+			
+			return 0;
+		}
+		
+		@Override
+		public int doCountAll(String query) throws SQLException {
+			String countSQL = "SELECT COUNT(*) FROM " + TABLE_NAME + " WHERE is_active=true AND (name LIKE ? OR author LIKE=? OR code LIKE ?)";
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement ps = connection.prepareStatement(countSQL)) {
+				ps.setString(1, "%" + query + "%");
+				ps.setString(2, "%" + query + "%");
+				ps.setString(3, "%" + query + "%");
+				try(ResultSet rs = ps.executeQuery()) {
+					while(rs.next())
+						return rs.getInt(1);
+				}
+			}
+			
+			return 0;
 		}
 		
 		public String setOrderString(String order) {

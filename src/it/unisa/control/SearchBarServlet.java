@@ -45,7 +45,7 @@ public class SearchBarServlet extends HttpServlet {
 		
 		try {
 			if(query != null && !query.trim().isEmpty()) {
-				ArrayList<BookBean> results = dao.doRetrieveByString(query.trim(), "az");
+				ArrayList<BookBean> results = dao.doRetrieveByString(query.trim(), "az", -1);
 				
 				if(results != null) {
 					for(BookBean book : results) {

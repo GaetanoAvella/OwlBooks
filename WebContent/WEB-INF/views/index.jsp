@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title>OwlBooks - Home</title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/css/global.css">
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/index.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/index.css?v=1">
 </head>
 <body>
 
@@ -92,6 +92,39 @@
                 <% }}%>
                 </tbody>
             </table>
+            
+            <div class="pagination">
+            <%
+                int currentPage = request.getAttribute("currentPage") != null ? (Integer) request.getAttribute("currentPage") : 1;
+                int totalPages = request.getAttribute("totalPages") != null ? (Integer) request.getAttribute("totalPages") : 1;
+                
+                if (totalPages > 1) {
+                    
+                    String baseUrl = "IndexServlet?sort=" + currentSort;
+                    if(request.getParameter("filter") != null) {
+                        baseUrl += "&filter=" + request.getParameter("filter");
+                    }
+                    if(request.getAttribute("searchQuery") != null && !((String)request.getAttribute("searchQuery")).isEmpty()) {
+                        baseUrl += "&searchQuery=" + request.getAttribute("searchQuery");
+                    }
+            %>
+                    <% if (currentPage > 1) { %>
+                        <a href="<%= baseUrl %>&page=<%= currentPage - 1 %>" class="btn-page">Precedente</a>
+                    <% } %>
+                    
+                    <% for (int i = 1; i <= totalPages; i++) { %>
+                        <a href="<%= baseUrl %>&page=<%= i %>" class="btn-page <%= (i == currentPage) ? "active-page" : "" %>">
+                           <%= i %>
+                        </a>
+                    <% } %>
+                    
+                    <% if (currentPage < totalPages) { %>
+                        <a href="<%= baseUrl %>&page=<%= currentPage + 1 %>" class="btn-page">Successivo</a>
+                    <% } %>
+                    
+            <%  } %>
+            </div>
+            
         </main>
 
     </div>
