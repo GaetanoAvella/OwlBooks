@@ -154,6 +154,35 @@
 		}
 		
 		@Override
+		public ArrayList<BookBean> doRetrieveAll() throws SQLException{
+			ArrayList<BookBean> list = new ArrayList<>();
+			String selectSQL = "SELECT * FROM " + TABLE_NAME;
+			
+			try(Connection connection = ds.getConnection();
+					PreparedStatement ps = connection.prepareStatement(selectSQL);
+					ResultSet rs = ps.executeQuery()) {
+				while(rs.next()) {
+					BookBean book = new BookBean();
+					book.setId(rs.getInt("id"));
+					book.setCode(rs.getString("code"));
+					book.setName(rs.getString("name"));
+					book.setAuthor(rs.getString("author"));
+					book.setGenre(rs.getString("genre"));
+					book.setPrice(rs.getFloat("price"));
+					book.setDescription(rs.getString("description"));
+					book.setStock_quantity(rs.getInt("stock_quantity"));
+					book.setEditor(rs.getString("editor"));
+					book.setActive(true);
+					book.setPath(rs.getString("path"));
+					book.setMimeType(rs.getString("mime_type"));
+					list.add(book);
+				}
+			} 
+			
+			return list;
+		}
+		
+		@Override
 		public ArrayList<String> doRetriveGenres() throws SQLException{
 			ArrayList<String> genres = new ArrayList<String>();
 			String selectSQL = "SELECT DISTINCT genre FROM " + TABLE_NAME + " WHERE is_active=true ORDER BY genre ASC";

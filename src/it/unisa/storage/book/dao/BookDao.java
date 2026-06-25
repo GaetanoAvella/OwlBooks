@@ -10,6 +10,7 @@ public interface BookDao {
 	public BookBean doRetriveByCode(String code) throws SQLException;
 	public ArrayList<BookBean> doRetriveAll(String order, boolean isActive, int page) throws SQLException;
 	public ArrayList<BookBean> doRetriveAll(String filter, String filterValue, String order, int page) throws SQLException;
+	public ArrayList<BookBean> doRetrieveAll() throws SQLException;
 	public ArrayList<String> doRetriveGenres() throws SQLException;
 	public void doUpdate(BookBean book) throws SQLException;
 	public boolean isRegistered(String code) throws SQLException;

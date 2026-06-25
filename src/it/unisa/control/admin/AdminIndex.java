@@ -34,7 +34,7 @@ public class AdminIndex extends HttpServlet {
 		ArrayList<BookBean> catalogue = null;
 		
 		try {
-			catalogue = dao.doRetriveAll("az", false, 0);
+			catalogue = dao.doRetrieveAll();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
