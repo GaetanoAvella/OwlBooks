@@ -85,6 +85,8 @@
                 <tbody>
                 <%
                 ArrayList<BookBean> catalogue = (ArrayList<BookBean>) request.getAttribute("catalogue");
+                if(catalogue == null)
+                	catalogue = new ArrayList<BookBean>();
                 for (BookBean book : catalogue) {
                 	if(book.isActive()) {
                 %>

@@ -248,7 +248,7 @@
 				String searchPattern = "%" + query + "%";
 				statement.setString(1, searchPattern);
 				statement.setString(2, searchPattern);
-				statement.setString(3, query);
+				statement.setString(3, searchPattern);
 				try(ResultSet rs = statement.executeQuery()) {
 					while(rs.next()) {
 						BookBean book = new BookBean();
@@ -269,7 +269,7 @@
 				}
 			}
 			
-			return books.isEmpty() ? null : books;
+			return books;
 		}
 		
 		@Override

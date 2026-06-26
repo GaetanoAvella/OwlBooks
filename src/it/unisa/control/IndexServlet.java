@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.text.StringEscapeUtils;
-
 import it.unisa.model.BookBean;
 import it.unisa.storage.book.dao.BookDao;
 import it.unisa.storage.book.dao.BookDaoImpl;
@@ -53,17 +51,21 @@ public class IndexServlet extends HttpServlet {
 			
 			String sort = request.getParameter("sort") != null ? request.getParameter("sort") : "az";
 			String genreFilter = request.getParameter("filter");
-			int totalBooks;			
+			int totalBooks = 0;			
 			
-			if(searchQuery != null && !searchQuery.isEmpty()) {
+			if(searchQuery != null && !searchQuery.trim().isEmpty()) {
 				catalogue = dao.doRetrieveByString(searchQuery, sort, currentPage-1);
 				totalBooks = dao.doCountAll(searchQuery);
 			} else if(genres.contains(genreFilter)){
-				catalogue = dao.doRetriveAll("genre", genreFilter, sort, currentPage-1);
-				totalBooks = dao.doCountAll("genre", genreFilter);
+					catalogue = dao.doRetriveAll("genre", genreFilter, sort, currentPage-1);
+					totalBooks = dao.doCountAll("genre", genreFilter);
 			} else {
-				catalogue = dao.doRetriveAll(sort, true, currentPage - 1);
-				totalBooks = dao.doCountAll();
+					catalogue = dao.doRetriveAll(sort, true, currentPage - 1);
+					totalBooks = dao.doCountAll();
+			}
+			
+			if (catalogue == null) {
+				catalogue = new ArrayList<>();
 			}
 			
 			totalPages = (int) Math.ceil((double) totalBooks / 10);
@@ -71,11 +73,13 @@ public class IndexServlet extends HttpServlet {
 				totalPages = 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			catalogue = new ArrayList<>();
+			if (genres == null) genres = new ArrayList<>();
 		} 
 		
 		request.setAttribute("catalogue", catalogue);
 		request.setAttribute("genres", genres);
-		request.setAttribute("searchQuery", StringEscapeUtils.escapeHtml4(request.getParameter("searchQuery")));
+		request.setAttribute("searchQuery", request.getParameter("searchQuery"));
 		request.setAttribute("currentPage", currentPage);
 		request.setAttribute("totalPages", totalPages);
 		
